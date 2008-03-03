@@ -3,7 +3,7 @@
 Summary: The Open Source PBX
 Name: asterisk
 Version: 1.4.18
-Release: 2%{?dist}
+Release: 3%{?dist}
 License: GPLv2
 Group: Applications/Internet
 URL: http://www.asterisk.org/
@@ -428,6 +428,7 @@ mkdir -p %{buildroot}%{_datadir}/asterisk/moh/
 mkdir -p %{buildroot}%{_datadir}/asterisk/sounds/
 mkdir -p %{buildroot}%{_localstatedir}/lib/asterisk
 mkdir -p %{buildroot}%{_localstatedir}/log/asterisk/cdr-custom/
+mkdir -p %{buildroot}%{_localstatedir}/spool/asterisk/monitor/
 mkdir -p %{buildroot}%{_localstatedir}/spool/asterisk/outgoing/
 
 # We're not going to package any of the sample AGI scripts
@@ -732,6 +733,7 @@ fi
 %attr(0750,asterisk,asterisk) %dir %{_localstatedir}/log/asterisk/cdr-custom/
 
 %attr(0750,asterisk,asterisk) %dir %{_localstatedir}/spool/asterisk/
+%attr(0770,asterisk,asterisk) %dir %{_localstatedir}/spool/asterisk/monitor/
 %attr(0770,asterisk,asterisk) %dir %{_localstatedir}/spool/asterisk/outgoing/
 %attr(0750,asterisk,asterisk) %dir %{_localstatedir}/spool/asterisk/tmp/
 %attr(0750,asterisk,asterisk) %dir %{_localstatedir}/spool/asterisk/voicemail/
@@ -900,7 +902,10 @@ fi
 %{_libdir}/asterisk/modules/codec_zap.so
 
 %changelog
-* Wed Feb 27 2008  <jcollie@pc21225.campus.dmacc.edu> - 1.4.18-2
+* Mon Mar  3 2008 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.4.18-3
+- Package the directory used to store monitor recordings.
+
+* Wed Feb 27 2008 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.4.18-2
 - Add patch from David Woodhouse to fix building on PPC64.
 
 * Wed Feb 13 2008 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.4.18-1
