@@ -2,8 +2,8 @@
 
 Summary: The Open Source PBX
 Name: asterisk
-Version: 1.4.18
-Release: 3%{?dist}
+Version: 1.4.18.1
+Release: 1%{?dist}
 License: GPLv2
 Group: Applications/Internet
 URL: http://www.asterisk.org/
@@ -17,13 +17,13 @@ URL: http://www.asterisk.org/
 #
 # MD5 Sums
 # ========
-# 3d8b2b2ef4f202901771663b40f19c3d  asterisk-1.4.18.tar.gz
-# b5027a1a87592db138e10ddbd0cece8a  asterisk-1.4.18-stripped.tar.gz
+# a0d7ee4054a04529b745e60dd4e750c4  asterisk-1.4.18.1.tar.gz
+# 31f42bbdc070fef1302adfeb81fc9251  asterisk-1.4.18.1-stripped.tar.gz
 #
 # SHA1 Sums
 # =========
-# 3a027488395510b6ebe4a0a0c372db33b2044b0a  asterisk-1.4.18.tar.gz
-# 6f66bf67e87d17f9ccce5fc07643abb759862289  asterisk-1.4.18-stripped.tar.gz
+# 2991e972f3c2f8cac3849f9359afbb0db7e7203a  asterisk-1.4.18.1.tar.gz
+# 14eaeb210f91c843291b018e67f765cb1b5356b4  asterisk-1.4.18.1-stripped.tar.gz
 
 Source0: asterisk-%{version}-stripped.tar.gz
 Source1: asterisk-logrotate
@@ -41,6 +41,7 @@ Patch7:  asterisk-1.4.18-optimization.patch
 Patch8:  asterisk-1.4.18-chanmobile.patch
 Patch9:  asterisk-1.4.18-autoconf.patch
 Patch10: asterisk-1.4.18-funcdesc.patch
+Patch11: asterisk-1.4.18-httpmgrids.patch
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-root-%(%{__id_u} -n)
 
@@ -332,6 +333,7 @@ Modules for Asterisk that use Zaptel.
 %patch8 -p1
 %patch9 -p1
 %patch10 -p1
+%patch11 -p1
 
 cp %{SOURCE2} menuselect.makedeps
 cp %{SOURCE3} menuselect.makeopts
@@ -902,6 +904,23 @@ fi
 %{_libdir}/asterisk/modules/codec_zap.so
 
 %changelog
+* Wed Mar 19 2008 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.4.18.1-1
+- Update to 1.4.18.1 plus another patch to fix some security issues.
+-
+- AST-2008-002 details two buffer overflows that were discovered in
+- RTP codec payload type handling.
+-  * http://downloads.digium.com/pub/security/AST-2008-002.pdf
+-  * All users of SIP in Asterisk 1.4 and 1.6 are affected.
+-
+- AST-2008-003 details a vulnerability which allows an attacker to
+- bypass SIP authentication and to make a call into the context
+- specified in the general section of sip.conf.
+-  * http://downloads.digium.com/pub/security/AST-2008-003.pdf
+-  * All users of SIP in Asterisk 1.0, 1.2, 1.4, or 1.6 are affected.
+-
+- AST-2008-005 details a problem in the way manager IDs are caculated.
+-  * http://downloads.digium.com/pub/security/AST-2008-005.pdf
+
 * Mon Mar  3 2008 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.4.18-3
 - Package the directory used to store monitor recordings.
 
