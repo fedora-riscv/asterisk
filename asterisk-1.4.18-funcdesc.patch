@@ -1,0 +1,60 @@
+From 0d18b1b78dbae3d548192883a858838bbc23011a Mon Sep 17 00:00:00 2001
+From: David Woodhouse <dwmw2@infradead.org>
+Date: Wed, 27 Feb 2008 14:54:45 -0600
+Subject: [PATCH] Fix building on PPC64.
+
+1. build_tools/strip_nonapi was looking at the wrong output from
+   nm(1).  This is fixed by checking for a PPC64 processor and
+   adjusting.
+
+2. Makefile would always hide the execution of
+   build_tools/strip_nonapi which made it difficult to diagnose the
+   problem.  Now when NOISY_BUILD is enabled you'll be able to see the
+   execution of the script.
+---
+ build_tools/strip_nonapi |   11 ++++++++++-
+ main/Makefile            |    2 +-
+ 2 files changed, 11 insertions(+), 2 deletions(-)
+
+diff --git a/build_tools/strip_nonapi b/build_tools/strip_nonapi
+index c2262ca..91e41aa 100755
+--- a/build_tools/strip_nonapi
++++ b/build_tools/strip_nonapi
+@@ -15,11 +15,20 @@
+ #	astman_
+ #	pbx_
+ 
++case "${PROC}" in
++    powerpc64)
++	TEXTSYM=" D "
++	;;
++    *)
++	TEXTSYM=" T "
++	;;
++esac
++
+ FILTER="${GREP} -v -e ^ast_ -e ^_ast_ -e ^__ast_ -e ^astman_ -e ^pbx_"
+ 
+ case "${OSARCH}" in
+     linux-gnu)
+-	nm ${1} | ${GREP} -e " T " | cut -d" " -f3 | ${FILTER} > striplist
++	nm ${1} | ${GREP} -e "$TEXTSYM" | cut -d" " -f3 | ${FILTER} > striplist
+ 	sed -e "s/^/-N /" striplist | xargs ${STRIP} ${1}
+ 	rm -f striplist
+ 	;;
+diff --git a/main/Makefile b/main/Makefile
+index 204e7df..c9de882 100644
+--- a/main/Makefile
++++ b/main/Makefile
+@@ -146,7 +146,7 @@ ifneq ($(findstring chan_h323,$(MENUSELECT_CHANNELS)),)
+ else
+ 	$(CMD_PREFIX) $(CXX) $(STATIC_BUILD) -o $@ $(ASTLINK) $(AST_EMBED_LDFLAGS) $(ASTLDFLAGS) $(H323LDFLAGS) $^ buildinfo.o $(AST_LIBS) $(AST_EMBED_LIBS) $(H323LDLIBS)
+ endif
+-	@$(ASTTOPDIR)/build_tools/strip_nonapi $@
++	$(CMD_PREFIX) $(ASTTOPDIR)/build_tools/strip_nonapi $@ || rm $@
+ 
+ clean::
+ 	rm -f asterisk
+-- 
+1.5.4.1
+
