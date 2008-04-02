@@ -1,0 +1,125 @@
+From 103685e8e94b4e526297e5bbdd344dc5540c386f Mon Sep 17 00:00:00 2001
+From: Jeffrey C. Ollie <jeff@ocjtech.us>
+Date: Sun, 23 Mar 2008 19:49:34 -0500
+Subject: [PATCH] Build using external libedit.
+
+---
+ build_tools/menuselect-deps.in |    1 +
+ configure.ac                   |   11 +++++++++++
+ main/Makefile                  |   11 +++++------
+ main/cli.c                     |    2 +-
+ makeopts.in                    |    3 +++
+ 5 files changed, 21 insertions(+), 7 deletions(-)
+
+diff --git a/build_tools/menuselect-deps.in b/build_tools/menuselect-deps.in
+index 6a6e3a2..bf019e7 100644
+--- a/build_tools/menuselect-deps.in
++++ b/build_tools/menuselect-deps.in
+@@ -11,6 +11,7 @@ IKSEMEL=@PBX_IKSEMEL@
+ IMAP_TK=@PBX_IMAP_TK@
+ IXJUSER=@PBX_IXJUSER@
+ KDE=@PBX_KDE@
++LIBEDIT=@PBX_LIBEDIT@
+ LTDL=@PBX_LTDL@
+ NBS=@PBX_NBS@
+ NETSNMP=@PBX_NETSNMP@
+diff --git a/configure.ac b/configure.ac
+index d17bb9d..977de32 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -1510,6 +1510,17 @@ AC_SUBST(PBX_GTK2)
+ AC_SUBST(GTK2_INCLUDE)
+ AC_SUBST(GTK2_LIB)
+ 
++AC_CHECK_TOOL(PKGCONFIG, pkg-config, No)
++if test ! "x${PKGCONFIG}" = xNo; then
++   LIBEDIT_INCLUDE=$(${PKGCONFIG} libedit --cflags 2>/dev/null)
++   LIBEDIT_LIB=$(${PKGCONFIG} libedit --libs)
++   PBX_LIBEDIT=1
++   AC_DEFINE([HAVE_LIBEDIT], 1, [Define if your system has the libedit libraries.])
++fi
++AC_SUBST(PBX_LIBEDIT)
++AC_SUBST(LIBEDIT_INCLUDE)
++AC_SUBST(LIBEDIT_LIB)
++
+ if test "${USE_CURL}" != "no"; then
+    AC_PATH_TOOL([CURL_CONFIG], [curl-config], No)
+    if test ! x"${CURL_CONFIG}" = xNo; then
+diff --git a/main/Makefile b/main/Makefile
+index 44e5a89..1bdfdb1 100644
+--- a/main/Makefile
++++ b/main/Makefile
+@@ -98,9 +98,6 @@ ifeq ($(OSARCH),SunOS)
+   ASTLINK=
+ endif
+ 
+-editline/libedit.a:
+-	cd editline && test -f config.h || CFLAGS="$(PTHREAD_CFLAGS) $(subst $(ASTTOPDIR),../../,$(ASTCFLAGS:-Werror=))" LDFLAGS="$(ASTLDFLAGS)" ./configure --build=$(BUILD_PLATFORM) --host=$(HOST_PLATFORM) --with-ncurses=$(NCURSES_DIR) --with-curses=$(CURSES_DIR) --with-termcap=$(TERMCAP_DIR) --with-tinfo=$(TINFO_DIR)
+-	$(MAKE) -C editline libedit.a
+ 
+ db1-ast/libdb1.a:
+ 	CFLAGS="$(subst $(ASTTOPDIR),../../,$(ASTCFLAGS))" LDFLAGS="$(ASTLDFLAGS)" $(MAKE) -C db1-ast libdb1.a
+@@ -123,6 +120,8 @@ testexpr2: ast_expr2f.c ast_expr2.c ast_expr2.h
+ 
+ channel.o: ASTCFLAGS+=$(ZAPTEL_INCLUDE)
+ 
++cli.o: ASTCLFAGS+=$(LIBEDIT_INCLUDE)
++
+ stdtime/localtime.o: ASTCFLAGS+=$(AST_NO_STRICT_OVERFLOW)
+ 
+ AST_EMBED_LDSCRIPTS:=$(sort $(EMBED_LDSCRIPTS))
+@@ -137,7 +136,7 @@ else
+   H323LDLIBS=
+ endif
+ 
+-asterisk: $(OBJS) editline/libedit.a db1-ast/libdb1.a $(AST_EMBED_LDSCRIPTS)
++asterisk: $(OBJS) db1-ast/libdb1.a $(AST_EMBED_LDSCRIPTS)
+ 	@$(ASTTOPDIR)/build_tools/make_build_h > $(ASTTOPDIR)/include/asterisk/build.h.tmp
+ 	@if cmp -s $(ASTTOPDIR)/include/asterisk/build.h.tmp $(ASTTOPDIR)/include/asterisk/build.h ; then echo ; else \
+ 		mv $(ASTTOPDIR)/include/asterisk/build.h.tmp $(ASTTOPDIR)/include/asterisk/build.h ; \
+@@ -146,9 +145,9 @@ asterisk: $(OBJS) editline/libedit.a db1-ast/libdb1.a $(AST_EMBED_LDSCRIPTS)
+ 	@$(CC) -c -o buildinfo.o $(ASTCFLAGS) buildinfo.c
+ 	$(ECHO_PREFIX) echo "   [LD] $^ -> $@"
+ ifneq ($(findstring chan_h323,$(MENUSELECT_CHANNELS)),)
+-	$(CMD_PREFIX) $(CC) $(STATIC_BUILD) -o $@ $(ASTLINK) $(AST_EMBED_LDFLAGS) $(ASTLDFLAGS) $^ buildinfo.o $(AST_LIBS) $(AST_EMBED_LIBS)
++	$(CMD_PREFIX) $(CC) $(STATIC_BUILD) -o $@ $(ASTLINK) $(AST_EMBED_LDFLAGS) $(ASTLDFLAGS) $^ buildinfo.o $(AST_LIBS) $(AST_EMBED_LIBS) $(LIBEDIT_LIB)
+ else
+-	$(CMD_PREFIX) $(CXX) $(STATIC_BUILD) -o $@ $(ASTLINK) $(AST_EMBED_LDFLAGS) $(ASTLDFLAGS) $(H323LDFLAGS) $^ buildinfo.o $(AST_LIBS) $(AST_EMBED_LIBS) $(H323LDLIBS)
++	$(CMD_PREFIX) $(CXX) $(STATIC_BUILD) -o $@ $(ASTLINK) $(AST_EMBED_LDFLAGS) $(ASTLDFLAGS) $(H323LDFLAGS) $^ buildinfo.o $(AST_LIBS) $(AST_EMBED_LIBS) $(H323LDLIBS) $(LIBEDIT_LIB)
+ endif
+ 	$(CMD_PREFIX) $(ASTTOPDIR)/build_tools/strip_nonapi $@ || rm $@
+ 
+diff --git a/main/cli.c b/main/cli.c
+index 2ecf20a..f30e598 100644
+--- a/main/cli.c
++++ b/main/cli.c
+@@ -35,6 +35,7 @@ ASTERISK_FILE_VERSION(__FILE__, "$Revision$")
+ #include <string.h>
+ #include <ctype.h>
+ #include <regex.h>
++#include <editline/readline.h>
+ 
+ #include "asterisk/logger.h"
+ #include "asterisk/options.h"
+@@ -46,7 +47,6 @@ ASTERISK_FILE_VERSION(__FILE__, "$Revision$")
+ #include "asterisk/utils.h"
+ #include "asterisk/app.h"
+ #include "asterisk/lock.h"
+-#include "editline/readline/readline.h"
+ #include "asterisk/threadstorage.h"
+ 
+ extern unsigned long global_fin, global_fout;
+diff --git a/makeopts.in b/makeopts.in
+index 82d4a59..ac196ad 100644
+--- a/makeopts.in
++++ b/makeopts.in
+@@ -195,3 +195,6 @@ TERMCAP_DIR=@TERMCAP_DIR@
+ TINFO_INCLUDE=@TINFO_INCLUDE@
+ TINFO_LIB=@TINFO_LIB@
+ TINFO_DIR=@TINFO_DIR@
++
++LIBEDIT_INCLUDE=@LIBEDIT_INCLUDE@
++LIBEDIT_LIB=@LIBEDIT_LIB@
+-- 
+1.5.4.3
+

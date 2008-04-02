@@ -1,4 +1,4 @@
-From 2fa124a4329da73868c62f73cb39250572947e44 Mon Sep 17 00:00:00 2001
+From be2cb58bb22987fa20b2f9eeb5577cb96a33d707 Mon Sep 17 00:00:00 2001
 From: Jeffrey C. Ollie <jeff@ocjtech.us>
 Date: Sun, 18 Nov 2007 22:25:43 -0600
 Subject: [PATCH] Add chan_mobile (backported from asterisk-addons trunk).
@@ -27,16 +27,15 @@ index 6bf5131..6a6e3a2 100644
  FREETDS=@PBX_FREETDS@
  GSM=@PBX_GSM@
 diff --git a/channels/Makefile b/channels/Makefile
-index f5e96c7..9844128 100644
+index d46632e..65e46fb 100644
 --- a/channels/Makefile
 +++ b/channels/Makefile
-@@ -124,4 +124,6 @@ misdn/isdn_lib.o: ASTCFLAGS+=-Wno-strict-aliasing
+@@ -125,3 +125,5 @@ misdn/isdn_lib.o: ASTCFLAGS+=-Wno-strict-aliasing
+ misdn_config.o misdn/isdn_lib.o misdn/isdn_msg_parser.o: ASTCFLAGS+=$(MENUSELECT_OPTS_chan_misdn:%=-D%) $(foreach dep,$(MENUSELECT_DEPENDS_chan_misdn),$(value $(dep)_INCLUDE))
  
  $(if $(filter chan_misdn,$(EMBEDDED_MODS)),modules.link,chan_misdn.so): chan_misdn.o misdn_config.o misdn/isdn_lib.o misdn/isdn_msg_parser.o
- 
-+chan_mobile.so: LIBS+=$(BLUETOOTH_LIB)
 +
- chan_vpb.oo: ASTCFLAGS:=$(filter-out -Wdeclaration-after-statement,$(ASTCFLAGS))
++chan_mobile.so: LIBS+=$(BLUETOOTH_LIB)
 diff --git a/channels/chan_mobile.c b/channels/chan_mobile.c
 new file mode 100644
 index 0000000..e3f5ec3
@@ -2236,7 +2235,7 @@ index 0000000..7ef26d8
 +type=headset
 +adapter=dlink
 diff --git a/configure.ac b/configure.ac
-index 765c3c0..365b551 100644
+index 4a8cb54..d17bb9d 100644
 --- a/configure.ac
 +++ b/configure.ac
 @@ -173,6 +173,7 @@ AC_SUBST(AST_DEVMODE)
@@ -2247,7 +2246,7 @@ index 765c3c0..365b551 100644
  AST_EXT_LIB_SETUP([CURL], [cURL], [curl])
  AST_EXT_LIB_SETUP([CAP], [POSIX 1.e capabilities], [cap])
  AST_EXT_LIB_SETUP([CURSES], [curses], [curses])
-@@ -399,6 +400,8 @@ AC_CHECK_SIZEOF(int)
+@@ -408,6 +409,8 @@ AC_CHECK_SIZEOF(int)
  
  AST_EXT_LIB_CHECK([ALSA], [asound], [snd_spcm_init], [alsa/asoundlib.h], [-lm -ldl])
  
@@ -2503,10 +2502,10 @@ index 0000000..32fcfd4
 +
 +email me at   david.bowerman at gmail.com   or dseeb_ on #asterisk & #asterisk-dev irc.
 diff --git a/makeopts.in b/makeopts.in
-index 983c7a9..6ac8df7 100644
+index a6feebc..82d4a59 100644
 --- a/makeopts.in
 +++ b/makeopts.in
-@@ -66,6 +66,9 @@ AST_DECLARATION_AFTER_STATEMENT=@AST_DECLARATION_AFTER_STATEMENT@
+@@ -67,6 +67,9 @@ AST_NO_STRICT_OVERFLOW=@AST_NO_STRICT_OVERFLOW@
  ASOUND_INCLUDE=@ALSA_INCLUDE@
  ASOUND_LIB=@ALSA_LIB@
  
@@ -2517,5 +2516,5 @@ index 983c7a9..6ac8df7 100644
  CURL_LIB=@CURL_LIB@
  
 -- 
-1.5.4.1
+1.5.4.3
 
