@@ -1,29 +1,29 @@
-From b5c3052fe56ef2dccde4b3aeb11ee1dfc237d2b1 Mon Sep 17 00:00:00 2001
+From f3aaee79e66605ba839da3d5b5c58a354d64c6ab Mon Sep 17 00:00:00 2001
 From: Jeffrey C. Ollie <jeff@ocjtech.us>
-Date: Mon, 18 Feb 2008 08:58:05 -0600
-Subject: [PATCH] Latest updates for app_conference.
+Date: Mon, 24 Mar 2008 13:44:08 -0500
+Subject: [PATCH] Applying latest appconference.
 
 ---
  apps/Makefile                      |   14 +
- apps/app_conference.c              |  113 ++
- apps/conference/CLI.txt            |   95 +
- apps/conference/Flags.txt          |   34 +
+ apps/app_conference.c              |  106 ++
+ apps/conference/CLI.txt            |   96 +
+ apps/conference/Flags.txt          |   35 +
  apps/conference/LICENSE            |  341 ++++
  apps/conference/README             |  125 ++
- apps/conference/README.videoswitch |   85 +
+ apps/conference/README.videoswitch |   87 +
  apps/conference/TODO               |    4 +
- apps/conference/app_conference.h   |  246 +++
- apps/conference/cli.c              | 1265 ++++++++++++++
+ apps/conference/app_conference.h   |  249 +++
+ apps/conference/cli.c              | 1268 ++++++++++++++
  apps/conference/cli.h              |   99 ++
  apps/conference/common.h           |   63 +
  apps/conference/conf_frame.h       |   73 +
- apps/conference/conference.c       | 3021 ++++++++++++++++++++++++++++++++
+ apps/conference/conference.c       | 3024 ++++++++++++++++++++++++++++++++
  apps/conference/conference.h       |  190 ++
- apps/conference/frame.c            |  666 +++++++
+ apps/conference/frame.c            |  683 ++++++++
  apps/conference/frame.h            |   75 +
- apps/conference/member.c           | 3375 ++++++++++++++++++++++++++++++++++++
+ apps/conference/member.c           | 3379 ++++++++++++++++++++++++++++++++++++
  apps/conference/member.h           |  336 ++++
- 19 files changed, 10220 insertions(+), 0 deletions(-)
+ 19 files changed, 10247 insertions(+), 0 deletions(-)
  create mode 100644 apps/app_conference.c
  create mode 100644 apps/conference/CLI.txt
  create mode 100644 apps/conference/Flags.txt
@@ -68,10 +68,10 @@ index 4006c9a..cf33505 100644
  include $(ASTTOPDIR)/Makefile.moddir_rules
 diff --git a/apps/app_conference.c b/apps/app_conference.c
 new file mode 100644
-index 0000000..824d5dd
+index 0000000..3c7205b
 --- /dev/null
 +++ b/apps/app_conference.c
-@@ -0,0 +1,113 @@
+@@ -0,0 +1,106 @@
 +/*
 + * app_conference
 + *
@@ -101,14 +101,7 @@ index 0000000..824d5dd
 +
 +#include "asterisk.h"
 +
-+// SVN revision number, provided by make
-+#ifndef REVISION
-+#define REVISION "unknown"
-+#endif
-+
-+static char *revision = REVISION;
-+
-+ASTERISK_FILE_VERSION(__FILE__, REVISION)
++ASTERISK_FILE_VERSION(__FILE__, "$Revision$")
 +
 +#include "app_conference.h"
 +#include "common.h"
@@ -158,7 +151,7 @@ index 0000000..824d5dd
 +
 +static int load_module( void )
 +{
-+	ast_log( LOG_NOTICE, "Loading app_conference module, revision=%s\n", revision) ;
++	ast_log( LOG_NOTICE, "Loading app_conference module\n") ;
 +
 +	init_conference() ;
 +
@@ -187,10 +180,10 @@ index 0000000..824d5dd
 +		"Channel Independent Conference Application");
 diff --git a/apps/conference/CLI.txt b/apps/conference/CLI.txt
 new file mode 100644
-index 0000000..d54f9d1
+index 0000000..48acf5a
 --- /dev/null
 +++ b/apps/conference/CLI.txt
-@@ -0,0 +1,95 @@
+@@ -0,0 +1,96 @@
 +Current command line used by app_conference
 +Please note that app_conference is still work in progress, so this document might be outdated. As always, the source code is the definitive reference (cli.[ch] and conference.[ch]).  You can also obtain help/usage information by using Asterisk CLI help system ("help conference")
 +
@@ -232,7 +225,7 @@ index 0000000..d54f9d1
 +
 +- conference restart: kick all users in all conferences
 +  usage: conference restart
-+
++  
 +- conference set default: sets default video source
 +  usage: conference set default <conference name> <member>
 +  use a negative value for member if you want to clear the default
@@ -286,12 +279,13 @@ index 0000000..d54f9d1
 +- conference drivechannel: drive VAD video switching of destination channel using audio from source channel
 +  usage: conference drivechannel <conference name> <source channel> [destination channel]
 +  If destination channel is missing, break existing connection
++ 
 diff --git a/apps/conference/Flags.txt b/apps/conference/Flags.txt
 new file mode 100644
-index 0000000..deef45d
+index 0000000..b888421
 --- /dev/null
 +++ b/apps/conference/Flags.txt
-@@ -0,0 +1,34 @@
+@@ -0,0 +1,35 @@
 +Current dialplan flags used by app_conference
 +Please note that app_conference is still work in progress, so this document might be outdated. As always, the source code is the definitive reference (member.c in create_member())
 +
@@ -302,7 +296,7 @@ index 0000000..deef45d
 +'l' : member starts unable to receive audio
 +
 +Speex preprocessing options (right now app_conference does preprocessing only for Zaptel members):
-+'V' : enable speex preprocessing Voice Activity Detection
++'V' : enable speex preprocessing Voice Activity Detection 
 +'D' : enable speex preprocessing De-noise
 +'A' : enable speex preprocessing Automatic Gain Control
 +'T' : member connects through Zaptel, so speex preprocessing should be enabled
@@ -316,7 +310,7 @@ index 0000000..deef45d
 +'M' : member is a "moderator". When a moderator quits, all members are kicked and the conference is disabled.
 +'S' : member accepts VAD controlled video switching.  Do not use with 'X'.
 +'z' : member can "linger". When the member is currently transmitting video and becomes silent and nobody else is speaking, we stay on it.
-+'o' : enable special behavior when in 1 and 2 member situation (one on one video). The conference observes the 'o' status of the last
++'o' : enable special behavior when in 1 and 2 member situation (one on one video). The conference observes the 'o' status of the last 
 +      member to join it
 +'F' : force switch mode: if the member is talking, force a switch to it even when there is no video
 +
@@ -326,6 +320,7 @@ index 0000000..deef45d
 +
 +Future development (these are not implemented yet):
 +'x' : marked member.  We plan to change the behavior so that when ALL moderators quit, all members that are marked will get kicked. Other members in the conference are not affected.
++
 diff --git a/apps/conference/LICENSE b/apps/conference/LICENSE
 new file mode 100644
 index 0000000..a52b16e
@@ -675,7 +670,7 @@ index 0000000..a52b16e
 +Public License instead of this License.
 diff --git a/apps/conference/README b/apps/conference/README
 new file mode 100644
-index 0000000..5a29d2c
+index 0000000..4c103ce
 --- /dev/null
 +++ b/apps/conference/README
 @@ -0,0 +1,125 @@
@@ -683,7 +678,7 @@ index 0000000..5a29d2c
 +
 +App_conference is a channel-independent conference application.
 +It features efficient audio mixing algorithms as well as video selection
-+support based on VAD, DTMF or CLI.
++support based on VAD, DTMF or CLI. 
 +
 +
 +Design goals
@@ -694,23 +689,23 @@ index 0000000..5a29d2c
 +    * It is very efficient when used with channels which support DTX (silence
 +	detection/discontinuous transmission).
 +
-+    * It can do VAD on channels which do not support DTX (although this
++    * It can do VAD on channels which do not support DTX (although this 
 +	is more expensive than just mixing them, but less expensive then
-+	encoding; therefore it might still be a win).
-+    * It presents messages on the Monitor interface for determine which
-+	speakers are active.
++	encoding; therefore it might still be a win). 
++    * It presents messages on the Monitor interface for determine which 
++	speakers are active. 
 +
 +Mixing design
 +
 +    * Minimize encoding/decoding, minimize mixing.
 +    * Minimize generational loss from trancoding.
 +    * Usual cases are handled very efficiently:
-+          o One speaker: That speaker's frame is sent directly to each
-+		participant which uses the same codec. It is trancoded
++          o One speaker: That speaker's frame is sent directly to each 
++		participant which uses the same codec. It is trancoded 
 +		_once_ for each additional codec type used by participants.
-+          o Two speakers: Each speaker gets the other speaker's frames.
-+		The two speaker's frames are decoded and mixed, and then
-+		encoded _once_ for each codec type used by participants.
++          o Two speakers: Each speaker gets the other speaker's frames.  
++		The two speaker's frames are decoded and mixed, and then 
++		encoded _once_ for each codec type used by participants. 
 +
 +Video features
 +
@@ -719,13 +714,13 @@ index 0000000..5a29d2c
 +    * Multiple ways to select video
 +        - VAD
 +	- DTMF from conference members
-+	- CLI
++	- CLI 
 +    * Ability to set default video sources and to lock/unlock video sources.
 +
 +
 +License
 +
-+Naturally, app_conference is GPL. The SVN repository also includes parts of
++Naturally, app_conference is GPL. The SVN repository also includes parts of 
 +libspeex, which is distributed under a BSD-style license. See LICENSE for more
 +details.
 +
@@ -742,7 +737,7 @@ index 0000000..5a29d2c
 +    * Checkout sources
 +    * Modify Makefile to point to your Asterisk include directory
 +    * make
-+    * sudo make install
++    * sudo make install 
 +
 +
 +Using app_conference
@@ -753,11 +748,11 @@ index 0000000..5a29d2c
 +
 +    * ConferenceName: Whatever you want to name the conference
 +    * Flags: please see Flags.txt for a comprehensive list of dialplan flags
-+    * Priority: Currently ignored; was to be a "speaking priority" so a
++    * Priority: Currently ignored; was to be a "speaking priority" so a 
 +	higher priority caller could "override" others.
 +    * VADSTART: Optional: "probability" to use to detect start of speech.
-+    * VADCONTINUE: Optional: "probability" to use to detect continuation
-+	of speech.
++    * VADCONTINUE: Optional: "probability" to use to detect continuation 
++	of speech. 
 +
 +
 +CLI Commands
@@ -779,17 +774,17 @@ index 0000000..5a29d2c
 +	Channel: The channel
 +	Key: The DTMF key send [0-9*#]
 +
-+    * ConferenceSoundComplete: send when the conference has finished playing
-+		a sound to a user
++    * ConferenceSoundComplete: send when the conference has finished playing 
++		a sound to a user	
 +	Channel: The channel
-+	Sound: The first 255 bytes of the file requested in conference play
-+		sound CLI/Mgr command.
++	Sound: The first 255 bytes of the file requested in conference play 
++		sound CLI/Mgr command.	
 +
 +
 +Benchmarking
 +
-+It would be nice to have solid benchmarks to present, but a good size
-+machine should be able to handle many callers when either (a) they are
++It would be nice to have solid benchmarks to present, but a good size 
++machine should be able to handle many callers when either (a) they are 
 +using DTX, or (b) they are listen-only.  It's used often with hundreds of
 +simultaneous callers.
 +
@@ -797,7 +792,7 @@ index 0000000..5a29d2c
 +Discussion
 +
 +The appconference-devel mailing list is the place to discuss everything related
-+to app_conference.  The bug tracker on SourceForge gets a little bit of
++to app_conference.  The bug tracker on SourceForge gets a little bit of 
 +attention now and then.
 +
 +
@@ -806,10 +801,10 @@ index 0000000..5a29d2c
 +app_conference is brought to you by the letter q, and the number e
 diff --git a/apps/conference/README.videoswitch b/apps/conference/README.videoswitch
 new file mode 100644
-index 0000000..ccc0978
+index 0000000..2612194
 --- /dev/null
 +++ b/apps/conference/README.videoswitch
-@@ -0,0 +1,85 @@
+@@ -0,0 +1,87 @@
 +VideoSwitch
 +-----------
 +(c) Vipadia Limited 2005-2006
@@ -839,7 +834,7 @@ index 0000000..ccc0978
 +Both are optional.
 +
 +0-9 - Set initial receive stream to n
-+0-9 - Set this stream id to n (will stop any other video with that id already)
++0-9 - Set this stream id to n (will stop any other video with that id already) 
 +
 +eg: Videoswitch(test/01) will set our id to 1, and we will receive id 0's video
 +
@@ -860,7 +855,7 @@ index 0000000..ccc0978
 +  videoswitch viewchannel  switch channel in a videoswitch
 +   videoswitch viewstream  switch view in a videoswitch
 +
-+fidwell*CLI> help videoswitch debug
++fidwell*CLI> help videoswitch debug 
 +usage: videoswitch debug <videoswitch_name> [ on | off ]
 +       enable debugging for a videoswitch
 +
@@ -895,6 +890,8 @@ index 0000000..ccc0978
 +fidwell*CLI> help videoswitch viewstream
 +usage: videoswitch viewstream <videoswitch_name> <member no> <stream no>
 +       member <member no> will receive video stream <stream no>
++
++
 diff --git a/apps/conference/TODO b/apps/conference/TODO
 new file mode 100644
 index 0000000..121e83e
@@ -907,10 +904,10 @@ index 0000000..121e83e
 +- Documentation!
 diff --git a/apps/conference/app_conference.h b/apps/conference/app_conference.h
 new file mode 100644
-index 0000000..03ed638
+index 0000000..e3415c4
 --- /dev/null
 +++ b/apps/conference/app_conference.h
-@@ -0,0 +1,246 @@
+@@ -0,0 +1,249 @@
 +
 +// $Id: app_conference.h 839 2007-01-17 22:32:03Z sbalea $
 +
@@ -944,6 +941,7 @@ index 0000000..03ed638
 +#ifndef _ASTERISK_CONF_H
 +#define _ASTERISK_CONF_H
 +
++#include "asterisk.h"
 +
 +/* standard includes */
 +#include <stdlib.h>
@@ -953,23 +951,23 @@ index 0000000..03ed638
 +#include <math.h>
 +#include <stdio.h>
 +
-+
 +#include <pthread.h>
 +
 +/* asterisk includes */
-+#include <asterisk/utils.h>
-+#include <asterisk/pbx.h>
-+#include <asterisk/module.h>
-+#include <asterisk/logger.h>
-+#include <asterisk/lock.h>
-+#include <asterisk/frame.h>
-+#include <asterisk/manager.h>
-+#include <asterisk/dsp.h>
-+#include <asterisk/translate.h>
-+#include <asterisk/channel.h>
-+#include <asterisk/file.h>
-+//#include <asterisk/channel_pvt.h>
-+#include <asterisk/cli.h>
++#include "asterisk/channel.h"
++#include "asterisk/utils.h"
++#include "asterisk/pbx.h"
++#include "asterisk/module.h"
++#include "asterisk/logger.h"
++#include "asterisk/lock.h"
++#include "asterisk/frame.h"
++#include "asterisk/manager.h"
++#include "asterisk/dsp.h"
++#include "asterisk/translate.h"
++#include "asterisk/channel.h"
++#include "asterisk/file.h"
++//#include "asterisk/channel_pvt.h"
++#include "asterisk/cli.h"
 +
 +
 +#if (SILDET == 2)
@@ -1157,12 +1155,14 @@ index 0000000..03ed638
 +void add_milliseconds( struct timeval* tv, long ms ) ;
 +
 +#endif
++
++
 diff --git a/apps/conference/cli.c b/apps/conference/cli.c
 new file mode 100644
-index 0000000..84b14a9
+index 0000000..86fddcd
 --- /dev/null
 +++ b/apps/conference/cli.c
-@@ -0,0 +1,1265 @@
+@@ -0,0 +1,1268 @@
 +
 +// $Id: cli.c 884 2007-06-27 14:56:21Z sbalea $
 +
@@ -1193,6 +1193,10 @@ index 0000000..84b14a9
 + * 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 + */
 +
++#include "asterisk.h"
++
++ASTERISK_FILE_VERSION(__FILE__, "$Revision$")
++
 +#include "asterisk/autoconfig.h"
 +#include "cli.h"
 +
@@ -1207,7 +1211,6 @@ index 0000000..84b14a9
 +	"restart a conference",
 +	conference_restart_usage
 +} ;
-+
 +
 +int conference_restart( int fd, int argc, char *argv[] )
 +{
@@ -1244,7 +1247,7 @@ index 0000000..84b14a9
 +	// get the conference name
 +	const char* name = argv[2] ;
 +
-+	// get the new state
++   	// get the new state
 +	int state = 0 ;
 +
 +	if ( argc == 3 )
@@ -1485,7 +1488,7 @@ index 0000000..84b14a9
 +	}
 +	const char * name = member->conf_name;
 +	int res = kick_channel( name, channel );
-+
++	
 +	if ( !res )
 +	{
 +		ast_cli(fd, "Cannot exit channel %s from conference %s\n", channel, name);
@@ -1540,7 +1543,7 @@ index 0000000..84b14a9
 +
 +int conference_mutechannel( int fd, int argc, char *argv[] )
 +{
-+	struct ast_conf_member *member;
++  	struct ast_conf_member *member;
 +	char *channel;
 +
 +	if ( argc < 3 )
@@ -1638,7 +1641,7 @@ index 0000000..84b14a9
 +
 +int conference_unmute( int fd, int argc, char *argv[] )
 +{
-+	if ( argc < 3 )
++	if ( argc < 4 )
 +		return RESULT_SHOWUSAGE ;
 +
 +	// get the conference name
@@ -2683,10 +2686,10 @@ index 0000000..e73e57a
 +#endif
 diff --git a/apps/conference/conference.c b/apps/conference/conference.c
 new file mode 100644
-index 0000000..c7c63ac
+index 0000000..4d82633
 --- /dev/null
 +++ b/apps/conference/conference.c
-@@ -0,0 +1,3021 @@
+@@ -0,0 +1,3024 @@
 +
 +// $Id: conference.c 886 2007-08-06 14:33:34Z bcholew $
 +
@@ -2716,6 +2719,9 @@ index 0000000..c7c63ac
 + * program; if not, write to the Free Software Foundation, Inc.
 + * 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 + */
++
++#include "asterisk.h"
++ASTERISK_FILE_VERSION(__FILE__, "$Revision$")
 +
 +#include "asterisk/autoconfig.h"
 +#include "conference.h"
@@ -3001,7 +3007,7 @@ index 0000000..c7c63ac
 +		//-------//
 +
 +		curr = ast_tvnow();
-+
++		
 +		// Chat mode handling
 +		// If there's only one member, then video gets reflected back to it
 +		// If there are two members, then each sees the other's video
@@ -3014,14 +3020,14 @@ index 0000000..c7c63ac
 +
 +			m1 = conf->memberlist;
 +			m2 = conf->memberlist->next;
-+
++			
 +			if ( !conf->chat_mode_on )
 +				conf->chat_mode_on = 1;
-+
++				
 +			start_video(m1);
 +			if ( m2 != NULL )
 +				start_video(m2);
-+
++			
 +			if ( conf->membercount == 1 )
 +			{
 +				cfr = get_incoming_video_frame(m1);
@@ -3066,7 +3072,7 @@ index 0000000..c7c63ac
 +						stop_video(member);
 +				}
 +			}
-+
++			
 +			// loop over the incoming frames and send to all outgoing
 +			// TODO: this is an O(n^2) algorithm. Can we speed it up without sacrificing per-member switching?
 +			for (video_source_member = conf->memberlist;
@@ -3142,7 +3148,7 @@ index 0000000..c7c63ac
 +
 +					if (member != dtmf_source_member)
 +					{
-+						// Send the latest frame
++ 						// Send the latest frame
 +						queue_outgoing_dtmf_frame(member, cfr->fr);
 +					}
 +				}
@@ -3760,7 +3766,7 @@ index 0000000..c7c63ac
 +					member->channel_name
 +					);
 +			}
-+
++			
 +			// output to manager...
 +			manager_event(
 +				EVENT_FLAG_CALL,
@@ -3799,7 +3805,7 @@ index 0000000..c7c63ac
 +					{
 +						// lock member for basic_play_sound
 +						ast_mutex_lock(&membertest->lock);
-+
++						
 +						// basic_play_sound unlock member automatically. do not mute on enter message
 +						if (!basic_play_sound (membertest, leave_snd, 0))
 +						{
@@ -3813,7 +3819,7 @@ index 0000000..c7c63ac
 +					}
 +				}
 +			}
-+
++			
 +			// delete the member
 +			delete_member( member ) ;
 +
@@ -3951,7 +3957,7 @@ index 0000000..c7c63ac
 +			ast_mutex_lock(&conf->lock);
 +
 +			ast_cli(fd, "Chat mode is %s\n", conf->chat_mode_on ? "ON" : "OFF");
-+
++			
 +			// do the biz
 +			member = conf->memberlist ;
 +			while ( member != NULL )
@@ -4706,7 +4712,7 @@ index 0000000..c7c63ac
 +			current_linger = member->vad_linger;
 +			current_force_switch = member->force_vad_switch;
 +		}
-+
++		
 +		if ( member->id == conf->default_video_source_id )
 +			default_force_switch = member->force_vad_switch;
 +
@@ -4714,7 +4720,7 @@ index 0000000..c7c63ac
 +		{
 +			if ( member->id == conf->default_video_source_id )
 +				default_no_video = 1;
-+
++			
 +			if ( member->id == conf->current_video_source_id )
 +				current_no_video = 1;
 +			else if ( !member->force_vad_switch )
@@ -4749,7 +4755,7 @@ index 0000000..c7c63ac
 +	// As a policy we don't want to switch away from a member that is speaking
 +	// however, we might need to refine this to avoid a situation when a member has a
 +	// low noise threshold or its VAD is simply stuck
-+	if (
++	if ( 
 +	     (conf->current_video_source_id < 0) ||
 +	     (current_silent && !current_linger) ||
 +	     (current_silent && longest_speaking_member != NULL ) ||
@@ -4761,7 +4767,7 @@ index 0000000..c7c63ac
 +		if ( longest_speaking_member )
 +			// Somebody is talking, switch to that member
 +			new_id = longest_speaking_member->id;
-+		else if ( conf->default_video_source_id &&
++		else if ( conf->default_video_source_id >= 0  &&
 +		          (!default_no_video || default_force_switch)
 +		        )
 +			// No talking, but we have a default that can send video
@@ -5593,7 +5599,7 @@ index 0000000..c7c63ac
 +
 +	newsound = calloc(1, sizeof(struct ast_conf_soundq));
 +	newsound->stream = ast_openstream(member->chan, file, NULL);
-+	if( !newsound->stream )
++	if( !newsound->stream ) 
 +	{
 +		free(newsound);
 +		ast_mutex_unlock(&member->lock);
@@ -5710,7 +5716,7 @@ index 0000000..c7c63ac
 +}
 diff --git a/apps/conference/conference.h b/apps/conference/conference.h
 new file mode 100644
-index 0000000..1b2b4bd
+index 0000000..6ef6676
 --- /dev/null
 +++ b/apps/conference/conference.h
 @@ -0,0 +1,190 @@
@@ -5830,7 +5836,7 @@ index 0000000..1b2b4bd
 +
 +	// chat mode is on;
 +	short chat_mode_on;
-+
++	
 +	// 1 => on, 0 => off
 +	short debug_flag ;
 +} ;
@@ -5906,10 +5912,10 @@ index 0000000..1b2b4bd
 +#endif
 diff --git a/apps/conference/frame.c b/apps/conference/frame.c
 new file mode 100644
-index 0000000..9e23672
+index 0000000..fbc7a96
 --- /dev/null
 +++ b/apps/conference/frame.c
-@@ -0,0 +1,666 @@
+@@ -0,0 +1,683 @@
 +
 +// $Id: frame.c 751 2006-12-11 22:08:45Z sbalea $
 +
@@ -5939,6 +5945,10 @@ index 0000000..9e23672
 + * program; if not, write to the Free Software Foundation, Inc.
 + * 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 + */
++
++#include "asterisk.h"
++
++ASTERISK_FILE_VERSION(__FILE__, "$Revision$")
 +
 +#include "asterisk/autoconfig.h"
 +#include "frame.h"
@@ -6523,7 +6533,7 @@ index 0000000..9e23672
 +		else
 +		{
 +			( (short*)dst )[i] = val ;
-+			continue ;
++	   		continue ;
 +		}
 +	}
 +
@@ -6576,6 +6586,19 @@ index 0000000..9e23672
 +
 +	return f;
 +}
++
++
++
++
++
++
++
++
++
++
++
++
++
 diff --git a/apps/conference/frame.h b/apps/conference/frame.h
 new file mode 100644
 index 0000000..2b77805
@@ -6659,10 +6682,10 @@ index 0000000..2b77805
 +#endif
 diff --git a/apps/conference/member.c b/apps/conference/member.c
 new file mode 100644
-index 0000000..535cb82
+index 0000000..e0b8c66
 --- /dev/null
 +++ b/apps/conference/member.c
-@@ -0,0 +1,3375 @@
+@@ -0,0 +1,3379 @@
 +
 +// $Id: member.c 885 2007-06-27 15:41:18Z sbalea $
 +
@@ -6692,6 +6715,10 @@ index 0000000..535cb82
 + * program; if not, write to the Free Software Foundation, Inc.
 + * 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 + */
++
++#include "asterisk.h"
++
++ASTERISK_FILE_VERSION(__FILE__, "$Revision$")
 +
 +#include <stdio.h>
 +#include "asterisk/channel.h"
@@ -7260,7 +7287,7 @@ index 0000000..535cb82
 +
 +	//
 +	// create a new member for the conference
-+	//
++ 	//
 +
 +//	ast_log( AST_CONF_DEBUG, "creating new member, id => %s, flags => %s, p => %s\n",
 +//		id, flags, priority ) ;
@@ -7364,7 +7391,7 @@ index 0000000..535cb82
 +	{
 +		// lock conference
 +		ast_mutex_lock( &conf->lock );
-+
++		
 +		/*if (conf->membercount < 2)
 +		  {
 +		  enter_snd = "conf-onlyperson";
@@ -7385,7 +7412,7 @@ index 0000000..535cb82
 +			{
 +				ast_log(LOG_NOTICE, "playing conference[%d] entry message <%s> on <%s>\n", conf->membercount, enter_snd, membertest->channel_name);
 +			}
-+
++			
 +			membertest = membertest->next;
 +		}
 +
@@ -7500,7 +7527,7 @@ index 0000000..535cb82
 +	     {
 +		     // lock this member
 +		     ast_mutex_lock( &member->lock ) ;
-+		     ast_mutex_unlock( &conf->lock ) ;
++	      	     ast_mutex_unlock( &conf->lock ) ;
 +		     return member;
 +	     }
 +	     member = member->next;
@@ -7565,7 +7592,7 @@ index 0000000..535cb82
 +	//
 +	// initialize member with passed data values
 +	//
-+
++	
 +	parse = ast_strdupa(data);
 +
 +	AST_STANDARD_APP_ARGS(args, parse);
@@ -7585,7 +7612,7 @@ index 0000000..535cb82
 +		member->flags = ast_strdup(args.flags);
 +	else
 +		member->flags = ast_strdup("");
-+
++	
 +	// parse enter sound
 +	if (!ast_strlen_zero(args.enter_snd))
 +		member->enter_snd = ast_strdup(args.enter_snd);
@@ -8192,7 +8219,7 @@ index 0000000..535cb82
 +
 +conf_frame* get_incoming_video_frame( struct ast_conf_member *member )
 +{
-+	if ( member == NULL )
++  	if ( member == NULL )
 +	{
 +		ast_log( LOG_WARNING, "unable to get frame from null member\n" ) ;
 +		return NULL ;
@@ -8245,7 +8272,7 @@ index 0000000..535cb82
 +}
 +conf_frame* get_incoming_dtmf_frame( struct ast_conf_member *member )
 +{
-+	if ( member == NULL )
++  	if ( member == NULL )
 +	{
 +		ast_log( LOG_WARNING, "unable to get frame from null member\n" ) ;
 +		return NULL ;
@@ -8313,9 +8340,9 @@ index 0000000..535cb82
 +
 +	ast_mutex_lock(&member->lock);
 +
-+	//
-+	// repeat last frame a couple times to smooth transition
-+	//
++ 	//
++ 	// repeat last frame a couple times to smooth transition
++ 	//
 +
 +#ifdef AST_CONF_CACHE_LAST_FRAME
 +	if ( member->inFramesCount == 0 )
@@ -10015,7 +10042,7 @@ index 0000000..535cb82
 +{
 +	if ( member == NULL )
 +		return 0;
-+
++	
 +	return !member->no_camera && !member->mute_video && !member->via_telephone;
 +}
 +
@@ -10040,7 +10067,7 @@ index 0000000..535cb82
 +}
 diff --git a/apps/conference/member.h b/apps/conference/member.h
 new file mode 100644
-index 0000000..52786d9
+index 0000000..62f3e59
 --- /dev/null
 +++ b/apps/conference/member.h
 @@ -0,0 +1,336 @@
@@ -10298,7 +10325,7 @@ index 0000000..52786d9
 +	// For playing sounds
 +	struct ast_conf_soundq *soundq;
 +	struct ast_conf_soundq *videoq;
-+
++	
 +	// Enter/leave sounds
 +	char * enter_snd;
 +	char * leave_snd;
@@ -10381,5 +10408,5 @@ index 0000000..52786d9
 +extern struct ast_frame *ast_packer_read(struct ast_packer *s);
 +#endif
 -- 
-1.5.4.1
+1.5.4.3
 

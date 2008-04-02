@@ -1,4 +1,4 @@
-From ffc11985802a32f48138695cb9e33a33f379d844 Mon Sep 17 00:00:00 2001
+From c567d438e59c091fcfca5cf4c82fcfc4dd81cd96 Mon Sep 17 00:00:00 2001
 From: Jeffrey C. Ollie <jeff@ocjtech.us>
 Date: Mon, 12 Nov 2007 15:51:12 -0600
 Subject: [PATCH] Add FAX apps.
@@ -724,7 +724,7 @@ index e9eac56..6bf5131 100644
  SPEEXDSP=@PBX_SPEEXDSP@
  SQLITE=@PBX_SQLITE@
 diff --git a/configure.ac b/configure.ac
-index f52184d..765c3c0 100644
+index 7838691..4a8cb54 100644
 --- a/configure.ac
 +++ b/configure.ac
 @@ -198,6 +198,7 @@ AST_EXT_LIB_SETUP([PRI], [ISDN PRI], [pri])
@@ -735,7 +735,7 @@ index f52184d..765c3c0 100644
  AST_EXT_LIB_SETUP([SPEEX], [Speex], [speex])
  AST_EXT_LIB_SETUP([SPEEXDSP], [Speexdsp], [speexdsp])
  AST_EXT_LIB_SETUP([SQLITE], [SQLite], [sqlite])
-@@ -896,6 +897,8 @@ fi
+@@ -1265,6 +1266,8 @@ fi
  
  AST_EXT_LIB_CHECK([RADIUS], [radiusclient-ng], [rc_read_config], [radiusclient-ng.h])
  
@@ -745,10 +745,10 @@ index f52184d..765c3c0 100644
  
  AST_EXT_LIB_CHECK([SPEEXDSP], [speexdsp], [speex_preprocess_ctl], [speex/speex.h], [-lm])
 diff --git a/makeopts.in b/makeopts.in
-index 88a414f..983c7a9 100644
+index 9d45c3c..a6feebc 100644
 --- a/makeopts.in
 +++ b/makeopts.in
-@@ -137,6 +137,9 @@ PWLIB_LIB=@PWLIB_LIB@
+@@ -138,6 +138,9 @@ PWLIB_LIB=@PWLIB_LIB@
  RADIUS_INCLUDE=@RADIUS_INCLUDE@
  RADIUS_LIB=@RADIUS_LIB@
  
@@ -759,5 +759,5 @@ index 88a414f..983c7a9 100644
  SPEEX_LIB=@SPEEX_LIB@
  
 -- 
-1.5.4.1
+1.5.4.3
 

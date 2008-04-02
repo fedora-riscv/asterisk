@@ -2,46 +2,26 @@
 
 Summary: The Open Source PBX
 Name: asterisk
-Version: 1.4.18.1
+Version: 1.4.19
 Release: 1%{?dist}
 License: GPLv2
 Group: Applications/Internet
 URL: http://www.asterisk.org/
 
-# The asterisk tarball contains some items that we don't want in there,
-# so start with the original tarball from here:
-# http://downloads.digium.com/pub/telephony/asterisk/releases/asterisk-%{version}.tar.gz
-# Then run the included script file to build the stripped tarball:
-#
-# sh asterisk-strip.sh %{version}
-#
-# MD5 Sums
-# ========
-# a0d7ee4054a04529b745e60dd4e750c4  asterisk-1.4.18.1.tar.gz
-# 31f42bbdc070fef1302adfeb81fc9251  asterisk-1.4.18.1-stripped.tar.gz
-#
-# SHA1 Sums
-# =========
-# 2991e972f3c2f8cac3849f9359afbb0db7e7203a  asterisk-1.4.18.1.tar.gz
-# 14eaeb210f91c843291b018e67f765cb1b5356b4  asterisk-1.4.18.1-stripped.tar.gz
-
-Source0: asterisk-%{version}-stripped.tar.gz
+Source0: http://downloads.digium.com/pub/telephony/asterisk/releases/asterisk-%{version}.tar.gz
 Source1: asterisk-logrotate
 Source2: menuselect.makedeps
 Source3: menuselect.makeopts
-Source4: asterisk-strip.sh
 
-Patch1:  asterisk-1.4.18-initscripts.patch
-Patch2:  asterisk-1.4.18-system-imap.patch
-Patch3:  asterisk-1.4.18-alternate-voicemail.patch
-Patch4:  asterisk-1.4.18-spandspfax.patch
-Patch5:  asterisk-1.4.18-appconference.patch
-Patch6:  asterisk-1.4.18-alternate-extensions.patch
-Patch7:  asterisk-1.4.18-optimization.patch
-Patch8:  asterisk-1.4.18-chanmobile.patch
-Patch9:  asterisk-1.4.18-autoconf.patch
-Patch10: asterisk-1.4.18-funcdesc.patch
-Patch11: asterisk-1.4.18-httpmgrids.patch
+Patch1:  asterisk-1.4.19-initscripts.patch
+Patch2:  asterisk-1.4.19-alternate-voicemail.patch
+Patch3:  asterisk-1.4.19-spandspfax.patch
+Patch4:  asterisk-1.4.19-appconference.patch
+Patch5:  asterisk-1.4.19-alternate-extensions.patch
+Patch6:  asterisk-1.4.19-optimization.patch
+Patch7:  asterisk-1.4.19-chanmobile.patch
+Patch8:  asterisk-1.4.19-external-libedit.patch
+Patch9:  asterisk-1.4.19-autoconf.patch
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-root-%(%{__id_u} -n)
 
@@ -74,6 +54,8 @@ BuildRequires: libvorbis-devel
 
 # codec_gsm
 BuildRequires: gsm-devel
+
+BuildRequires: libedit-devel
 
 Requires(pre): %{_sbindir}/useradd
 Requires(pre): %{_sbindir}/groupadd
@@ -332,8 +314,6 @@ Modules for Asterisk that use Zaptel.
 %patch7 -p1
 %patch8 -p1
 %patch9 -p1
-%patch10 -p1
-%patch11 -p1
 
 cp %{SOURCE2} menuselect.makedeps
 cp %{SOURCE3} menuselect.makeopts
@@ -904,6 +884,15 @@ fi
 %{_libdir}/asterisk/modules/codec_zap.so
 
 %changelog
+* Wed Apr  2 2008 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.4.19-1
+- Update to 1.4.19
+- Upstream removed iLBC code from tarball so we no longer need to
+  strip it before uploading to Fedora, so we don't need the script
+  that does the stripping either.
+- Add a patch that compiles against an external libedit rather than an
+  internal one.
+- Remove upstreamed patches.
+
 * Wed Mar 19 2008 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.4.18.1-1
 - Update to 1.4.18.1 plus another patch to fix some security issues.
 -
