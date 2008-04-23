@@ -2,8 +2,8 @@
 
 Summary: The Open Source PBX
 Name: asterisk
-Version: 1.4.19
-Release: 2%{?dist}
+Version: 1.4.19.1
+Release: 1%{?dist}
 License: GPLv2
 Group: Applications/Internet
 URL: http://www.asterisk.org/
@@ -14,19 +14,19 @@ URL: http://www.asterisk.org/
 # Then run the included script file to build the stripped tarball:
 #
 # sh asterisk-strip.sh %{version}
-#
+
 # MD5 Sums
 # ========
-# 2be30f9d35e808828ffb6876d6c947fe  asterisk-1.4.19.tar.gz
-# 0a80d34a43e3cd60e71a5434c4f7cb13  asterisk-1.4.19-stripped.tar.gz
-#
+# 3b416557d2c395a36b97a819812e99b0  asterisk-1.4.19.1.tar.gz
+# 421e9bcfd632fed5eecc78aeaf7a5b3c  asterisk-1.4.19.1-stripped.tar.gz
+# 
 # SHA1 Sums
 # =========
-# 92419351d6bef5bea0678aa2dffc7938d73390bf  asterisk-1.4.19.tar.gz
-# ad8a2f08ad2a4076a4deaabe62689ba9b675bffd  asterisk-1.4.19-stripped.tar.gz
+# dd72de8c0f875f7bf5db570cf4debde6a45caf19  asterisk-1.4.19.1.tar.gz
+# 356ee7f4a71c239594d60fe1a534a0bf04a85f76  asterisk-1.4.19.1-stripped.tar.gz
 
-#Source0: http://downloads.digium.com/pub/telephony/asterisk/releases/asterisk-%{version}.tar.gz
-Source0: asterisk-%{version}-stripped.tar.gz
+Source0: http://downloads.digium.com/pub/telephony/asterisk/releases/asterisk-%{version}.tar.gz
+#Source0: asterisk-%{version}-stripped.tar.gz
 Source1: asterisk-logrotate
 Source2: menuselect.makedeps
 Source3: menuselect.makeopts
@@ -902,6 +902,10 @@ fi
 %{_libdir}/asterisk/modules/codec_zap.so
 
 %changelog
+* Tue Apr 22 2008 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.4.19.1-1
+- Update to 1.4.19.1
+- Contains fixes for AST-2008-006 / CVE-2008-1897
+
 * Wed Apr  2 2008 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.4.19-2
 - Return to stripped tarballs since there's more non-free content in
   the Asterisk tarballs than I thought.
