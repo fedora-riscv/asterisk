@@ -25,8 +25,8 @@ URL: http://www.asterisk.org/
 # dd72de8c0f875f7bf5db570cf4debde6a45caf19  asterisk-1.4.19.1.tar.gz
 # 356ee7f4a71c239594d60fe1a534a0bf04a85f76  asterisk-1.4.19.1-stripped.tar.gz
 
-Source0: http://downloads.digium.com/pub/telephony/asterisk/releases/asterisk-%{version}.tar.gz
-#Source0: asterisk-%{version}-stripped.tar.gz
+#Source0: http://downloads.digium.com/pub/telephony/asterisk/releases/asterisk-%{version}.tar.gz
+Source0: asterisk-%{version}-stripped.tar.gz
 Source1: asterisk-logrotate
 Source2: menuselect.makedeps
 Source3: menuselect.makeopts
