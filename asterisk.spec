@@ -2,7 +2,7 @@
 
 Summary: The Open Source PBX
 Name: asterisk
-Version: 1.4.19.1
+Version: 1.4.19.2
 Release: 1%{?dist}
 License: GPLv2
 Group: Applications/Internet
@@ -17,13 +17,13 @@ URL: http://www.asterisk.org/
 
 # MD5 Sums
 # ========
-# 3b416557d2c395a36b97a819812e99b0  asterisk-1.4.19.1.tar.gz
-# 421e9bcfd632fed5eecc78aeaf7a5b3c  asterisk-1.4.19.1-stripped.tar.gz
+# a942367e20a364510881c086a3517321  asterisk-1.4.19.2.tar.gz
+# 172d5b340f817b713db2e70e8427ab75  asterisk-1.4.19.2-stripped.tar.gz
 # 
 # SHA1 Sums
 # =========
-# dd72de8c0f875f7bf5db570cf4debde6a45caf19  asterisk-1.4.19.1.tar.gz
-# 356ee7f4a71c239594d60fe1a534a0bf04a85f76  asterisk-1.4.19.1-stripped.tar.gz
+# 2256e8440fab4218f13a22facfe2d8b396545e74  asterisk-1.4.19.2.tar.gz
+# a86e899c94cbf7b82a46aea5df5afa4d200af321  asterisk-1.4.19.2-stripped.tar.gz
 
 #Source0: http://downloads.digium.com/pub/telephony/asterisk/releases/asterisk-%{version}.tar.gz
 Source0: asterisk-%{version}-stripped.tar.gz
@@ -902,6 +902,9 @@ fi
 %{_libdir}/asterisk/modules/codec_zap.so
 
 %changelog
+* Tue May 13 2008 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.4.19.2-1
+- Update to 1.4.19.2
+
 * Tue Apr 22 2008 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.4.19.1-1
 - Update to 1.4.19.1
 - Contains fixes for AST-2008-006 / CVE-2008-1897
