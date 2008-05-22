@@ -2,7 +2,7 @@
 
 Summary: The Open Source PBX
 Name: asterisk
-Version: 1.4.19.2
+Version: 1.4.20
 Release: 1%{?dist}
 License: GPLv2
 Group: Applications/Internet
@@ -17,13 +17,13 @@ URL: http://www.asterisk.org/
 
 # MD5 Sums
 # ========
-# a942367e20a364510881c086a3517321  asterisk-1.4.19.2.tar.gz
-# 172d5b340f817b713db2e70e8427ab75  asterisk-1.4.19.2-stripped.tar.gz
+# 15dbe409b72ee8b7fc30f74e49f877db  asterisk-1.4.20.tar.gz
+# 58f76e8b291de97784e3576c89d826c0  asterisk-1.4.20-stripped.tar.gz
 # 
 # SHA1 Sums
 # =========
-# 2256e8440fab4218f13a22facfe2d8b396545e74  asterisk-1.4.19.2.tar.gz
-# a86e899c94cbf7b82a46aea5df5afa4d200af321  asterisk-1.4.19.2-stripped.tar.gz
+# ac924225ff70618eccd5662b9a10986e273cb05c  asterisk-1.4.20.tar.gz
+# 65c31acfd512865d23fbe9607f8f67bc5e1a5be4  asterisk-1.4.20-stripped.tar.gz
 
 #Source0: http://downloads.digium.com/pub/telephony/asterisk/releases/asterisk-%{version}.tar.gz
 Source0: asterisk-%{version}-stripped.tar.gz
@@ -31,15 +31,15 @@ Source1: asterisk-logrotate
 Source2: menuselect.makedeps
 Source3: menuselect.makeopts
 
-Patch1:  asterisk-1.4.19-initscripts.patch
-Patch2:  asterisk-1.4.19-alternate-voicemail.patch
-Patch3:  asterisk-1.4.19-spandspfax.patch
-Patch4:  asterisk-1.4.19-appconference.patch
-Patch5:  asterisk-1.4.19-alternate-extensions.patch
-Patch6:  asterisk-1.4.19-optimization.patch
-Patch7:  asterisk-1.4.19-chanmobile.patch
-Patch8:  asterisk-1.4.19-external-libedit.patch
-Patch9:  asterisk-1.4.19-autoconf.patch
+Patch1:  asterisk-1.4.20-initscripts.patch
+Patch2:  asterisk-1.4.20-alternate-voicemail.patch
+Patch3:  asterisk-1.4.20-spandspfax.patch
+Patch4:  asterisk-1.4.20-appconference.patch
+Patch5:  asterisk-1.4.20-alternate-extensions.patch
+Patch6:  asterisk-1.4.20-optimization.patch
+Patch7:  asterisk-1.4.20-chanmobile.patch
+Patch8:  asterisk-1.4.20-external-libedit.patch
+Patch9:  asterisk-1.4.20-autoconf.patch
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-root-%(%{__id_u} -n)
 
@@ -902,6 +902,9 @@ fi
 %{_libdir}/asterisk/modules/codec_zap.so
 
 %changelog
+* Thu May 22 2008 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.4.20-1
+- Update to 1.4.20
+
 * Tue May 13 2008 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.4.19.2-1
 - Update to 1.4.19.2
 
