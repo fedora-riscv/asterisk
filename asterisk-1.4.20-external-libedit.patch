@@ -1,4 +1,4 @@
-From 103685e8e94b4e526297e5bbdd344dc5540c386f Mon Sep 17 00:00:00 2001
+From 1c1236ee775ffd1aab76390a4436a857d3d4c8e1 Mon Sep 17 00:00:00 2001
 From: Jeffrey C. Ollie <jeff@ocjtech.us>
 Date: Sun, 23 Mar 2008 19:49:34 -0500
 Subject: [PATCH] Build using external libedit.
@@ -12,7 +12,7 @@ Subject: [PATCH] Build using external libedit.
  5 files changed, 21 insertions(+), 7 deletions(-)
 
 diff --git a/build_tools/menuselect-deps.in b/build_tools/menuselect-deps.in
-index 6a6e3a2..bf019e7 100644
+index eed2b14..d26b36d 100644
 --- a/build_tools/menuselect-deps.in
 +++ b/build_tools/menuselect-deps.in
 @@ -11,6 +11,7 @@ IKSEMEL=@PBX_IKSEMEL@
@@ -24,10 +24,10 @@ index 6a6e3a2..bf019e7 100644
  NBS=@PBX_NBS@
  NETSNMP=@PBX_NETSNMP@
 diff --git a/configure.ac b/configure.ac
-index d17bb9d..977de32 100644
+index b06d90a..806d813 100644
 --- a/configure.ac
 +++ b/configure.ac
-@@ -1510,6 +1510,17 @@ AC_SUBST(PBX_GTK2)
+@@ -1555,6 +1555,17 @@ AC_SUBST(PBX_GTK2)
  AC_SUBST(GTK2_INCLUDE)
  AC_SUBST(GTK2_LIB)
  
@@ -46,7 +46,7 @@ index d17bb9d..977de32 100644
     AC_PATH_TOOL([CURL_CONFIG], [curl-config], No)
     if test ! x"${CURL_CONFIG}" = xNo; then
 diff --git a/main/Makefile b/main/Makefile
-index 44e5a89..1bdfdb1 100644
+index 6cf1c5e..ca39b93 100644
 --- a/main/Makefile
 +++ b/main/Makefile
 @@ -98,9 +98,6 @@ ifeq ($(OSARCH),SunOS)
@@ -59,16 +59,16 @@ index 44e5a89..1bdfdb1 100644
  
  db1-ast/libdb1.a:
  	CFLAGS="$(subst $(ASTTOPDIR),../../,$(ASTCFLAGS))" LDFLAGS="$(ASTLDFLAGS)" $(MAKE) -C db1-ast libdb1.a
-@@ -123,6 +120,8 @@ testexpr2: ast_expr2f.c ast_expr2.c ast_expr2.h
- 
+@@ -124,6 +121,8 @@ testexpr2: ast_expr2f.c ast_expr2.c ast_expr2.h
  channel.o: ASTCFLAGS+=$(ZAPTEL_INCLUDE)
+ asterisk.o: ASTCFLAGS+=$(ZAPTEL_INCLUDE)
  
 +cli.o: ASTCLFAGS+=$(LIBEDIT_INCLUDE)
 +
  stdtime/localtime.o: ASTCFLAGS+=$(AST_NO_STRICT_OVERFLOW)
  
  AST_EMBED_LDSCRIPTS:=$(sort $(EMBED_LDSCRIPTS))
-@@ -137,7 +136,7 @@ else
+@@ -138,7 +137,7 @@ else
    H323LDLIBS=
  endif
  
@@ -77,7 +77,7 @@ index 44e5a89..1bdfdb1 100644
  	@$(ASTTOPDIR)/build_tools/make_build_h > $(ASTTOPDIR)/include/asterisk/build.h.tmp
  	@if cmp -s $(ASTTOPDIR)/include/asterisk/build.h.tmp $(ASTTOPDIR)/include/asterisk/build.h ; then echo ; else \
  		mv $(ASTTOPDIR)/include/asterisk/build.h.tmp $(ASTTOPDIR)/include/asterisk/build.h ; \
-@@ -146,9 +145,9 @@ asterisk: $(OBJS) editline/libedit.a db1-ast/libdb1.a $(AST_EMBED_LDSCRIPTS)
+@@ -147,9 +146,9 @@ asterisk: $(OBJS) editline/libedit.a db1-ast/libdb1.a $(AST_EMBED_LDSCRIPTS)
  	@$(CC) -c -o buildinfo.o $(ASTCFLAGS) buildinfo.c
  	$(ECHO_PREFIX) echo "   [LD] $^ -> $@"
  ifneq ($(findstring chan_h323,$(MENUSELECT_CHANNELS)),)

@@ -1,4 +1,4 @@
-From c567d438e59c091fcfca5cf4c82fcfc4dd81cd96 Mon Sep 17 00:00:00 2001
+From b0b83c7f23d075e2dd7659d95fa0d36c6250ad35 Mon Sep 17 00:00:00 2001
 From: Jeffrey C. Ollie <jeff@ocjtech.us>
 Date: Mon, 12 Nov 2007 15:51:12 -0600
 Subject: [PATCH] Add FAX apps.
@@ -712,7 +712,7 @@ index 0000000..713ecf1
 +
 +/*- End of file ------------------------------------------------------------*/
 diff --git a/build_tools/menuselect-deps.in b/build_tools/menuselect-deps.in
-index e9eac56..6bf5131 100644
+index 3ffb565..55e35ea 100644
 --- a/build_tools/menuselect-deps.in
 +++ b/build_tools/menuselect-deps.in
 @@ -21,6 +21,7 @@ PGSQL=@PBX_PGSQL@
@@ -722,9 +722,9 @@ index e9eac56..6bf5131 100644
 +SPANDSP=@PBX_SPANDSP@
  SPEEX=@PBX_SPEEX@
  SPEEXDSP=@PBX_SPEEXDSP@
- SQLITE=@PBX_SQLITE@
+ SPEEX_PREPROCESS=@PBX_SPEEX_PREPROCESS@
 diff --git a/configure.ac b/configure.ac
-index 7838691..4a8cb54 100644
+index aeda896..8340ac4 100644
 --- a/configure.ac
 +++ b/configure.ac
 @@ -198,6 +198,7 @@ AST_EXT_LIB_SETUP([PRI], [ISDN PRI], [pri])
@@ -735,7 +735,7 @@ index 7838691..4a8cb54 100644
  AST_EXT_LIB_SETUP([SPEEX], [Speex], [speex])
  AST_EXT_LIB_SETUP([SPEEXDSP], [Speexdsp], [speexdsp])
  AST_EXT_LIB_SETUP([SQLITE], [SQLite], [sqlite])
-@@ -1265,6 +1266,8 @@ fi
+@@ -1289,6 +1290,8 @@ fi
  
  AST_EXT_LIB_CHECK([RADIUS], [radiusclient-ng], [rc_read_config], [radiusclient-ng.h])
  
@@ -743,7 +743,7 @@ index 7838691..4a8cb54 100644
 +
  AST_EXT_LIB_CHECK([SPEEX], [speex], [speex_encode], [speex/speex.h], [-lm])
  
- AST_EXT_LIB_CHECK([SPEEXDSP], [speexdsp], [speex_preprocess_ctl], [speex/speex.h], [-lm])
+ # See if the main speex library contains the preprocess functions
 diff --git a/makeopts.in b/makeopts.in
 index 9d45c3c..a6feebc 100644
 --- a/makeopts.in

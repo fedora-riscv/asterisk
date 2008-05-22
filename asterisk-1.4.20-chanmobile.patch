@@ -1,4 +1,4 @@
-From be2cb58bb22987fa20b2f9eeb5577cb96a33d707 Mon Sep 17 00:00:00 2001
+From 9f04dc0205f759372c422891d9f949cc16a0d8fd Mon Sep 17 00:00:00 2001
 From: Jeffrey C. Ollie <jeff@ocjtech.us>
 Date: Sun, 18 Nov 2007 22:25:43 -0600
 Subject: [PATCH] Add chan_mobile (backported from asterisk-addons trunk).
@@ -17,7 +17,7 @@ Subject: [PATCH] Add chan_mobile (backported from asterisk-addons trunk).
  create mode 100644 doc/chan_mobile.txt
 
 diff --git a/build_tools/menuselect-deps.in b/build_tools/menuselect-deps.in
-index 6bf5131..6a6e3a2 100644
+index 55e35ea..eed2b14 100644
 --- a/build_tools/menuselect-deps.in
 +++ b/build_tools/menuselect-deps.in
 @@ -1,4 +1,5 @@
@@ -2235,7 +2235,7 @@ index 0000000..7ef26d8
 +type=headset
 +adapter=dlink
 diff --git a/configure.ac b/configure.ac
-index 4a8cb54..d17bb9d 100644
+index 8340ac4..b06d90a 100644
 --- a/configure.ac
 +++ b/configure.ac
 @@ -173,6 +173,7 @@ AC_SUBST(AST_DEVMODE)
@@ -2246,7 +2246,7 @@ index 4a8cb54..d17bb9d 100644
  AST_EXT_LIB_SETUP([CURL], [cURL], [curl])
  AST_EXT_LIB_SETUP([CAP], [POSIX 1.e capabilities], [cap])
  AST_EXT_LIB_SETUP([CURSES], [curses], [curses])
-@@ -408,6 +409,8 @@ AC_CHECK_SIZEOF(int)
+@@ -430,6 +431,8 @@ AC_CHECK_SIZEOF(int)
  
  AST_EXT_LIB_CHECK([ALSA], [asound], [snd_spcm_init], [alsa/asoundlib.h], [-lm -ldl])
  
