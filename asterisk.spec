@@ -2,7 +2,7 @@
 
 Summary: The Open Source PBX
 Name: asterisk
-Version: 1.4.20
+Version: 1.4.20.1
 Release: 1%{?dist}
 License: GPLv2
 Group: Applications/Internet
@@ -17,13 +17,13 @@ URL: http://www.asterisk.org/
 
 # MD5 Sums
 # ========
-# 15dbe409b72ee8b7fc30f74e49f877db  asterisk-1.4.20.tar.gz
-# 58f76e8b291de97784e3576c89d826c0  asterisk-1.4.20-stripped.tar.gz
+# 4e4c0cdd97cb0f7b007d4f773222a2a9  asterisk-1.4.20.1.tar.gz
+# 080faaa6d684e1466bcfaaa3952cbc83  asterisk-1.4.20.1-stripped.tar.gz
 # 
 # SHA1 Sums
 # =========
-# ac924225ff70618eccd5662b9a10986e273cb05c  asterisk-1.4.20.tar.gz
-# 65c31acfd512865d23fbe9607f8f67bc5e1a5be4  asterisk-1.4.20-stripped.tar.gz
+# 402c06fdf5171bdeec90f0a456f5582230c64284  asterisk-1.4.20.1.tar.gz
+# 659a0c0ee35216c801e294eeecd20c1dbef9388f  asterisk-1.4.20.1-stripped.tar.gz
 
 #Source0: http://downloads.digium.com/pub/telephony/asterisk/releases/asterisk-%{version}.tar.gz
 Source0: asterisk-%{version}-stripped.tar.gz
@@ -902,6 +902,9 @@ fi
 %{_libdir}/asterisk/modules/codec_zap.so
 
 %changelog
+* Thu May 29 2008 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.4.20.1-1
+- Update to 1.4.20.1
+
 * Thu May 22 2008 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.4.20-1
 - Update to 1.4.20
 
