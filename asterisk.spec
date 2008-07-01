@@ -2,7 +2,7 @@
 
 Summary: The Open Source PBX
 Name: asterisk
-Version: 1.4.21
+Version: 1.4.21.1
 Release: 1%{?dist}
 License: GPLv2
 Group: Applications/Internet
@@ -17,15 +17,14 @@ URL: http://www.asterisk.org/
 
 # MD5 Sums
 # ========
-# c4cf69eb6eae3105806b08d3efc28ec7  asterisk-1.4.21.tar.gz
-# 4039033d95c32441a9eb4a1712262aec  asterisk-1.4.21-stripped.tar.gz
-# 
+# dfa1b73587aa74b36caaf4811cfe610e  asterisk-1.4.21.1.tar.gz
+# 51caedfdd9d92b9f2dc02c584ab7d7de  asterisk-1.4.21.1-stripped.tar.gz
+#
 # SHA1 Sums
 # =========
-# dc8a15e1cd1a1fc7eccff35a6208d1a0dff051b6  asterisk-1.4.21.tar.gz
-# 7c73ea107c9ba32b9e6573fd9f99fe5ba5cf3d67  asterisk-1.4.21-stripped.tar.gz
+# dcd21c7b242487742a595a4d9d847c33ef2041d8  asterisk-1.4.21.1.tar.gz
+# df4a8c6d7c75df01e4bb399bf4f5f6ba6466a522  asterisk-1.4.21.1-stripped.tar.gz
 
-#Source0: http://downloads.digium.com/pub/telephony/asterisk/releases/asterisk-%{version}.tar.gz
 Source0: asterisk-%{version}-stripped.tar.gz
 Source1: asterisk-logrotate
 Source2: menuselect.makedeps
@@ -902,6 +901,9 @@ fi
 %{_libdir}/asterisk/modules/codec_zap.so
 
 %changelog
+* Thu Jul  1 2008 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.4.21.1-1
+- Update to 1.4.21.1
+
 * Thu Jun 12 2008 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.4.21-1
 - Update to final 1.4.21
 
