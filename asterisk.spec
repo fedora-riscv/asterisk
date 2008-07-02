@@ -4,14 +4,16 @@
 Summary: The Open Source PBX
 Name: asterisk
 Version: 1.6.0
-Release: 0.14.beta%{beta}%{?dist}
+Release: 0.17.beta%{beta}%{?dist}
 License: GPLv2
 Group: Applications/Internet
 URL: http://www.asterisk.org/
 
 # The Asterisk tarball contains some items that we don't want in there,
 # so start with the original tarball from here:
+#
 # http://downloads.digium.com/pub/telephony/asterisk/releases/asterisk-%{version}%{?beta:-beta%{beta}}.tar.gz
+#
 # Then run the included script file to build the stripped tarball:
 #
 # sh asterisk-strip.sh %{version}
@@ -26,23 +28,22 @@ URL: http://www.asterisk.org/
 # 3f04cd803fea058ecec170db15a1a3e1738f0fc9  asterisk-1.6.0-beta9.tar.gz
 # a5d3d6699bcd55afe35c2e57059f3b3b32ebf112  asterisk-1.6.0-beta9-stripped.tar.gz
 
-#Source0: http://downloads.digium.com/pub/telephony/asterisk/releases/asterisk-%{version}%{?beta:-beta%{beta}}.tar.gz
 Source0: asterisk-%{version}%{?beta:-beta%{beta}}-stripped.tar.gz
 Source1: asterisk-logrotate
 Source2: menuselect.makedeps
 Source3: menuselect.makeopts
 Source4: asterisk-strip.sh
 
-Patch1:  asterisk-1.6.0-beta9-initscripts.patch
-Patch2:  asterisk-1.6.0-beta9-alternate-voicemail.patch
-Patch3:  asterisk-1.6.0-beta9-spandspfax.patch
-#Patch4:  asterisk-1.6.0-beta9-appconference.patch
-Patch5:  asterisk-1.6.0-beta9-alternate-extensions.patch
-Patch6:  asterisk-1.6.0-beta9-optimization.patch
-Patch7:  asterisk-1.6.0-beta9-chanmobile.patch
-Patch8:  asterisk-1.6.0-beta9-lua.patch
-Patch9:  asterisk-1.6.0-beta9-editline.patch
-Patch10: asterisk-1.6.0-beta9-autoconf.patch
+Patch1:  0001-Modify-init-scripts-for-better-Fedora-compatibility.patch
+Patch2:  0002-Modify-modules.conf-so-that-different-voicemail-modu.patch
+Patch3:  0003-Add-FAX-apps.patch
+Patch4:  0004-Allow-alternate-extensions-to-be-specified-in-users.patch
+Patch5:  0005-Pick-proper-optimization-flags-for-Fedora.patch
+Patch6:  0006-Add-chan_mobile-from-asterisk-addons.patch
+Patch7:  0007-Use-pkgconfig-to-check-for-Lua.patch
+Patch8:  0008-Build-using-external-libedit.patch
+Patch9:  0009-Update-cdr_tds-to-latest.patch
+Patch10: 0010-Update-autoconf.patch
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-root-%(%{__id_u} -n)
 
@@ -84,6 +85,9 @@ Requires(pre): %{_sbindir}/groupadd
 Requires(post): /sbin/chkconfig
 Requires(preun): /sbin/chkconfig
 Requires(preun): /sbin/service
+
+# asterisk-conference package removed since patch no longer compiles
+Obsoletes: asterisk-conference <= 1.6.0-0.14.beta9
 
 %description
 Asterisk is a complete PBX in software. It runs on Linux and provides
@@ -402,7 +406,7 @@ Modules for Asterisk that use Zaptel.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-#patch4 -p1
+%patch4 -p1
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
@@ -1019,6 +1023,16 @@ fi
 %{_libdir}/asterisk/modules/codec_zap.so
 
 %changelog
+* Thu Jul  2 2008 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.6.0-0.17.beta9
+- Add patch that unbreaks cdr_tds with FreeTDS 0.82.
+- Properly obsolete conference subpackage.
+
+* Thu Jun 12 2008 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.6.0-0.16.beta9
+- Disable building cdr_tds since new FreeTDS in rawhide no longer provides needed library.
+
+* Wed Jun 11 2008 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.6.0-0.15.beta9
+- Bump release and rebuild to fix libtds breakage.
+
 * Mon May 19 2008 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.6.0-0.14.beta9
 - Update to 1.6.0-beta9.
 - Update patches so that they apply cleanly.
