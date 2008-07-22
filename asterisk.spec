@@ -2,7 +2,7 @@
 
 Summary: The Open Source PBX
 Name: asterisk
-Version: 1.4.21.1
+Version: 1.4.21.2
 Release: 1%{?dist}
 License: GPLv2
 Group: Applications/Internet
@@ -17,13 +17,13 @@ URL: http://www.asterisk.org/
 
 # MD5 Sums
 # ========
-# dfa1b73587aa74b36caaf4811cfe610e  asterisk-1.4.21.1.tar.gz
-# 51caedfdd9d92b9f2dc02c584ab7d7de  asterisk-1.4.21.1-stripped.tar.gz
+# 46881e1345eca21ea13a7d5b1036fa6e  asterisk-1.4.21.2.tar.gz
+# b5cf2c58c96659316d1edc5bd97ec443  asterisk-1.4.21.2-stripped.tar.gz
 #
 # SHA1 Sums
 # =========
-# dcd21c7b242487742a595a4d9d847c33ef2041d8  asterisk-1.4.21.1.tar.gz
-# df4a8c6d7c75df01e4bb399bf4f5f6ba6466a522  asterisk-1.4.21.1-stripped.tar.gz
+# 8c0dcf57f69ce27929f7836081316a2695eb76fa  asterisk-1.4.21.2.tar.gz
+# ca3421b51147bbad0e4bf696a2e15df0cd8a2ce2  asterisk-1.4.21.2-stripped.tar.gz
 
 Source0: asterisk-%{version}-stripped.tar.gz
 Source1: asterisk-logrotate
@@ -901,6 +901,9 @@ fi
 %{_libdir}/asterisk/modules/codec_zap.so
 
 %changelog
+* Tue Jul 22 2008 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.4.21.2-1
+- Update to 1.4.21.2 to fix CVE-2008-3263 / AST-2008-010 and CVE-2008-3264 / AST-2008-011
+
 * Thu Jul  1 2008 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.4.21.1-1
 - Update to 1.4.21.1
 
