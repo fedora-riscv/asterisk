@@ -3,7 +3,7 @@
 Summary: The Open Source PBX
 Name: asterisk
 Version: 1.4.21.2
-Release: 2%{?dist}
+Release: 3%{?dist}
 License: GPLv2
 Group: Applications/Internet
 URL: http://www.asterisk.org/
@@ -315,7 +315,7 @@ Requires: asterisk = %{version}-%{release}
 Requires: zaptel >= 1.4.11
 Requires(pre): %{_sbindir}/usermod
 BuildRequires: zaptel-devel >= 1.4.11
-BuildRequires: libpri-devel >= 1.4.6
+BuildRequires: libpri-devel >= 1.4.7
 
 %description zaptel
 Modules for Asterisk that use Zaptel.
@@ -901,6 +901,9 @@ fi
 %{_libdir}/asterisk/modules/codec_zap.so
 
 %changelog
+* Sat Sep  6 2008 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.4.21.2-3
+- Bump release and rebuild to pick up new libpri
+
 * Wed Jul 30 2008 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.4.21.2-2
 - Bump release and rebuild to pick up new libpri.
 
