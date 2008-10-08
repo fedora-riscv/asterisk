@@ -1,4 +1,4 @@
-From e1a8b3b91bc1ddb0f9ac690254676e197f9d9728 Mon Sep 17 00:00:00 2001
+From 270b2599142af4097780f0ce2feac7e4a4570061 Mon Sep 17 00:00:00 2001
 From: Jeffrey C. Ollie <jeff@ocjtech.us>
 Date: Sun, 18 Nov 2007 21:47:59 -0600
 Subject: [PATCH] Modify init scripts for better Fedora compatibility.
@@ -10,7 +10,7 @@ Subject: [PATCH] Modify init scripts for better Fedora compatibility.
  create mode 100644 contrib/sysconfig/asterisk
 
 diff --git a/contrib/init.d/rc.redhat.asterisk b/contrib/init.d/rc.redhat.asterisk
-index de821fe..ddb1d64 100755
+index d2a630e..51e3459 100755
 --- a/contrib/init.d/rc.redhat.asterisk
 +++ b/contrib/init.d/rc.redhat.asterisk
 @@ -3,7 +3,7 @@
@@ -142,5 +142,5 @@ index 0000000..2d3598a
 +# be initialized.
 +#AST_GROUP="asterisk"
 -- 
-1.5.4.3
+1.5.5.2
 

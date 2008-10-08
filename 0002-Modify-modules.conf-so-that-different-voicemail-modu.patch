@@ -1,4 +1,4 @@
-From 8740b45095c5ec6453e7f6aee93d82866012821a Mon Sep 17 00:00:00 2001
+From f2fd0ae038469a36862645e6791bae6373e4b9cf Mon Sep 17 00:00:00 2001
 From: Jeffrey C. Ollie <jcollie@pc21224.campus.dmacc.edu>
 Date: Thu, 8 Nov 2007 15:52:36 -0600
 Subject: [PATCH] Modify modules.conf so that different voicemail modules can be loaded.
@@ -43,5 +43,5 @@ index 9302e87..b2ef961 100644
 +;noload => app_voicemail_plain.so
 +
 -- 
-1.5.4.3
+1.5.5.2
 

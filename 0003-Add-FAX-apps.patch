@@ -1,4 +1,4 @@
-From b0b83c7f23d075e2dd7659d95fa0d36c6250ad35 Mon Sep 17 00:00:00 2001
+From c43427a6a0476ddfbc1c9ff1ab66a783a5216c21 Mon Sep 17 00:00:00 2001
 From: Jeffrey C. Ollie <jeff@ocjtech.us>
 Date: Mon, 12 Nov 2007 15:51:12 -0600
 Subject: [PATCH] Add FAX apps.
@@ -38,7 +38,7 @@ index 0000000..bd81ea1
 +
 +#include "asterisk.h"
 +
-+ASTERISK_FILE_VERSION(__FILE__, "$Revision:$")
++ASTERISK_FILE_VERSION(__FILE__, "$Revision: 1.1 $")
 +
 +#include <string.h>
 +#include <stdlib.h>
@@ -424,7 +424,7 @@ index 0000000..713ecf1
 +
 +#include "asterisk.h"
 +
-+ASTERISK_FILE_VERSION(__FILE__, "$Revision:$")
++ASTERISK_FILE_VERSION(__FILE__, "$Revision: 1.1 $")
 +
 +#include <string.h>
 +#include <stdlib.h>
@@ -712,10 +712,10 @@ index 0000000..713ecf1
 +
 +/*- End of file ------------------------------------------------------------*/
 diff --git a/build_tools/menuselect-deps.in b/build_tools/menuselect-deps.in
-index 3ffb565..55e35ea 100644
+index 2613ea9..c42cd30 100644
 --- a/build_tools/menuselect-deps.in
 +++ b/build_tools/menuselect-deps.in
-@@ -21,6 +21,7 @@ PGSQL=@PBX_PGSQL@
+@@ -23,6 +23,7 @@ PGSQL=@PBX_PGSQL@
  POPT=@PBX_POPT@
  PRI=@PBX_PRI@
  RADIUS=@PBX_RADIUS@
@@ -724,10 +724,10 @@ index 3ffb565..55e35ea 100644
  SPEEXDSP=@PBX_SPEEXDSP@
  SPEEX_PREPROCESS=@PBX_SPEEX_PREPROCESS@
 diff --git a/configure.ac b/configure.ac
-index aeda896..8340ac4 100644
+index d73b99d..ccd267b 100644
 --- a/configure.ac
 +++ b/configure.ac
-@@ -198,6 +198,7 @@ AST_EXT_LIB_SETUP([PRI], [ISDN PRI], [pri])
+@@ -201,6 +201,7 @@ AST_EXT_LIB_SETUP([PRI], [ISDN PRI], [pri])
  AST_EXT_LIB_SETUP([PWLIB], [PWlib], [pwlib])
  AST_EXT_LIB_SETUP([OPENH323], [OpenH323], [h323])
  AST_EXT_LIB_SETUP([RADIUS], [Radius Client], [radius])
@@ -735,7 +735,7 @@ index aeda896..8340ac4 100644
  AST_EXT_LIB_SETUP([SPEEX], [Speex], [speex])
  AST_EXT_LIB_SETUP([SPEEXDSP], [Speexdsp], [speexdsp])
  AST_EXT_LIB_SETUP([SQLITE], [SQLite], [sqlite])
-@@ -1289,6 +1290,8 @@ fi
+@@ -1302,6 +1303,8 @@ fi
  
  AST_EXT_LIB_CHECK([RADIUS], [radiusclient-ng], [rc_read_config], [radiusclient-ng.h])
  
@@ -745,7 +745,7 @@ index aeda896..8340ac4 100644
  
  # See if the main speex library contains the preprocess functions
 diff --git a/makeopts.in b/makeopts.in
-index 9d45c3c..a6feebc 100644
+index eb54b59..b7e6a9e 100644
 --- a/makeopts.in
 +++ b/makeopts.in
 @@ -138,6 +138,9 @@ PWLIB_LIB=@PWLIB_LIB@
@@ -759,5 +759,5 @@ index 9d45c3c..a6feebc 100644
  SPEEX_LIB=@SPEEX_LIB@
  
 -- 
-1.5.4.3
+1.5.5.2
 

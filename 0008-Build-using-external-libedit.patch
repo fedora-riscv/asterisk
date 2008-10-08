@@ -1,4 +1,4 @@
-From 1c1236ee775ffd1aab76390a4436a857d3d4c8e1 Mon Sep 17 00:00:00 2001
+From 53948b88efd76f77794f20acebcd8a4256a30b03 Mon Sep 17 00:00:00 2001
 From: Jeffrey C. Ollie <jeff@ocjtech.us>
 Date: Sun, 23 Mar 2008 19:49:34 -0500
 Subject: [PATCH] Build using external libedit.
@@ -12,10 +12,10 @@ Subject: [PATCH] Build using external libedit.
  5 files changed, 21 insertions(+), 7 deletions(-)
 
 diff --git a/build_tools/menuselect-deps.in b/build_tools/menuselect-deps.in
-index eed2b14..d26b36d 100644
+index f2ea5e5..3df6918 100644
 --- a/build_tools/menuselect-deps.in
 +++ b/build_tools/menuselect-deps.in
-@@ -11,6 +11,7 @@ IKSEMEL=@PBX_IKSEMEL@
+@@ -13,6 +13,7 @@ IKSEMEL=@PBX_IKSEMEL@
  IMAP_TK=@PBX_IMAP_TK@
  IXJUSER=@PBX_IXJUSER@
  KDE=@PBX_KDE@
@@ -24,10 +24,10 @@ index eed2b14..d26b36d 100644
  NBS=@PBX_NBS@
  NETSNMP=@PBX_NETSNMP@
 diff --git a/configure.ac b/configure.ac
-index b06d90a..806d813 100644
+index 0e08e78..3c93647 100644
 --- a/configure.ac
 +++ b/configure.ac
-@@ -1555,6 +1555,17 @@ AC_SUBST(PBX_GTK2)
+@@ -1598,6 +1598,17 @@ AC_SUBST(PBX_GTK2)
  AC_SUBST(GTK2_INCLUDE)
  AC_SUBST(GTK2_LIB)
  
@@ -46,10 +46,10 @@ index b06d90a..806d813 100644
     AC_PATH_TOOL([CURL_CONFIG], [curl-config], No)
     if test ! x"${CURL_CONFIG}" = xNo; then
 diff --git a/main/Makefile b/main/Makefile
-index 6cf1c5e..ca39b93 100644
+index 53274ea..8469a33 100644
 --- a/main/Makefile
 +++ b/main/Makefile
-@@ -98,9 +98,6 @@ ifeq ($(OSARCH),SunOS)
+@@ -94,9 +94,6 @@ ifeq ($(OSARCH),SunOS)
    ASTLINK=
  endif
  
@@ -59,16 +59,16 @@ index 6cf1c5e..ca39b93 100644
  
  db1-ast/libdb1.a:
  	CFLAGS="$(subst $(ASTTOPDIR),../../,$(ASTCFLAGS))" LDFLAGS="$(ASTLDFLAGS)" $(MAKE) -C db1-ast libdb1.a
-@@ -124,6 +121,8 @@ testexpr2: ast_expr2f.c ast_expr2.c ast_expr2.h
- channel.o: ASTCFLAGS+=$(ZAPTEL_INCLUDE)
- asterisk.o: ASTCFLAGS+=$(ZAPTEL_INCLUDE)
+@@ -119,6 +116,8 @@ testexpr2: ast_expr2f.c ast_expr2.c ast_expr2.h
+ 
+ asterisk.o channel.o: ASTCFLAGS+=$(ZAPTEL_INCLUDE) $(DAHDI_INCLUDE)
  
 +cli.o: ASTCLFAGS+=$(LIBEDIT_INCLUDE)
 +
  stdtime/localtime.o: ASTCFLAGS+=$(AST_NO_STRICT_OVERFLOW)
  
  AST_EMBED_LDSCRIPTS:=$(sort $(EMBED_LDSCRIPTS))
-@@ -138,7 +137,7 @@ else
+@@ -133,7 +132,7 @@ else
    H323LDLIBS=
  endif
  
@@ -77,7 +77,7 @@ index 6cf1c5e..ca39b93 100644
  	@$(ASTTOPDIR)/build_tools/make_build_h > $(ASTTOPDIR)/include/asterisk/build.h.tmp
  	@if cmp -s $(ASTTOPDIR)/include/asterisk/build.h.tmp $(ASTTOPDIR)/include/asterisk/build.h ; then echo ; else \
  		mv $(ASTTOPDIR)/include/asterisk/build.h.tmp $(ASTTOPDIR)/include/asterisk/build.h ; \
-@@ -147,9 +146,9 @@ asterisk: $(OBJS) editline/libedit.a db1-ast/libdb1.a $(AST_EMBED_LDSCRIPTS)
+@@ -142,9 +141,9 @@ asterisk: $(OBJS) editline/libedit.a db1-ast/libdb1.a $(AST_EMBED_LDSCRIPTS)
  	@$(CC) -c -o buildinfo.o $(ASTCFLAGS) buildinfo.c
  	$(ECHO_PREFIX) echo "   [LD] $^ -> $@"
  ifneq ($(findstring chan_h323,$(MENUSELECT_CHANNELS)),)
@@ -90,10 +90,10 @@ index 6cf1c5e..ca39b93 100644
  	$(CMD_PREFIX) $(ASTTOPDIR)/build_tools/strip_nonapi $@ || rm $@
  
 diff --git a/main/cli.c b/main/cli.c
-index 2ecf20a..f30e598 100644
+index e685268..3fc54ed 100644
 --- a/main/cli.c
 +++ b/main/cli.c
-@@ -35,6 +35,7 @@ ASTERISK_FILE_VERSION(__FILE__, "$Revision$")
+@@ -35,6 +35,7 @@ ASTERISK_FILE_VERSION(__FILE__, "$Revision: 1.1 $")
  #include <string.h>
  #include <ctype.h>
  #include <regex.h>
@@ -101,7 +101,7 @@ index 2ecf20a..f30e598 100644
  
  #include "asterisk/logger.h"
  #include "asterisk/options.h"
-@@ -46,7 +47,6 @@ ASTERISK_FILE_VERSION(__FILE__, "$Revision$")
+@@ -46,7 +47,6 @@ ASTERISK_FILE_VERSION(__FILE__, "$Revision: 1.1 $")
  #include "asterisk/utils.h"
  #include "asterisk/app.h"
  #include "asterisk/lock.h"
@@ -110,10 +110,10 @@ index 2ecf20a..f30e598 100644
  
  extern unsigned long global_fin, global_fout;
 diff --git a/makeopts.in b/makeopts.in
-index 82d4a59..ac196ad 100644
+index 2966532..883ccc1 100644
 --- a/makeopts.in
 +++ b/makeopts.in
-@@ -195,3 +195,6 @@ TERMCAP_DIR=@TERMCAP_DIR@
+@@ -197,3 +197,6 @@ TERMCAP_DIR=@TERMCAP_DIR@
  TINFO_INCLUDE=@TINFO_INCLUDE@
  TINFO_LIB=@TINFO_LIB@
  TINFO_DIR=@TINFO_DIR@
@@ -121,5 +121,5 @@ index 82d4a59..ac196ad 100644
 +LIBEDIT_INCLUDE=@LIBEDIT_INCLUDE@
 +LIBEDIT_LIB=@LIBEDIT_LIB@
 -- 
-1.5.4.3
+1.5.5.2
 

@@ -1,4 +1,4 @@
-From bf754a704b61166551ee0910c7706b45f0150760 Mon Sep 17 00:00:00 2001
+From d0a9a5e65b0c0b2d5184134627a5a8b819237759 Mon Sep 17 00:00:00 2001
 From: Jeffrey C. Ollie <jeff@ocjtech.us>
 Date: Mon, 18 Feb 2008 08:58:05 -0600
 Subject: [PATCH] Latest updates for app_conference.
@@ -44,10 +44,10 @@ Subject: [PATCH] Latest updates for app_conference.
  create mode 100644 apps/conference/member.h
 
 diff --git a/apps/Makefile b/apps/Makefile
-index 4006c9a..cf33505 100644
+index c57926a..7714f45 100644
 --- a/apps/Makefile
 +++ b/apps/Makefile
-@@ -44,4 +44,18 @@ endif
+@@ -39,4 +39,18 @@ endif
  
  all: _all
  
@@ -10381,5 +10381,5 @@ index 0000000..52786d9
 +extern struct ast_frame *ast_packer_read(struct ast_packer *s);
 +#endif
 -- 
-1.5.4.3
+1.5.5.2
 

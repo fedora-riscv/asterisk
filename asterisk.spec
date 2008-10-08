@@ -2,8 +2,8 @@
 
 Summary: The Open Source PBX
 Name: asterisk
-Version: 1.4.21.2
-Release: 3%{?dist}
+Version: 1.4.22
+Release: 1%{?dist}
 License: GPLv2
 Group: Applications/Internet
 URL: http://www.asterisk.org/
@@ -17,28 +17,28 @@ URL: http://www.asterisk.org/
 
 # MD5 Sums
 # ========
-# 46881e1345eca21ea13a7d5b1036fa6e  asterisk-1.4.21.2.tar.gz
-# b5cf2c58c96659316d1edc5bd97ec443  asterisk-1.4.21.2-stripped.tar.gz
+# 7626febc4a01e16e012dfccb9e4ab9d2  asterisk-1.4.22.tar.gz
+# 9fd67ff6d9b00ebb9579acd5d39622c8  asterisk-1.4.22-stripped.tar.gz
 #
 # SHA1 Sums
 # =========
-# 8c0dcf57f69ce27929f7836081316a2695eb76fa  asterisk-1.4.21.2.tar.gz
-# ca3421b51147bbad0e4bf696a2e15df0cd8a2ce2  asterisk-1.4.21.2-stripped.tar.gz
+# 598d7fdf075a4e6154bc8910d3ed3995f39c9f23  asterisk-1.4.22.tar.gz
+# 39039153a40922f3f3d7e62f9b60e1ed674d08ed  asterisk-1.4.22-stripped.tar.gz
 
 Source0: asterisk-%{version}-stripped.tar.gz
 Source1: asterisk-logrotate
 Source2: menuselect.makedeps
 Source3: menuselect.makeopts
 
-Patch1:  asterisk-1.4.20-initscripts.patch
-Patch2:  asterisk-1.4.20-alternate-voicemail.patch
-Patch3:  asterisk-1.4.20-spandspfax.patch
-Patch4:  asterisk-1.4.20-appconference.patch
-Patch5:  asterisk-1.4.20-alternate-extensions.patch
-Patch6:  asterisk-1.4.20-optimization.patch
-Patch7:  asterisk-1.4.20-chanmobile.patch
-Patch8:  asterisk-1.4.20-external-libedit.patch
-Patch9:  asterisk-1.4.20-autoconf.patch
+Patch1: 0001-Modify-init-scripts-for-better-Fedora-compatibility.patch
+Patch2: 0002-Modify-modules.conf-so-that-different-voicemail-modu.patch
+Patch3: 0003-Add-FAX-apps.patch
+Patch4: 0004-Latest-updates-for-app_conference.patch
+Patch5: 0005-Allow-alternate-extensions-to-be-specified-in-users.patch
+Patch6: 0006-Pick-proper-optimization-flags-for-Fedora.patch
+Patch7: 0007-Add-chan_mobile-backported-from-asterisk-addons-tru.patch
+Patch8: 0008-Build-using-external-libedit.patch
+Patch9: 0009-Update-Autoconf.patch
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-root-%(%{__id_u} -n)
 
@@ -123,6 +123,20 @@ BuildRequires: curl-devel
 
 %description curl
 Modules for Asterisk that use cURL.
+
+%package dahdi
+Summary: Modules for Asterisk that use DAHDI
+Group: Applications/Internet
+Requires: asterisk = %{version}-%{release}
+Requires: zaptel >= 1.4.12.1
+Requires(pre): %{_sbindir}/usermod
+BuildRequires: zaptel-devel >= 1.4.12.1
+BuildRequires: libpri-devel >= 1.4.7
+Obsoletes: asterisk-zaptel <= 1.4.21.2-3
+Provides: asterisk-zaptel = %{version}-%{release}
+
+%description dahdi
+Modules for Asterisk that use DAHDI.
 
 %package devel
 Summary: Development files for Asterisk
@@ -308,18 +322,6 @@ Provides: asterisk-voicemail-implementation = %{version}-%{release}
 Voicemail implementation for Asterisk that stores voicemail on the
 local filesystem.
 
-%package zaptel
-Summary: Modules for Asterisk that use Zaptel
-Group: Applications/Internet
-Requires: asterisk = %{version}-%{release}
-Requires: zaptel >= 1.4.11
-Requires(pre): %{_sbindir}/usermod
-BuildRequires: zaptel-devel >= 1.4.11
-BuildRequires: libpri-devel >= 1.4.7
-
-%description zaptel
-Modules for Asterisk that use Zaptel.
-
 %prep
 %setup0 -q
 %patch1 -p1
@@ -461,7 +463,7 @@ fi
 %pre misdn
 %{_sbindir}/usermod -a -G misdn asterisk
 
-%pre zaptel
+%pre dahdi
 %{_sbindir}/usermod -a -G zaptel asterisk
 
 %files
@@ -764,6 +766,19 @@ fi
 %defattr(-,root,root,-)
 %{_libdir}/asterisk/modules/func_curl.so
 
+%files dahdi
+%defattr(-,root,root,-)
+%config(noreplace) %{_sysconfdir}/asterisk/meetme.conf
+%config(noreplace) %{_sysconfdir}/asterisk/chan_dahdi.conf
+%{_libdir}/asterisk/modules/app_flash.so
+%{_libdir}/asterisk/modules/app_meetme.so
+%{_libdir}/asterisk/modules/app_page.so
+%{_libdir}/asterisk/modules/app_dahdibarge.so
+%{_libdir}/asterisk/modules/app_dahdiras.so
+%{_libdir}/asterisk/modules/app_dahdiscan.so
+%{_libdir}/asterisk/modules/chan_dahdi.so
+%{_libdir}/asterisk/modules/codec_dahdi.so
+
 %files devel
 %defattr(-,root,root,-)
 %doc doc/CODING-GUIDELINES
@@ -887,20 +902,13 @@ fi
 %{_libdir}/asterisk/modules/app_directory_plain.so
 %{_libdir}/asterisk/modules/app_voicemail_plain.so
 
-%files zaptel
-%defattr(-,root,root,-)
-%config(noreplace) %{_sysconfdir}/asterisk/meetme.conf
-%config(noreplace) %{_sysconfdir}/asterisk/zapata.conf
-%{_libdir}/asterisk/modules/app_flash.so
-%{_libdir}/asterisk/modules/app_meetme.so
-%{_libdir}/asterisk/modules/app_page.so
-%{_libdir}/asterisk/modules/app_zapbarge.so
-%{_libdir}/asterisk/modules/app_zapras.so
-%{_libdir}/asterisk/modules/app_zapscan.so
-%{_libdir}/asterisk/modules/chan_zap.so
-%{_libdir}/asterisk/modules/codec_zap.so
-
 %changelog
+* Wed Oct  8 2008 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.4.22-1
+- Update to 1.4.22
+- Zaptel has been renamed to DAHDI (due to trademark issues) but we
+- are still building against the Zaptel libraries because the DAHDI
+- libraries are still under review.
+
 * Sat Sep  6 2008 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.4.21.2-3
 - Bump release and rebuild to pick up new libpri
 
