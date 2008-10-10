@@ -1,4 +1,4 @@
-From c43427a6a0476ddfbc1c9ff1ab66a783a5216c21 Mon Sep 17 00:00:00 2001
+From 9fac81256af4d0d28b1ef4eacdbb5b308d383e30 Mon Sep 17 00:00:00 2001
 From: Jeffrey C. Ollie <jeff@ocjtech.us>
 Date: Mon, 12 Nov 2007 15:51:12 -0600
 Subject: [PATCH] Add FAX apps.
@@ -38,7 +38,7 @@ index 0000000..bd81ea1
 +
 +#include "asterisk.h"
 +
-+ASTERISK_FILE_VERSION(__FILE__, "$Revision: 1.1 $")
++ASTERISK_FILE_VERSION(__FILE__, "$Revision: 1.2 $")
 +
 +#include <string.h>
 +#include <stdlib.h>
@@ -424,7 +424,7 @@ index 0000000..713ecf1
 +
 +#include "asterisk.h"
 +
-+ASTERISK_FILE_VERSION(__FILE__, "$Revision: 1.1 $")
++ASTERISK_FILE_VERSION(__FILE__, "$Revision: 1.2 $")
 +
 +#include <string.h>
 +#include <stdlib.h>

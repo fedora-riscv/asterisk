@@ -1,4 +1,4 @@
-From 6dd70348aaadbf5df35a6bf045109cb2b5a68aa3 Mon Sep 17 00:00:00 2001
+From 7d820b0ab368c4f478b2ff4d828d0893e18ea022 Mon Sep 17 00:00:00 2001
 From: Jeffrey C. Ollie <jcollie@pc21224.campus.dmacc.edu>
 Date: Thu, 8 Nov 2007 16:42:14 -0600
 Subject: [PATCH] Pick proper optimization flags for Fedora.

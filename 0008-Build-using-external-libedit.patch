@@ -1,4 +1,4 @@
-From 53948b88efd76f77794f20acebcd8a4256a30b03 Mon Sep 17 00:00:00 2001
+From 016b626e7243d065c57a2dde2fdd6dc0be019060 Mon Sep 17 00:00:00 2001
 From: Jeffrey C. Ollie <jeff@ocjtech.us>
 Date: Sun, 23 Mar 2008 19:49:34 -0500
 Subject: [PATCH] Build using external libedit.
@@ -93,7 +93,7 @@ diff --git a/main/cli.c b/main/cli.c
 index e685268..3fc54ed 100644
 --- a/main/cli.c
 +++ b/main/cli.c
-@@ -35,6 +35,7 @@ ASTERISK_FILE_VERSION(__FILE__, "$Revision: 1.1 $")
+@@ -35,6 +35,7 @@ ASTERISK_FILE_VERSION(__FILE__, "$Revision: 1.2 $")
  #include <string.h>
  #include <ctype.h>
  #include <regex.h>
@@ -101,7 +101,7 @@ index e685268..3fc54ed 100644
  
  #include "asterisk/logger.h"
  #include "asterisk/options.h"
-@@ -46,7 +47,6 @@ ASTERISK_FILE_VERSION(__FILE__, "$Revision: 1.1 $")
+@@ -46,7 +47,6 @@ ASTERISK_FILE_VERSION(__FILE__, "$Revision: 1.2 $")
  #include "asterisk/utils.h"
  #include "asterisk/app.h"
  #include "asterisk/lock.h"

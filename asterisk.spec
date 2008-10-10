@@ -3,7 +3,7 @@
 Summary: The Open Source PBX
 Name: asterisk
 Version: 1.4.22
-Release: 1%{?dist}
+Release: 2%{?dist}
 License: GPLv2
 Group: Applications/Internet
 URL: http://www.asterisk.org/
@@ -128,9 +128,9 @@ Modules for Asterisk that use cURL.
 Summary: Modules for Asterisk that use DAHDI
 Group: Applications/Internet
 Requires: asterisk = %{version}-%{release}
-Requires: zaptel >= 1.4.12.1
+Requires: dahdi-tools >= 2.0.0
 Requires(pre): %{_sbindir}/usermod
-BuildRequires: zaptel-devel >= 1.4.12.1
+BuildRequires: dahdi-tools-devel >= 2.0.0
 BuildRequires: libpri-devel >= 1.4.7
 Obsoletes: asterisk-zaptel <= 1.4.21.2-3
 Provides: asterisk-zaptel = %{version}-%{release}
@@ -460,11 +460,11 @@ if [ "$1" -eq "0" ]; then
         /sbin/chkconfig --del asterisk
 fi
 
+%pre dahdi
+%{_sbindir}/usermod -a -G dahdi asterisk
+
 %pre misdn
 %{_sbindir}/usermod -a -G misdn asterisk
-
-%pre dahdi
-%{_sbindir}/usermod -a -G zaptel asterisk
 
 %files
 %defattr(-,root,root,-)
@@ -903,6 +903,10 @@ fi
 %{_libdir}/asterisk/modules/app_voicemail_plain.so
 
 %changelog
+* Fri Oct 10 2008 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.4.22-2
+- Fix problem with init script patch
+- Build against DAHDI instead of Zaptel.
+
 * Wed Oct  8 2008 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.4.22-1
 - Update to 1.4.22
 - Zaptel has been renamed to DAHDI (due to trademark issues) but we

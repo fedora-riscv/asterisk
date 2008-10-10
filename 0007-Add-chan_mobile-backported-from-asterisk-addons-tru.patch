@@ -1,4 +1,4 @@
-From 6329cd414f241dd090f9d536e7fdb6207ec2c342 Mon Sep 17 00:00:00 2001
+From 897b0e69ce1e786ba20e019d608e6ee076905f2e Mon Sep 17 00:00:00 2001
 From: Jeffrey C. Ollie <jeff@ocjtech.us>
 Date: Sun, 18 Nov 2007 22:25:43 -0600
 Subject: [PATCH] Add chan_mobile (backported from asterisk-addons trunk).
@@ -75,7 +75,7 @@ index 0000000..e3f5ec3
 +
 +#include <asterisk.h>
 +
-+ASTERISK_FILE_VERSION(__FILE__, "$Revision: 1.1 $")
++ASTERISK_FILE_VERSION(__FILE__, "$Revision: 1.2 $")
 +
 +#include <stdio.h>
 +#include <string.h>

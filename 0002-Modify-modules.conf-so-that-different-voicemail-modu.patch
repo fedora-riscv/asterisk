@@ -1,4 +1,4 @@
-From f2fd0ae038469a36862645e6791bae6373e4b9cf Mon Sep 17 00:00:00 2001
+From 59c3a474d2ae39b2ce9c5ce9aa46c265e05cbb20 Mon Sep 17 00:00:00 2001
 From: Jeffrey C. Ollie <jcollie@pc21224.campus.dmacc.edu>
 Date: Thu, 8 Nov 2007 15:52:36 -0600
 Subject: [PATCH] Modify modules.conf so that different voicemail modules can be loaded.
