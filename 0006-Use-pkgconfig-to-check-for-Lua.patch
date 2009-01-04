@@ -1,7 +1,7 @@
 From d633181f75ea7dc879e8ac9d014cf1fc0fe364ef Mon Sep 17 00:00:00 2001
 From: Jeffrey C. Ollie <jeff@ocjtech.us>
 Date: Mon, 25 Feb 2008 13:14:23 -0600
-Subject: [PATCH 06/12] Use pkgconfig to check for Lua.
+Subject: [PATCH 06/13] Use pkgconfig to check for Lua.
 
 ---
  configure.ac |    9 ++++++++-

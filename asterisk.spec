@@ -3,7 +3,7 @@
 Summary: The Open Source PBX
 Name: asterisk
 Version: 1.6.0.2
-Release: 1%{?dist}
+Release: 2%{?dist}
 License: GPLv2
 Group: Applications/Internet
 URL: http://www.asterisk.org/
@@ -44,7 +44,8 @@ Patch8:  0008-Revert-changes-to-pbx_lua-from-rev-126363-that-cause.patch
 Patch9:  0009-change-configure.ac-to-look-for-pkg-config-gmime-2.4.patch
 Patch10: 0010-fix-the-AST_PROG_SED-problem-that-makes-.-bootstrap.patch
 Patch11: 0011-Merged-revisions-160170-160172-via-svnmerge-from.patch
-Patch12: 0012-Update-autoconf.patch
+Patch12: 0012-Merged-revisions-162275-via-svnmerge-from.patch
+Patch13: 0013-Update-autoconf.patch
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-root-%(%{__id_u} -n)
 
@@ -421,6 +422,7 @@ local filesystem.
 %patch10 -p1
 %patch11 -p1
 %patch12 -p1
+%patch13 -p1
 
 cp %{SOURCE2} menuselect.makedeps
 cp %{SOURCE3} menuselect.makeopts
@@ -1030,6 +1032,9 @@ fi
 %{_libdir}/asterisk/modules/app_voicemail_plain.so
 
 %changelog
+* Sun Jan  4 2009 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.6.0.2-2
+- Add patch to fix compilation on PPC
+
 * Sun Jan  4 2009 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.6.0.2-1
 - Update to 1.6.0.2
 

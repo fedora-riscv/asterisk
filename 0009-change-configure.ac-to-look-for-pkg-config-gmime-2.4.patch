@@ -1,7 +1,7 @@
 From 7719af5a016f40f573c90aae17910f7f77b9b4e6 Mon Sep 17 00:00:00 2001
 From: Caolan McNamara <caolanm@redhat.com>
 Date: Sat, 3 Jan 2009 19:06:18 -0600
-Subject: [PATCH 09/12] change configure.ac to look for pkg-config gmime-2.4 instead of gmime-2.4 gmime-config
+Subject: [PATCH 09/13] change configure.ac to look for pkg-config gmime-2.4 instead of gmime-2.4 gmime-config
 
 ---
  configure.ac |   12 +++++++++++-
