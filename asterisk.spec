@@ -2,8 +2,8 @@
 
 Summary: The Open Source PBX
 Name: asterisk
-Version: 1.6.0.1
-Release: 3%{?dist}
+Version: 1.6.0.2
+Release: 1%{?dist}
 License: GPLv2
 Group: Applications/Internet
 URL: http://www.asterisk.org/
@@ -19,13 +19,13 @@ URL: http://www.asterisk.org/
 
 # MD5 Sums
 # ========
-# 5277db1134f0dc736932279c6a25c29a  asterisk-1.6.0.1.tar.gz
-# 00465d571b2cd9fd49c86b753aa3a551  asterisk-1.6.0.1-stripped.tar.gz
+# 22068805be6b11831c507861293fc1f5  asterisk-1.6.0.2.tar.gz
+# 6782a95a088a78ebb52252926e94a186  asterisk-1.6.0.2-stripped.tar.gz
 #
 # SHA1 Sums
 # =========
-# 20d77f6a08a8d755eeadf431c1f692d5adeadde8  asterisk-1.6.0.1.tar.gz
-# 4f5d1f436ba1119db9dfea072b1e6ac59c9eebd5  asterisk-1.6.0.1-stripped.tar.gz
+# 7d7c63f5c8ad17cc7dfd1bdd0fd27eea4fcef2c1  asterisk-1.6.0.2.tar.gz
+# 9aa182314ed4cc72bd39c7bd6897812b22bde2a2  asterisk-1.6.0.2-stripped.tar.gz
 
 Source0: asterisk-%{version}-stripped.tar.gz
 Source1: asterisk-logrotate
@@ -40,8 +40,11 @@ Patch4:  0004-Minor-changes-to-reduce-packaging-changes-made-by-th.patch
 Patch5:  0005-Add-chan_mobile-from-asterisk-addons.patch
 Patch6:  0006-Use-pkgconfig-to-check-for-Lua.patch
 Patch7:  0007-Build-using-external-libedit.patch
-Patch8:  0008-Update-autoconf.patch
-Patch9:	 0009-Revert-changes-to-pbx_lua-from-rev-126363-that-cause.patch
+Patch8:  0008-Revert-changes-to-pbx_lua-from-rev-126363-that-cause.patch
+Patch9:  0009-change-configure.ac-to-look-for-pkg-config-gmime-2.4.patch
+Patch10: 0010-fix-the-AST_PROG_SED-problem-that-makes-.-bootstrap.patch
+Patch11: 0011-Merged-revisions-160170-160172-via-svnmerge-from.patch
+Patch12: 0012-Update-autoconf.patch
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-root-%(%{__id_u} -n)
 
@@ -415,6 +418,9 @@ local filesystem.
 %patch7 -p1
 %patch8 -p1
 %patch9 -p1
+%patch10 -p1
+%patch11 -p1
+%patch12 -p1
 
 cp %{SOURCE2} menuselect.makedeps
 cp %{SOURCE3} menuselect.makeopts
@@ -727,14 +733,14 @@ fi
 %{_libdir}/asterisk/modules/res_smdi.so
 %{_libdir}/asterisk/modules/res_speech.so
 
-%{_sbindir}/aelparse
+#%{_sbindir}/aelparse
 %{_sbindir}/astcanary
 %{_sbindir}/asterisk
 %{_sbindir}/astgenkey
 %{_sbindir}/astman
 %{_sbindir}/autosupport
 %{_sbindir}/check_expr
-%{_sbindir}/conf2ael
+#%{_sbindir}/conf2ael
 %{_sbindir}/muted
 %{_sbindir}/rasterisk
 %{_sbindir}/safe_asterisk
@@ -1024,6 +1030,9 @@ fi
 %{_libdir}/asterisk/modules/app_voicemail_plain.so
 
 %changelog
+* Sun Jan  4 2009 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.6.0.2-1
+- Update to 1.6.0.2
+
 * Wed Nov  5 2008 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.6.0.1-3
 - Fix issue with init script giving wrong path to config file.
 

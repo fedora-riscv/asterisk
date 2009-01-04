@@ -1,7 +1,7 @@
-From f3c9272a15f71e3dc084fad107eceb92d8a19475 Mon Sep 17 00:00:00 2001
+From 8cc8002094fe880d374a727aa0be389ca68b0342 Mon Sep 17 00:00:00 2001
 From: Jeffrey C. Ollie <jeff@ocjtech.us>
 Date: Mon, 25 Feb 2008 09:23:28 -0600
-Subject: [PATCH] Add chan_mobile from asterisk-addons.
+Subject: [PATCH 05/12] Add chan_mobile from asterisk-addons.
 
 ---
  build_tools/menuselect-deps.in |    1 +
@@ -2228,10 +2228,10 @@ index 0000000..7ef26d8
 +type=headset
 +adapter=dlink
 diff --git a/configure.ac b/configure.ac
-index 33b40a2..f86e8f5 100644
+index 20e8e33..b8ebbf5 100644
 --- a/configure.ac
 +++ b/configure.ac
-@@ -205,6 +205,8 @@ AST_EXT_LIB_SETUP([ALSA], [Advanced Linux Sound Architecture], [asound])
+@@ -211,6 +211,8 @@ AST_EXT_LIB_SETUP([ALSA], [Advanced Linux Sound Architecture], [asound])
  # BKTR is used for backtrace support on platforms that do not
  # have it natively.
  AST_EXT_LIB_SETUP([BKTR], [Stack Backtrace support], [execinfo])
@@ -2240,7 +2240,7 @@ index 33b40a2..f86e8f5 100644
  AST_EXT_LIB_SETUP([CAP], [POSIX 1.e capabilities], [cap])
  AST_EXT_LIB_SETUP([CURL], [cURL], [curl])
  AST_EXT_LIB_SETUP([CURSES], [curses], [curses])
-@@ -556,6 +558,8 @@ AC_CHECK_SIZEOF(int)
+@@ -574,6 +576,8 @@ AC_CHECK_SIZEOF(int)
  
  AST_EXT_LIB_CHECK([ALSA], [asound], [snd_spcm_init], [alsa/asoundlib.h], [-lm -ldl])
  
@@ -2496,10 +2496,10 @@ index 0000000..32fcfd4
 +
 +email me at   david.bowerman at gmail.com   or dseeb_ on #asterisk & #asterisk-dev irc.
 diff --git a/makeopts.in b/makeopts.in
-index b3e5c49..05de366 100644
+index 018bc6c..039525d 100644
 --- a/makeopts.in
 +++ b/makeopts.in
-@@ -69,6 +69,9 @@ AST_NO_STRICT_OVERFLOW=@AST_NO_STRICT_OVERFLOW@
+@@ -71,6 +71,9 @@ AST_FORTIFY_SOURCE=@AST_FORTIFY_SOURCE@
  ASOUND_INCLUDE=@ALSA_INCLUDE@
  ASOUND_LIB=@ALSA_LIB@
  
@@ -2510,5 +2510,5 @@ index b3e5c49..05de366 100644
  CURL_LIB=@CURL_LIB@
  
 -- 
-1.5.6.5
+1.6.1
 

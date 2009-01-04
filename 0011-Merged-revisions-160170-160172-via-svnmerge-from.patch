@@ -1,0 +1,49 @@
+From c38fa4eb3cf989c110a737058c46a916ebab19c8 Mon Sep 17 00:00:00 2001
+From: seanbright <seanbright@f38db490-d61c-443f-a65b-d21fe96a405b>
+Date: Mon, 1 Dec 2008 23:41:16 +0000
+Subject: [PATCH 11/12] Merged revisions 160170-160172 via svnmerge from
+ https://origsvn.digium.com/svn/asterisk/trunk
+
+................
+  r160170 | seanbright | 2008-12-01 18:08:24 -0500 (Mon, 01 Dec 2008) | 1 line
+
+  Pay attention to the return value of system(), even if we basically ignore it.
+................
+  r160171 | seanbright | 2008-12-01 18:18:48 -0500 (Mon, 01 Dec 2008) | 1 line
+
+  Silence a build warning. (chan_phone.c:810: warning: value computed is not used)
+................
+  r160172 | seanbright | 2008-12-01 18:37:49 -0500 (Mon, 01 Dec 2008) | 10 lines
+
+  Merged revisions 159976 via svnmerge from
+  https://origsvn.digium.com/svn/asterisk/branches/1.4
+
+  ........
+    r159976 | mvanbaak | 2008-12-01 11:08:36 -0500 (Mon, 01 Dec 2008) | 3 lines
+
+    Get rid of the useless format string and argument in the Bogus/ manager channelname.
+    Noted by kpfleming and name Bogus/manager suggested by eliel
+  ........
+................
+
+git-svn-id: http://svn.digium.com/svn/asterisk/branches/1.6.0@160173 f38db490-d61c-443f-a65b-d21fe96a405b
+---
+ main/manager.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/main/manager.c b/main/manager.c
+index 6c28fed..bcf222f 100644
+--- a/main/manager.c
++++ b/main/manager.c
+@@ -1729,7 +1729,7 @@ static int action_getvar(struct mansession *s, const struct message *m)
+ 
+ 	if (varname[strlen(varname) - 1] == ')') {
+ 		if (!c) {
+-			c = ast_channel_alloc(0, 0, "", "", "", "", "", 0, "Bogus/%p", SENTINEL);
++			c = ast_channel_alloc(0, 0, "", "", "", "", "", 0, "Bogus/manager");
+ 			if (c) {
+ 				ast_func_read(c, (char *) varname, workspace, sizeof(workspace));
+ 				ast_channel_free(c);
+-- 
+1.6.1
+
