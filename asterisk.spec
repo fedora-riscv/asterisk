@@ -3,7 +3,7 @@
 Summary: The Open Source PBX
 Name: asterisk
 Version: 1.6.0.2
-Release: 2%{?dist}
+Release: 3%{?dist}
 License: GPLv2
 Group: Applications/Internet
 URL: http://www.asterisk.org/
@@ -46,6 +46,7 @@ Patch10: 0010-fix-the-AST_PROG_SED-problem-that-makes-.-bootstrap.patch
 Patch11: 0011-Merged-revisions-160170-160172-via-svnmerge-from.patch
 Patch12: 0012-Merged-revisions-162275-via-svnmerge-from.patch
 Patch13: 0013-Update-autoconf.patch
+Patch14: 0014-Fix-up-some-paths.patch
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-root-%(%{__id_u} -n)
 
@@ -423,6 +424,7 @@ local filesystem.
 %patch11 -p1
 %patch12 -p1
 %patch13 -p1
+%patch14 -p1
 
 cp %{SOURCE2} menuselect.makedeps
 cp %{SOURCE3} menuselect.makeopts
@@ -521,8 +523,10 @@ mkdir -p %{buildroot}%{_datadir}/asterisk/moh/
 mkdir -p %{buildroot}%{_datadir}/asterisk/sounds/
 mkdir -p %{buildroot}%{_localstatedir}/lib/asterisk
 mkdir -p %{buildroot}%{_localstatedir}/log/asterisk/cdr-custom/
+mkdir -p %{buildroot}%{_localstatedir}/spool/asterisk/festival/
 mkdir -p %{buildroot}%{_localstatedir}/spool/asterisk/monitor/
 mkdir -p %{buildroot}%{_localstatedir}/spool/asterisk/outgoing/
+mkdir -p %{buildroot}%{_localstatedir}/spool/asterisk/uploads/
 
 # We're not going to package any of the sample AGI scripts
 rm -f %{buildroot}%{_datadir}/asterisk/agi-bin/*
@@ -687,7 +691,6 @@ fi
 %{_libdir}/asterisk/modules/func_callerid.so
 %{_libdir}/asterisk/modules/func_cdr.so
 %{_libdir}/asterisk/modules/func_channel.so
-%{_libdir}/asterisk/modules/func_curl.so
 %{_libdir}/asterisk/modules/func_cut.so
 %{_libdir}/asterisk/modules/func_db.so
 %{_libdir}/asterisk/modules/func_devstate.so
@@ -825,6 +828,7 @@ fi
 %attr(0770,asterisk,asterisk) %dir %{_localstatedir}/spool/asterisk/monitor/
 %attr(0770,asterisk,asterisk) %dir %{_localstatedir}/spool/asterisk/outgoing/
 %attr(0750,asterisk,asterisk) %dir %{_localstatedir}/spool/asterisk/tmp/
+%attr(0750,asterisk,asterisk) %dir %{_localstatedir}/spool/asterisk/uploads/
 %attr(0750,asterisk,asterisk) %dir %{_localstatedir}/spool/asterisk/voicemail/
 
 %attr(0755,asterisk,asterisk) %dir %{_localstatedir}/run/asterisk
@@ -886,6 +890,7 @@ fi
 %files festival
 %defattr(-,root,root,-)
 %config(noreplace) %{_sysconfdir}/asterisk/festival.conf
+%attr(0750,asterisk,asterisk) %dir %{_localstatedir}/spool/asterisk/festival/
 %{_libdir}/asterisk/modules/app_festival.so
 
 %files firmware
@@ -1032,6 +1037,10 @@ fi
 %{_libdir}/asterisk/modules/app_voicemail_plain.so
 
 %changelog
+* Sun Jan  4 2009 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.6.0.2-3
+- Don't package func_curl in the main package. BZ#475910
+- Fix up paths. BZ#477238
+
 * Sun Jan  4 2009 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.6.0.2-2
 - Add patch to fix compilation on PPC
 

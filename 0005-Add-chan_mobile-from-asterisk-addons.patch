@@ -1,7 +1,7 @@
 From 8cc8002094fe880d374a727aa0be389ca68b0342 Mon Sep 17 00:00:00 2001
 From: Jeffrey C. Ollie <jeff@ocjtech.us>
 Date: Mon, 25 Feb 2008 09:23:28 -0600
-Subject: [PATCH 05/13] Add chan_mobile from asterisk-addons.
+Subject: [PATCH 05/14] Add chan_mobile from asterisk-addons.
 
 ---
  build_tools/menuselect-deps.in |    1 +

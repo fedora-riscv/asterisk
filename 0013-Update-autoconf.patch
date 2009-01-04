@@ -1,7 +1,7 @@
 From 249cd4bd1b4b9a0b99a07d44359e098c10dacbdb Mon Sep 17 00:00:00 2001
 From: Jeffrey C. Ollie <jeff@ocjtech.us>
 Date: Sun, 4 Jan 2009 00:37:02 -0600
-Subject: [PATCH 13/13] Update autoconf.
+Subject: [PATCH 13/14] Update autoconf.
 
 ---
  configure                        |23025 ++++++++++++++++++++------------------
