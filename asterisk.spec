@@ -3,7 +3,7 @@
 Summary: The Open Source PBX
 Name: asterisk
 Version: 1.6.0.2
-Release: 3%{?dist}
+Release: 4%{?dist}
 License: GPLv2
 Group: Applications/Internet
 URL: http://www.asterisk.org/
@@ -47,6 +47,7 @@ Patch11: 0011-Merged-revisions-160170-160172-via-svnmerge-from.patch
 Patch12: 0012-Merged-revisions-162275-via-svnmerge-from.patch
 Patch13: 0013-Update-autoconf.patch
 Patch14: 0014-Fix-up-some-paths.patch
+Patch15: 0015-Add-LDAP-schema-that-is-compatible-with-Fedora-Direc.patch
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-root-%(%{__id_u} -n)
 
@@ -234,6 +235,16 @@ BuildRequires: openldap-devel
 
 %description ldap
 LDAP resources for Asterisk.
+
+%package ldap-fds
+Summary: LDAP resources for Asterisk and the Fedora Directory Server
+Group: Applications/Internet
+Requires: asterisk = %{version}-%{release}
+Requires: asterisk-ldap = %{version}-%{release}
+Requires: fedora-ds-base
+
+%description ldap-fds
+LDAP resources for Asterisk and the Fedora Directory Server.
 
 %package misdn
 Summary: mISDN channel for Asterisk
@@ -425,6 +436,7 @@ local filesystem.
 %patch12 -p1
 %patch13 -p1
 %patch14 -p1
+%patch15 -p1
 
 cp %{SOURCE2} menuselect.makedeps
 cp %{SOURCE3} menuselect.makeopts
@@ -505,6 +517,7 @@ ASTCFLAGS="%{optflags}" make samples DEBUG= OPTIMIZE= DESTDIR=%{buildroot} ASTVA
 
 install -D -p -m 0755 contrib/init.d/rc.redhat.asterisk %{buildroot}%{_initrddir}/asterisk
 install -D -p -m 0644 contrib/sysconfig/asterisk %{buildroot}%{_sysconfdir}/sysconfig/asterisk
+install -D -p -m 0644 contrib/scripts/99asterisk.ldif %{buildroot}%{_sysconfdir}/dirsrv/schema/99asterisk.ldif
 install -D -p -m 0644 %{S:1} %{buildroot}%{_sysconfdir}/logrotate.d/asterisk
 install -D -p -m 0644 doc/asterisk-mib.txt %{buildroot}%{_datadir}/snmp/mibs/ASTERISK-MIB.txt
 install -D -p -m 0644 doc/digium-mib.txt %{buildroot}%{_datadir}/snmp/mibs/DIGIUM-MIB.txt
@@ -928,6 +941,10 @@ fi
 %config(noreplace) %{_sysconfdir}/asterisk/res_ldap.conf
 %{_libdir}/asterisk/modules/res_config_ldap.so
 
+%files ldap-fds
+%defattr(-,root,root,-)
+%{_sysconfdir}/dirsrv/schema/99asterisk.ldif
+
 %files minivm
 %defattr(-,root,root,-)
 %config(noreplace) %{_sysconfdir}/asterisk/extensions_minivm.conf
@@ -1037,6 +1054,9 @@ fi
 %{_libdir}/asterisk/modules/app_voicemail_plain.so
 
 %changelog
+* Sun Jan  4 2009 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.6.0.2-4
+- Fedora Directory Server compatibility patch/subpackage. BZ#452176
+
 * Sun Jan  4 2009 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.6.0.2-3
 - Don't package func_curl in the main package. BZ#475910
 - Fix up paths. BZ#477238

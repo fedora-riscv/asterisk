@@ -1,7 +1,7 @@
 From 42991016984f9e7930686527706ab0f36baa41d1 Mon Sep 17 00:00:00 2001
 From: tilghman <tilghman@614ede4d-c843-0410-af14-a771ab80d22e>
 Date: Tue, 29 Jul 2008 23:00:45 +0000
-Subject: [PATCH 04/14] Minor changes to reduce packaging changes made by the Fedora maintainer.
+Subject: [PATCH 04/15] Minor changes to reduce packaging changes made by the Fedora maintainer.
  (closes issue #12974)
   Reported by: jcollie
   Patches:
