@@ -1,0 +1,35 @@
+From 7719af5a016f40f573c90aae17910f7f77b9b4e6 Mon Sep 17 00:00:00 2001
+From: Caolan McNamara <caolanm@redhat.com>
+Date: Sat, 3 Jan 2009 19:06:18 -0600
+Subject: [PATCH 09/15] change configure.ac to look for pkg-config gmime-2.4 instead of gmime-2.4 gmime-config
+
+---
+ configure.ac |   12 +++++++++++-
+ 1 files changed, 11 insertions(+), 1 deletions(-)
+
+diff --git a/configure.ac b/configure.ac
+index 12065a4..08f142d 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -1425,7 +1425,17 @@ then
+     AST_EXT_LIB_CHECK([OSPTK], [osptk], [OSPPCryptoDecrypt], [osp/osp.h], [-lcrypto -lssl])
+ fi
+ 
+-AST_EXT_TOOL_CHECK([GMIME], [gmime])
++PBX_GMIME=0
++AC_CHECK_TOOL(PKGCONFIG, pkg-config, No)
++if test ! "x${PKGCONFIG}" = xNo; then
++   GMIME_INCLUDE=$(${PKGCONFIG} gmime-2.4 --cflags 2>/dev/null)
++   GMIME_LIB=$(${PKGCONFIG} gmime-2.4 --libs)
++   PBX_GMIME=1
++   AC_DEFINE([HAVE_GMIME], 1, [Define if your system has the GMIME libraries.])
++fi
++AC_SUBST(PBX_GMIME)
++AC_SUBST(GMIME_INCLUDE)
++AC_SUBST(GMIME_LIB)
+ 
+ if test "$PBX_GMIME" = "1";
+ then
+-- 
+1.6.1
+

@@ -1,0 +1,41 @@
+From 986c677766137383378252947eafb3eb8c86718a Mon Sep 17 00:00:00 2001
+From: file <file@f38db490-d61c-443f-a65b-d21fe96a405b>
+Date: Tue, 9 Dec 2008 20:47:11 +0000
+Subject: [PATCH 12/15] Merged revisions 162275 via svnmerge from
+ https://origsvn.digium.com/svn/asterisk/trunk
+
+................
+  r162275 | file | 2008-12-09 16:46:11 -0400 (Tue, 09 Dec 2008) | 11 lines
+
+  Merged revisions 162273 via svnmerge from
+  https://origsvn.digium.com/svn/asterisk/branches/1.4
+
+  ........
+    r162273 | file | 2008-12-09 16:44:32 -0400 (Tue, 09 Dec 2008) | 4 lines
+
+    Fix double declaration of 'x' on the PPC platform.
+    (closes issue #14038)
+    Reported by: ffloimair
+  ........
+................
+
+git-svn-id: http://svn.digium.com/svn/asterisk/branches/1.6.0@162276 f38db490-d61c-443f-a65b-d21fe96a405b
+---
+ apps/app_festival.c |    1 -
+ 1 files changed, 0 insertions(+), 1 deletions(-)
+
+diff --git a/apps/app_festival.c b/apps/app_festival.c
+index de8c618..4e1e47e 100644
+--- a/apps/app_festival.c
++++ b/apps/app_festival.c
+@@ -121,7 +121,6 @@ static int send_waveform_to_fd(char *waveform, int length, int fd)
+ 	int x;
+ #ifdef __PPC__ 
+ 	char c;
+-	int x;
+ #endif
+ 	sigset_t fullset, oldset;
+ 
+-- 
+1.6.1
+

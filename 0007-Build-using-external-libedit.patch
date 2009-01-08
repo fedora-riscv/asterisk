@@ -1,7 +1,7 @@
-From bbdbf8b43a846dd5f84cee581cb43eae7fc57c87 Mon Sep 17 00:00:00 2001
+From a50090dc47540b5c3df28c9846fe753f5476c4fc Mon Sep 17 00:00:00 2001
 From: Jeffrey C. Ollie <jeff@ocjtech.us>
 Date: Tue, 25 Mar 2008 00:50:27 -0500
-Subject: [PATCH] Build using external libedit.
+Subject: [PATCH 07/15] Build using external libedit.
 
 ---
  build_tools/menuselect-deps.in |    1 +
@@ -24,10 +24,10 @@ index 45faa9e..90507ee 100644
  LUA=@PBX_LUA@
  MISDN=@PBX_MISDN@
 diff --git a/configure.ac b/configure.ac
-index f4e445c..40f8d6e 100644
+index d3e4054..12065a4 100644
 --- a/configure.ac
 +++ b/configure.ac
-@@ -223,6 +223,7 @@ AST_EXT_LIB_SETUP([IMAP_TK], [UW IMAP Toolkit], [imap])
+@@ -229,6 +229,7 @@ AST_EXT_LIB_SETUP([IMAP_TK], [UW IMAP Toolkit], [imap])
  AST_EXT_LIB_SETUP([ISDNNET], [ISDN4Linux Library], [isdnnet])
  AST_EXT_LIB_SETUP([JACK], [Jack Audio Connection Kit], [jack])
  AST_EXT_LIB_SETUP([LDAP], [OpenLDAP], [ldap])
@@ -35,7 +35,7 @@ index f4e445c..40f8d6e 100644
  AST_EXT_LIB_SETUP([LTDL], [libtool], [ltdl])
  AST_EXT_LIB_SETUP([LUA], [Lua], [lua])
  AST_EXT_LIB_SETUP([MISDN], [mISDN User Library], [misdn])
-@@ -1530,6 +1531,27 @@ AC_SUBST(PBX_GTK2)
+@@ -1576,6 +1577,27 @@ AC_SUBST(PBX_GTK2)
  AC_SUBST(GTK2_INCLUDE)
  AC_SUBST(GTK2_LIB)
  
@@ -64,10 +64,10 @@ index f4e445c..40f8d6e 100644
     AC_PATH_TOOL([CURL_CONFIG], [curl-config], No)
     if test ! x"${CURL_CONFIG}" = xNo; then
 diff --git a/main/Makefile b/main/Makefile
-index b3a53a3..996ddf6 100644
+index 14fa19a..9d3e9e4 100644
 --- a/main/Makefile
 +++ b/main/Makefile
-@@ -132,6 +132,7 @@ testexpr2: ast_expr2f.c ast_expr2.c ast_expr2.h
+@@ -135,6 +135,7 @@ testexpr2: ast_expr2f.c ast_expr2.c ast_expr2.h
  channel.o: ASTCFLAGS+=$(DAHDI_INCLUDE)
  asterisk.o: ASTCFLAGS+=$(DAHDI_INCLUDE)
  
@@ -75,7 +75,7 @@ index b3a53a3..996ddf6 100644
  
  ifneq ($(findstring ENABLE_UPLOADS,$(MENUSELECT_CFLAGS)),)
  http.o: ASTCFLAGS+=$(GMIME_INCLUDE)
-@@ -165,13 +166,13 @@ ifneq ($(findstring ENABLE_UPLOADS,$(MENUSELECT_CFLAGS)),)
+@@ -168,13 +169,13 @@ ifneq ($(findstring ENABLE_UPLOADS,$(MENUSELECT_CFLAGS)),)
  GMIMELDFLAGS+=$(GMIME_LIB)
  endif
  
@@ -93,10 +93,10 @@ index b3a53a3..996ddf6 100644
  	$(CMD_PREFIX) $(ASTTOPDIR)/build_tools/strip_nonapi $@ || rm $@
  
 diff --git a/main/cli.c b/main/cli.c
-index 70d26e1..90454d8 100644
+index 6b129bc..cc838d5 100644
 --- a/main/cli.c
 +++ b/main/cli.c
-@@ -34,6 +34,8 @@ ASTERISK_FILE_VERSION(__FILE__, "$Revision: 1.3 $")
+@@ -34,6 +34,8 @@ ASTERISK_FILE_VERSION(__FILE__, "$Revision: 1.4 $")
  #include <ctype.h>
  #include <regex.h>
  
@@ -105,7 +105,7 @@ index 70d26e1..90454d8 100644
  #include "asterisk/cli.h"
  #include "asterisk/linkedlists.h"
  #include "asterisk/module.h"
-@@ -42,7 +44,6 @@ ASTERISK_FILE_VERSION(__FILE__, "$Revision: 1.3 $")
+@@ -42,7 +44,6 @@ ASTERISK_FILE_VERSION(__FILE__, "$Revision: 1.4 $")
  #include "asterisk/utils.h"
  #include "asterisk/app.h"
  #include "asterisk/lock.h"
@@ -114,10 +114,10 @@ index 70d26e1..90454d8 100644
  
  /*!
 diff --git a/makeopts.in b/makeopts.in
-index 05de366..72d5315 100644
+index 039525d..9eef75e 100644
 --- a/makeopts.in
 +++ b/makeopts.in
-@@ -241,3 +241,7 @@ TINFO_DIR=@TINFO_DIR@
+@@ -243,3 +243,7 @@ TINFO_DIR=@TINFO_DIR@
  
  # if poll is not present, let the makefile know.
  POLL_AVAILABLE=@HAS_POLL@
@@ -126,5 +126,5 @@ index 05de366..72d5315 100644
 +LIBEDIT_LIB=@LIBEDIT_LIB@
 +LIBEDIT_OBJ=@LIBEDIT_OBJ@
 -- 
-1.5.6.5
+1.6.1
 

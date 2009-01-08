@@ -2,8 +2,8 @@
 
 Summary: The Open Source PBX
 Name: asterisk
-Version: 1.6.0.1
-Release: 3%{?dist}
+Version: 1.6.0.3
+Release: 1%{?dist}
 License: GPLv2
 Group: Applications/Internet
 URL: http://www.asterisk.org/
@@ -19,13 +19,13 @@ URL: http://www.asterisk.org/
 
 # MD5 Sums
 # ========
-# 5277db1134f0dc736932279c6a25c29a  asterisk-1.6.0.1.tar.gz
-# 00465d571b2cd9fd49c86b753aa3a551  asterisk-1.6.0.1-stripped.tar.gz
+# 0797cfc8834b06e5a0169b2fda6f7bb9  asterisk-1.6.0.3.tar.gz
+# eefe39842fac3f5bd3c7b3a6c378bb5c  asterisk-1.6.0.3-stripped.tar.gz
 #
 # SHA1 Sums
 # =========
-# 20d77f6a08a8d755eeadf431c1f692d5adeadde8  asterisk-1.6.0.1.tar.gz
-# 4f5d1f436ba1119db9dfea072b1e6ac59c9eebd5  asterisk-1.6.0.1-stripped.tar.gz
+# bdede6d5113a5b0006b186a72e81c886d48ae4db  asterisk-1.6.0.3.tar.gz
+# e14b25b16d49a8b7400353e0588cc8e8d1768c5c  asterisk-1.6.0.3-stripped.tar.gz
 
 Source0: asterisk-%{version}-stripped.tar.gz
 Source1: asterisk-logrotate
@@ -40,8 +40,13 @@ Patch4:  0004-Minor-changes-to-reduce-packaging-changes-made-by-th.patch
 Patch5:  0005-Add-chan_mobile-from-asterisk-addons.patch
 Patch6:  0006-Use-pkgconfig-to-check-for-Lua.patch
 Patch7:  0007-Build-using-external-libedit.patch
-Patch8:  0008-Update-autoconf.patch
-Patch9:	 0009-Revert-changes-to-pbx_lua-from-rev-126363-that-cause.patch
+Patch8:  0008-Revert-changes-to-pbx_lua-from-rev-126363-that-cause.patch
+Patch9:  0009-change-configure.ac-to-look-for-pkg-config-gmime-2.4.patch
+Patch10: 0010-fix-the-AST_PROG_SED-problem-that-makes-.-bootstrap.patch
+Patch12: 0012-Merged-revisions-162275-via-svnmerge-from.patch
+Patch13: 0013-Update-autoconf.patch
+Patch14: 0014-Fix-up-some-paths.patch
+Patch15: 0015-Add-LDAP-schema-that-is-compatible-with-Fedora-Direc.patch
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-root-%(%{__id_u} -n)
 
@@ -230,6 +235,16 @@ BuildRequires: openldap-devel
 %description ldap
 LDAP resources for Asterisk.
 
+%package ldap-fds
+Summary: LDAP resources for Asterisk and the Fedora Directory Server
+Group: Applications/Internet
+Requires: asterisk = %{version}-%{release}
+Requires: asterisk-ldap = %{version}-%{release}
+Requires: fedora-ds-base
+
+%description ldap-fds
+LDAP resources for Asterisk and the Fedora Directory Server.
+
 %package misdn
 Summary: mISDN channel for Asterisk
 Group: Applications/Internet
@@ -415,6 +430,11 @@ local filesystem.
 %patch7 -p1
 %patch8 -p1
 %patch9 -p1
+%patch10 -p1
+%patch12 -p1
+%patch13 -p1
+%patch14 -p1
+%patch15 -p1
 
 cp %{SOURCE2} menuselect.makedeps
 cp %{SOURCE3} menuselect.makeopts
@@ -495,6 +515,7 @@ ASTCFLAGS="%{optflags}" make samples DEBUG= OPTIMIZE= DESTDIR=%{buildroot} ASTVA
 
 install -D -p -m 0755 contrib/init.d/rc.redhat.asterisk %{buildroot}%{_initrddir}/asterisk
 install -D -p -m 0644 contrib/sysconfig/asterisk %{buildroot}%{_sysconfdir}/sysconfig/asterisk
+install -D -p -m 0644 contrib/scripts/99asterisk.ldif %{buildroot}%{_sysconfdir}/dirsrv/schema/99asterisk.ldif
 install -D -p -m 0644 %{S:1} %{buildroot}%{_sysconfdir}/logrotate.d/asterisk
 install -D -p -m 0644 doc/asterisk-mib.txt %{buildroot}%{_datadir}/snmp/mibs/ASTERISK-MIB.txt
 install -D -p -m 0644 doc/digium-mib.txt %{buildroot}%{_datadir}/snmp/mibs/DIGIUM-MIB.txt
@@ -513,8 +534,10 @@ mkdir -p %{buildroot}%{_datadir}/asterisk/moh/
 mkdir -p %{buildroot}%{_datadir}/asterisk/sounds/
 mkdir -p %{buildroot}%{_localstatedir}/lib/asterisk
 mkdir -p %{buildroot}%{_localstatedir}/log/asterisk/cdr-custom/
+mkdir -p %{buildroot}%{_localstatedir}/spool/asterisk/festival/
 mkdir -p %{buildroot}%{_localstatedir}/spool/asterisk/monitor/
 mkdir -p %{buildroot}%{_localstatedir}/spool/asterisk/outgoing/
+mkdir -p %{buildroot}%{_localstatedir}/spool/asterisk/uploads/
 
 # We're not going to package any of the sample AGI scripts
 rm -f %{buildroot}%{_datadir}/asterisk/agi-bin/*
@@ -679,7 +702,6 @@ fi
 %{_libdir}/asterisk/modules/func_callerid.so
 %{_libdir}/asterisk/modules/func_cdr.so
 %{_libdir}/asterisk/modules/func_channel.so
-%{_libdir}/asterisk/modules/func_curl.so
 %{_libdir}/asterisk/modules/func_cut.so
 %{_libdir}/asterisk/modules/func_db.so
 %{_libdir}/asterisk/modules/func_devstate.so
@@ -727,14 +749,14 @@ fi
 %{_libdir}/asterisk/modules/res_smdi.so
 %{_libdir}/asterisk/modules/res_speech.so
 
-%{_sbindir}/aelparse
+#%{_sbindir}/aelparse
 %{_sbindir}/astcanary
 %{_sbindir}/asterisk
 %{_sbindir}/astgenkey
 %{_sbindir}/astman
 %{_sbindir}/autosupport
 %{_sbindir}/check_expr
-%{_sbindir}/conf2ael
+#%{_sbindir}/conf2ael
 %{_sbindir}/muted
 %{_sbindir}/rasterisk
 %{_sbindir}/safe_asterisk
@@ -817,6 +839,7 @@ fi
 %attr(0770,asterisk,asterisk) %dir %{_localstatedir}/spool/asterisk/monitor/
 %attr(0770,asterisk,asterisk) %dir %{_localstatedir}/spool/asterisk/outgoing/
 %attr(0750,asterisk,asterisk) %dir %{_localstatedir}/spool/asterisk/tmp/
+%attr(0750,asterisk,asterisk) %dir %{_localstatedir}/spool/asterisk/uploads/
 %attr(0750,asterisk,asterisk) %dir %{_localstatedir}/spool/asterisk/voicemail/
 
 %attr(0755,asterisk,asterisk) %dir %{_localstatedir}/run/asterisk
@@ -878,6 +901,7 @@ fi
 %files festival
 %defattr(-,root,root,-)
 %config(noreplace) %{_sysconfdir}/asterisk/festival.conf
+%attr(0750,asterisk,asterisk) %dir %{_localstatedir}/spool/asterisk/festival/
 %{_libdir}/asterisk/modules/app_festival.so
 
 %files firmware
@@ -914,6 +938,10 @@ fi
 %doc doc/ldap.txt
 %config(noreplace) %{_sysconfdir}/asterisk/res_ldap.conf
 %{_libdir}/asterisk/modules/res_config_ldap.so
+
+%files ldap-fds
+%defattr(-,root,root,-)
+%{_sysconfdir}/dirsrv/schema/99asterisk.ldif
 
 %files minivm
 %defattr(-,root,root,-)
@@ -1024,6 +1052,23 @@ fi
 %{_libdir}/asterisk/modules/app_voicemail_plain.so
 
 %changelog
+* Thu Jan  8 2009 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.6.0.3-1
+- Update to 1.6.0.3 to fix AST-2009-001/CVE-2009-0041
+- http://downloads.digium.com/pub/security/AST-2009-001.html
+
+* Sun Jan  4 2009 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.6.0.2-4
+- Fedora Directory Server compatibility patch/subpackage. BZ#452176
+
+* Sun Jan  4 2009 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.6.0.2-3
+- Don't package func_curl in the main package. BZ#475910
+- Fix up paths. BZ#477238
+
+* Sun Jan  4 2009 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.6.0.2-2
+- Add patch to fix compilation on PPC
+
+* Sun Jan  4 2009 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.6.0.2-1
+- Update to 1.6.0.2
+
 * Wed Nov  5 2008 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.6.0.1-3
 - Fix issue with init script giving wrong path to config file.
 

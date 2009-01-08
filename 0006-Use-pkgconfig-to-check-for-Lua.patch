@@ -1,17 +1,17 @@
-From 81bf87aedbf0f1ad5b8ecc97e3012821207445ca Mon Sep 17 00:00:00 2001
+From d633181f75ea7dc879e8ac9d014cf1fc0fe364ef Mon Sep 17 00:00:00 2001
 From: Jeffrey C. Ollie <jeff@ocjtech.us>
 Date: Mon, 25 Feb 2008 13:14:23 -0600
-Subject: [PATCH] Use pkgconfig to check for Lua.
+Subject: [PATCH 06/15] Use pkgconfig to check for Lua.
 
 ---
  configure.ac |    9 ++++++++-
  1 files changed, 8 insertions(+), 1 deletions(-)
 
 diff --git a/configure.ac b/configure.ac
-index f86e8f5..f4e445c 100644
+index b8ebbf5..d3e4054 100644
 --- a/configure.ac
 +++ b/configure.ac
-@@ -1364,7 +1364,14 @@ if test "${PBX_PWLIB}" = "1" -a "${USE_OPENH323}" != "no" ; then
+@@ -1382,7 +1382,14 @@ if test "${PBX_PWLIB}" = "1" -a "${USE_OPENH323}" != "no" ; then
  		[${PWLIB_INCLUDE}], [${PWLIB_LIB}])
  fi
  
@@ -28,5 +28,5 @@ index f86e8f5..f4e445c 100644
  AST_EXT_LIB_CHECK([RADIUS], [radiusclient-ng], [rc_read_config], [radiusclient-ng.h])
  
 -- 
-1.5.6.5
+1.6.1
 

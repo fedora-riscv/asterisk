@@ -1,7 +1,7 @@
-From 28e48a2b0b1b50a4dc09051f1250ae667614bedb Mon Sep 17 00:00:00 2001
+From 42991016984f9e7930686527706ab0f36baa41d1 Mon Sep 17 00:00:00 2001
 From: tilghman <tilghman@614ede4d-c843-0410-af14-a771ab80d22e>
 Date: Tue, 29 Jul 2008 23:00:45 +0000
-Subject: [PATCH] Minor changes to reduce packaging changes made by the Fedora maintainer.
+Subject: [PATCH 04/15] Minor changes to reduce packaging changes made by the Fedora maintainer.
  (closes issue #12974)
   Reported by: jcollie
   Patches:
@@ -13,10 +13,10 @@ git-svn-id: http://svn.digium.com/svn/asterisk/trunk@134312 614ede4d-c843-0410-a
  1 files changed, 12 insertions(+), 4 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index a874a7c..f82602c 100644
+index 788e524..05a58d1 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -221,10 +221,16 @@ ifeq ($(OSARCH),linux-gnu)
+@@ -222,10 +222,16 @@ ifeq ($(OSARCH),linux-gnu)
  endif
  
  ifeq ($(findstring -save-temps,$(ASTCFLAGS)),)
@@ -33,9 +33,9 @@ index a874a7c..f82602c 100644
 -ASTCFLAGS+=-Wall -Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations $(DEBUG)
 +ASTCFLAGS+=-Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations $(DEBUG)
  
- ASTCFLAGS+=-include $(ASTTOPDIR)/include/asterisk/autoconfig.h
- 
-@@ -237,8 +243,10 @@ ifneq ($(findstring BSD,$(OSARCH)),)
+ ifeq ($(AST_DEVMODE),yes)
+   ASTCFLAGS+=-Werror
+@@ -242,8 +248,10 @@ ifneq ($(findstring BSD,$(OSARCH)),)
    ASTLDFLAGS+=-L/usr/local/lib
  endif
  
@@ -49,5 +49,5 @@ index a874a7c..f82602c 100644
  
  ifeq ($(PROC),ppc)
 -- 
-1.5.6.5
+1.6.1
 
