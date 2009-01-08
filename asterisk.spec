@@ -2,8 +2,8 @@
 
 Summary: The Open Source PBX
 Name: asterisk
-Version: 1.6.0.2
-Release: 4%{?dist}
+Version: 1.6.0.3
+Release: 1%{?dist}
 License: GPLv2
 Group: Applications/Internet
 URL: http://www.asterisk.org/
@@ -19,13 +19,13 @@ URL: http://www.asterisk.org/
 
 # MD5 Sums
 # ========
-# 22068805be6b11831c507861293fc1f5  asterisk-1.6.0.2.tar.gz
-# 6782a95a088a78ebb52252926e94a186  asterisk-1.6.0.2-stripped.tar.gz
+# 0797cfc8834b06e5a0169b2fda6f7bb9  asterisk-1.6.0.3.tar.gz
+# eefe39842fac3f5bd3c7b3a6c378bb5c  asterisk-1.6.0.3-stripped.tar.gz
 #
 # SHA1 Sums
 # =========
-# 7d7c63f5c8ad17cc7dfd1bdd0fd27eea4fcef2c1  asterisk-1.6.0.2.tar.gz
-# 9aa182314ed4cc72bd39c7bd6897812b22bde2a2  asterisk-1.6.0.2-stripped.tar.gz
+# bdede6d5113a5b0006b186a72e81c886d48ae4db  asterisk-1.6.0.3.tar.gz
+# e14b25b16d49a8b7400353e0588cc8e8d1768c5c  asterisk-1.6.0.3-stripped.tar.gz
 
 Source0: asterisk-%{version}-stripped.tar.gz
 Source1: asterisk-logrotate
@@ -43,7 +43,6 @@ Patch7:  0007-Build-using-external-libedit.patch
 Patch8:  0008-Revert-changes-to-pbx_lua-from-rev-126363-that-cause.patch
 Patch9:  0009-change-configure.ac-to-look-for-pkg-config-gmime-2.4.patch
 Patch10: 0010-fix-the-AST_PROG_SED-problem-that-makes-.-bootstrap.patch
-Patch11: 0011-Merged-revisions-160170-160172-via-svnmerge-from.patch
 Patch12: 0012-Merged-revisions-162275-via-svnmerge-from.patch
 Patch13: 0013-Update-autoconf.patch
 Patch14: 0014-Fix-up-some-paths.patch
@@ -432,7 +431,6 @@ local filesystem.
 %patch8 -p1
 %patch9 -p1
 %patch10 -p1
-%patch11 -p1
 %patch12 -p1
 %patch13 -p1
 %patch14 -p1
@@ -1054,6 +1052,10 @@ fi
 %{_libdir}/asterisk/modules/app_voicemail_plain.so
 
 %changelog
+* Thu Jan  8 2009 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.6.0.3-1
+- Update to 1.6.0.3 to fix AST-2009-001/CVE-2009-0041
+- http://downloads.digium.com/pub/security/AST-2009-001.html
+
 * Sun Jan  4 2009 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.6.0.2-4
 - Fedora Directory Server compatibility patch/subpackage. BZ#452176
 
