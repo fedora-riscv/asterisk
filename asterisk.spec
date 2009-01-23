@@ -2,7 +2,7 @@
 
 Summary: The Open Source PBX
 Name: asterisk
-Version: 1.6.0.3
+Version: 1.6.0.5
 Release: 1%{?dist}
 License: GPLv2
 Group: Applications/Internet
@@ -19,13 +19,13 @@ URL: http://www.asterisk.org/
 
 # MD5 Sums
 # ========
-# 0797cfc8834b06e5a0169b2fda6f7bb9  asterisk-1.6.0.3.tar.gz
-# eefe39842fac3f5bd3c7b3a6c378bb5c  asterisk-1.6.0.3-stripped.tar.gz
+# 11210cf7c59cde03d928743e71fcb556  asterisk-1.6.0.5.tar.gz
+# 29bdc7428266b75aac77d66acd8c88a0  asterisk-1.6.0.5-stripped.tar.gz
 #
 # SHA1 Sums
 # =========
-# bdede6d5113a5b0006b186a72e81c886d48ae4db  asterisk-1.6.0.3.tar.gz
-# e14b25b16d49a8b7400353e0588cc8e8d1768c5c  asterisk-1.6.0.3-stripped.tar.gz
+# f2a2cd9be274dc4a7e6001f877197863b4ba8e15  asterisk-1.6.0.5.tar.gz
+# 25b92e9675d72c784018bddf0ddb458cab9e4185  asterisk-1.6.0.5-stripped.tar.gz
 
 Source0: asterisk-%{version}-stripped.tar.gz
 Source1: asterisk-logrotate
@@ -1052,6 +1052,10 @@ fi
 %{_libdir}/asterisk/modules/app_voicemail_plain.so
 
 %changelog
+* Fri Jan 23 2009 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.6.0.5-1
+- Update to 1.6.0.5 to fix regressions caused by fixes for
+  AST-2009-001/CVE-2009-0041 (Asterisk 1.6.0.4 was never released).
+
 * Thu Jan  8 2009 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.6.0.3-1
 - Update to 1.6.0.3 to fix AST-2009-001/CVE-2009-0041
 - http://downloads.digium.com/pub/security/AST-2009-001.html
