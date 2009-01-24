@@ -1,0 +1,29 @@
+From f439a25ddc062941e2e14d7c3cf60b55b324f98b Mon Sep 17 00:00:00 2001
+From: mmichelson <mmichelson@f38db490-d61c-443f-a65b-d21fe96a405b>
+Date: Fri, 5 Dec 2008 22:59:43 +0000
+Subject: [PATCH] Fix a reversed-logic ast_strlen_zero.
+
+This problem was pointed out on the asterisk-users list
+by Jim Dickenson
+
+git-svn-id: http://svn.digium.com/svn/asterisk/branches/1.6.0@161490 f38db490-d61c-443f-a65b-d21fe96a405b
+---
+ main/manager.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/main/manager.c b/main/manager.c
+index 0076f64..5eb8339 100644
+--- a/main/manager.c
++++ b/main/manager.c
+@@ -2163,7 +2163,7 @@ static int action_originate(struct mansession *s, const struct message *m)
+ 	int format = AST_FORMAT_SLINEAR;
+ 
+ 	pthread_t th;
+-	if (!ast_strlen_zero(name)) {
++	if (ast_strlen_zero(name)) {
+ 		astman_send_error(s, m, "Channel not specified");
+ 		return 0;
+ 	}
+-- 
+1.6.0.6
+

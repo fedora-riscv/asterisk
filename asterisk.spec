@@ -3,7 +3,7 @@
 Summary: The Open Source PBX
 Name: asterisk
 Version: 1.6.0.5
-Release: 1%{?dist}
+Release: 2%{?dist}
 License: GPLv2
 Group: Applications/Internet
 URL: http://www.asterisk.org/
@@ -47,6 +47,7 @@ Patch12: 0012-Merged-revisions-162275-via-svnmerge-from.patch
 Patch13: 0013-Update-autoconf.patch
 Patch14: 0014-Fix-up-some-paths.patch
 Patch15: 0015-Add-LDAP-schema-that-is-compatible-with-Fedora-Direc.patch
+Patch16: 0016-Fix-a-reversed-logic-ast_strlen_zero.patch
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-root-%(%{__id_u} -n)
 
@@ -435,6 +436,7 @@ local filesystem.
 %patch13 -p1
 %patch14 -p1
 %patch15 -p1
+%patch16 -p1
 
 cp %{SOURCE2} menuselect.makedeps
 cp %{SOURCE3} menuselect.makeopts
@@ -1052,6 +1054,9 @@ fi
 %{_libdir}/asterisk/modules/app_voicemail_plain.so
 
 %changelog
+* Fri Jan 23 2009 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.6.0.5-2
+- Add a patch to fix a problem with the manager interface.
+
 * Fri Jan 23 2009 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.6.0.5-1
 - Update to 1.6.0.5 to fix regressions caused by fixes for
   AST-2009-001/CVE-2009-0041 (Asterisk 1.6.0.4 was never released).
