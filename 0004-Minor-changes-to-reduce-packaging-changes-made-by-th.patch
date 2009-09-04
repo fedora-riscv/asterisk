@@ -1,53 +1,17 @@
-From 42991016984f9e7930686527706ab0f36baa41d1 Mon Sep 17 00:00:00 2001
-From: tilghman <tilghman@614ede4d-c843-0410-af14-a771ab80d22e>
-Date: Tue, 29 Jul 2008 23:00:45 +0000
-Subject: [PATCH 04/15] Minor changes to reduce packaging changes made by the Fedora maintainer.
- (closes issue #12974)
-  Reported by: jcollie
-  Patches:
-        0001-Don-t-override-duplicate-optimization-flags.patch uploaded by jcollie (license 412)
-
-git-svn-id: http://svn.digium.com/svn/asterisk/trunk@134312 614ede4d-c843-0410-af14-a771ab80d22e
----
- Makefile |   16 ++++++++++++----
- 1 files changed, 12 insertions(+), 4 deletions(-)
-
-diff --git a/Makefile b/Makefile
-index 788e524..05a58d1 100644
---- a/Makefile
-+++ b/Makefile
-@@ -222,10 +222,16 @@ ifeq ($(OSARCH),linux-gnu)
- endif
- 
- ifeq ($(findstring -save-temps,$(ASTCFLAGS)),)
--ASTCFLAGS+=-pipe
-+  ifeq ($(findstring -pipe,$(ASTCFLAGS)),)
-+    ASTCFLAGS+=-pipe
-+  endif
-+endif
-+
-+ifeq ($(findstring -Wall,$(ASTCFLAGS)),)
-+  ASTCFLAGS+=-Wall
- endif
- 
--ASTCFLAGS+=-Wall -Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations $(DEBUG)
-+ASTCFLAGS+=-Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations $(DEBUG)
- 
- ifeq ($(AST_DEVMODE),yes)
-   ASTCFLAGS+=-Werror
-@@ -242,8 +248,10 @@ ifneq ($(findstring BSD,$(OSARCH)),)
-   ASTLDFLAGS+=-L/usr/local/lib
+Index: Makefile
+===================================================================
+--- Makefile	(revision 216221)
++++ Makefile	(working copy)
+@@ -241,8 +241,10 @@
+   _ASTCFLAGS+=-isystem /usr/local/include
  endif
  
 -ifneq ($(PROC),ultrasparc)
--  ASTCFLAGS+=$(shell if $(CC) -march=$(PROC) -S -o /dev/null -xc /dev/null >/dev/null 2>&1; then echo "-march=$(PROC)"; fi)
-+ifeq ($(findstring -march,$(ASTCFLAGS)),)
+-  _ASTCFLAGS+=$(shell if $(CC) -march=$(PROC) -S -o /dev/null -xc /dev/null >/dev/null 2>&1; then echo "-march=$(PROC)"; fi)
++ifeq ($(findstring -march,$(_ASTCFLAGS)),)
 +  ifneq ($(PROC),ultrasparc)
-+    ASTCFLAGS+=$(shell if $(CC) -march=$(PROC) -S -o /dev/null -xc /dev/null >/dev/null 2>&1; then echo "-march=$(PROC)"; fi)
++    _ASTCFLAGS+=$(shell if $(CC) -march=$(PROC) -S -o /dev/null -xc /dev/null >/dev/null 2>&1; then echo "-march=$(PROC)"; fi)
 +  endif
  endif
  
  ifeq ($(PROC),ppc)
--- 
-1.6.1
-

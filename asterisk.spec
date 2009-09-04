@@ -2,8 +2,8 @@
 
 Summary: The Open Source PBX
 Name: asterisk
-Version: 1.6.0.5
-Release: 2%{?dist}
+Version: 1.6.0.15
+Release: 1%{?dist}
 License: GPLv2
 Group: Applications/Internet
 URL: http://www.asterisk.org/
@@ -19,13 +19,18 @@ URL: http://www.asterisk.org/
 
 # MD5 Sums
 # ========
-# 11210cf7c59cde03d928743e71fcb556  asterisk-1.6.0.5.tar.gz
-# 29bdc7428266b75aac77d66acd8c88a0  asterisk-1.6.0.5-stripped.tar.gz
+# d319f52d8d1d70f69583901e56720c30  asterisk-1.6.0.15.tar.gz
+# 99f689457465e013f3402dfe029967ee  asterisk-1.6.0.15-stripped.tar.gz
 #
 # SHA1 Sums
 # =========
-# f2a2cd9be274dc4a7e6001f877197863b4ba8e15  asterisk-1.6.0.5.tar.gz
-# 25b92e9675d72c784018bddf0ddb458cab9e4185  asterisk-1.6.0.5-stripped.tar.gz
+# 31b2ad242d103cef7509e0fae4f31eb0b00a855e  asterisk-1.6.0.15.tar.gz
+# 1326c6ab27b22dc447905293b54b1f1af2f91c18  asterisk-1.6.0.15-stripped.tar.gz
+#
+# SHA256 Sums
+# =========
+# 159bf2c39ed2926d97f535c8d46bcf6c80853bab1269d596241c6ed30b27b92a  asterisk-1.6.0.15.tar.gz
+# 823ff57f5ae10e5ff5ca711ab52d0bc30148e94d1ef9f80de499d8ce28520242  asterisk-1.6.0.15-stripped.tar.gz
 
 Source0: asterisk-%{version}-stripped.tar.gz
 Source1: asterisk-logrotate
@@ -37,22 +42,15 @@ Patch1:  0001-Modify-init-scripts-for-better-Fedora-compatibility.patch
 Patch2:  0002-Modify-modules.conf-so-that-different-voicemail-modu.patch
 Patch3:  0003-Allow-alternate-extensions-to-be-specified-in-users.patch
 Patch4:  0004-Minor-changes-to-reduce-packaging-changes-made-by-th.patch
-Patch5:  0005-Add-chan_mobile-from-asterisk-addons.patch
-Patch6:  0006-Use-pkgconfig-to-check-for-Lua.patch
-Patch7:  0007-Build-using-external-libedit.patch
 Patch8:  0008-Revert-changes-to-pbx_lua-from-rev-126363-that-cause.patch
 Patch9:  0009-change-configure.ac-to-look-for-pkg-config-gmime-2.4.patch
-Patch10: 0010-fix-the-AST_PROG_SED-problem-that-makes-.-bootstrap.patch
-Patch12: 0012-Merged-revisions-162275-via-svnmerge-from.patch
-Patch13: 0013-Update-autoconf.patch
 Patch14: 0014-Fix-up-some-paths.patch
 Patch15: 0015-Add-LDAP-schema-that-is-compatible-with-Fedora-Direc.patch
-Patch16: 0016-Fix-a-reversed-logic-ast_strlen_zero.patch
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-root-%(%{__id_u} -n)
 
-#BuildRequires: autoconf
-#BuildRequires: automake
+BuildRequires: autoconf
+BuildRequires: automake
 
 # core build requirements
 BuildRequires: openssl-devel
@@ -81,9 +79,6 @@ BuildRequires: libvorbis-devel
 # codec_gsm
 BuildRequires: gsm-devel
 
-# cli
-BuildRequires: libedit-devel
-
 Requires(pre): %{_sbindir}/useradd
 Requires(pre): %{_sbindir}/groupadd
 Requires(post): /sbin/chkconfig
@@ -92,6 +87,9 @@ Requires(preun): /sbin/service
 
 # asterisk-conference package removed since patch no longer compiles
 Obsoletes: asterisk-conference <= 1.6.0-0.14.beta9
+
+# we are dropping the chan_mobile patch
+Obsoletes: asterisk-mobile <= 1.6.0.5-2
 
 %description
 Asterisk is a complete PBX in software. It runs on Linux and provides
@@ -264,15 +262,15 @@ Requires: asterisk = %{version}-%{release}
 %description minivm
 MiniVM application for Asterisk.
 
-%package mobile
-Summary: Asterisk channel driver for bluetooth phones and headsets
-Group: Applications/Internet
-Requires: asterisk = %{version}-%{release}
-BuildRequires: bluez-libs-devel
-
-%description mobile
-Asterisk channel driver to allow Bluetooth cell/mobile phones to be
-used as FXO devices, and headsets as FXS devices.
+#%package mobile
+#Summary: Asterisk channel driver for bluetooth phones and headsets
+#Group: Applications/Internet
+#Requires: asterisk = %{version}-%{release}
+#BuildRequires: bluez-libs-devel
+#
+#%description mobile
+#Asterisk channel driver to allow Bluetooth cell/mobile phones to be
+#used as FXO devices, and headsets as FXS devices.
 
 %package odbc
 Summary: Applications for Asterisk that use ODBC (except voicemail)
@@ -423,20 +421,13 @@ local filesystem.
 %prep
 %setup0 -q
 %patch1 -p1
-%patch2 -p1
+%patch2 -p0
 %patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
+%patch4 -p0
 %patch8 -p1
 %patch9 -p1
-%patch10 -p1
-%patch12 -p1
-%patch13 -p1
 %patch14 -p1
 %patch15 -p1
-%patch16 -p1
 
 cp %{SOURCE2} menuselect.makedeps
 cp %{SOURCE3} menuselect.makeopts
@@ -699,6 +690,7 @@ fi
 %{_libdir}/asterisk/modules/format_vox.so
 %{_libdir}/asterisk/modules/format_wav_gsm.so
 %{_libdir}/asterisk/modules/format_wav.so
+%{_libdir}/asterisk/modules/func_audiohookinherit.so
 %{_libdir}/asterisk/modules/func_base64.so
 %{_libdir}/asterisk/modules/func_blacklist.so
 %{_libdir}/asterisk/modules/func_callerid.so
@@ -751,14 +743,14 @@ fi
 %{_libdir}/asterisk/modules/res_smdi.so
 %{_libdir}/asterisk/modules/res_speech.so
 
-#%{_sbindir}/aelparse
+%{_sbindir}/aelparse
 %{_sbindir}/astcanary
 %{_sbindir}/asterisk
 %{_sbindir}/astgenkey
 %{_sbindir}/astman
 %{_sbindir}/autosupport
-%{_sbindir}/check_expr
-#%{_sbindir}/conf2ael
+#%{_sbindir}/check_expr
+%{_sbindir}/conf2ael
 %{_sbindir}/muted
 %{_sbindir}/rasterisk
 %{_sbindir}/safe_asterisk
@@ -956,11 +948,11 @@ fi
 %config(noreplace) %{_sysconfdir}/asterisk/misdn.conf
 %{_libdir}/asterisk/modules/chan_misdn.so
 
-%files mobile
-%defattr(-,root,root,-)
-%doc doc/chan_mobile.txt
-%config(noreplace) %{_sysconfdir}/asterisk/mobile.conf
-%{_libdir}/asterisk/modules/chan_mobile.so
+#%files mobile
+#%defattr(-,root,root,-)
+#%doc doc/chan_mobile.txt
+#%config(noreplace) %{_sysconfdir}/asterisk/mobile.conf
+#%{_libdir}/asterisk/modules/chan_mobile.so
 
 %files odbc
 %defattr(-,root,root,-)
@@ -1054,6 +1046,10 @@ fi
 %{_libdir}/asterisk/modules/app_voicemail_plain.so
 
 %changelog
+* Thu Sep  3 2009 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.6.0.15-1
+- Drop chan_mobile, too difficult to maintain as a patch
+- Update to 1.6.0.15 and drop unneeded patches
+
 * Fri Jan 23 2009 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.6.0.5-2
 - Add a patch to fix a problem with the manager interface.
 
