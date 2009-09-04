@@ -3,7 +3,7 @@
 Summary: The Open Source PBX
 Name: asterisk
 Version: 1.6.0.15
-Release: 1%{?dist}
+Release: 2%{?dist}
 License: GPLv2
 Group: Applications/Internet
 URL: http://www.asterisk.org/
@@ -526,6 +526,7 @@ install -D -p -m 0755 apps/app_voicemail_plain.so %{buildroot}%{_libdir}/asteris
 mkdir -p %{buildroot}%{_datadir}/asterisk/moh/
 mkdir -p %{buildroot}%{_datadir}/asterisk/sounds/
 mkdir -p %{buildroot}%{_localstatedir}/lib/asterisk
+mkdir -p %{buildroot}%{_localstatedir}/lib/asterisk/keys
 mkdir -p %{buildroot}%{_localstatedir}/log/asterisk/cdr-custom/
 mkdir -p %{buildroot}%{_localstatedir}/spool/asterisk/festival/
 mkdir -p %{buildroot}%{_localstatedir}/spool/asterisk/monitor/
@@ -824,6 +825,7 @@ fi
 %dir %{_datadir}/asterisk/sounds/
 
 %attr(0750,asterisk,asterisk) %dir %{_localstatedir}/lib/asterisk/
+%attr(0750,asterisk,asterisk) %dir %{_localstatedir}/lib/asterisk/keys
 
 %attr(0750,asterisk,asterisk) %dir %{_localstatedir}/log/asterisk/
 %attr(0750,asterisk,asterisk) %dir %{_localstatedir}/log/asterisk/cdr-csv/
@@ -1046,6 +1048,9 @@ fi
 %{_libdir}/asterisk/modules/app_voicemail_plain.so
 
 %changelog
+* Thu Sep  3 2009 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.6.0.15-2
+- Create /var/lib/asterisk/keys
+
 * Thu Sep  3 2009 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.6.0.15-1
 - Drop chan_mobile, too difficult to maintain as a patch
 - Update to 1.6.0.15 and drop unneeded patches
