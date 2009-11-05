@@ -3,7 +3,7 @@
 Summary: The Open Source PBX
 Name: asterisk
 Version: 1.6.0.17
-Release: 1%{?dist}
+Release: 2%{?dist}
 License: GPLv2
 Group: Applications/Internet
 URL: http://www.asterisk.org/
@@ -516,7 +516,7 @@ rm -rf %{buildroot}%{_sbindir}/hashtest
 rm -rf %{buildroot}%{_sbindir}/hashtest2
 
 # don't package the iaxy firmware
-rm -rf %{buildroot}%{_datadir}/asterisk/firmware/iaxy/iaxy.bin
+rm -rf %{buildroot}%{_datadir}/asterisk/firmware/iax/iaxy.bin
 
 %if %{with_apidoc}
 find doc/api/html -name \*.map -size 0 -delete
@@ -790,7 +790,7 @@ fi
 %dir %{_datadir}/asterisk
 %dir %{_datadir}/asterisk/agi-bin
 %dir %{_datadir}/asterisk/firmware
-%dir %{_datadir}/asterisk/firmware/iaxy
+%dir %{_datadir}/asterisk/firmware/iax
 %{_datadir}/asterisk/images
 %{_datadir}/asterisk/keys
 %{_datadir}/asterisk/phoneprov
@@ -1018,6 +1018,9 @@ fi
 %{_libdir}/asterisk/modules/app_voicemail_plain.so
 
 %changelog
+* Thu Nov  5 2009 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.6.0.17-2
+- Fix firmware path
+
 * Wed Nov  4 2009 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.6.0.17-1
 - Update to 1.6.0.17 to fix AST-2009-009/CVE-2008-7220
 - Merge the firmware subpackage back into the main package.
