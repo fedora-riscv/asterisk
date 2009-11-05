@@ -2,41 +2,17 @@
 
 Summary: The Open Source PBX
 Name: asterisk
-Version: 1.6.0.15
-Release: 2%{?dist}
+Version: 1.6.0.17
+Release: 1%{?dist}
 License: GPLv2
 Group: Applications/Internet
 URL: http://www.asterisk.org/
 
-# The Asterisk tarball contains some items that we don't want in there,
-# so start with the original tarball from here:
-#
-# http://downloads.digium.com/pub/telephony/asterisk/releases/asterisk-%{version}%{?beta:-beta%{beta}}.tar.gz
-#
-# Then run the included script file to build the stripped tarball:
-#
-# sh asterisk-strip.sh %{version}
-
-# MD5 Sums
-# ========
-# d319f52d8d1d70f69583901e56720c30  asterisk-1.6.0.15.tar.gz
-# 99f689457465e013f3402dfe029967ee  asterisk-1.6.0.15-stripped.tar.gz
-#
-# SHA1 Sums
-# =========
-# 31b2ad242d103cef7509e0fae4f31eb0b00a855e  asterisk-1.6.0.15.tar.gz
-# 1326c6ab27b22dc447905293b54b1f1af2f91c18  asterisk-1.6.0.15-stripped.tar.gz
-#
-# SHA256 Sums
-# =========
-# 159bf2c39ed2926d97f535c8d46bcf6c80853bab1269d596241c6ed30b27b92a  asterisk-1.6.0.15.tar.gz
-# 823ff57f5ae10e5ff5ca711ab52d0bc30148e94d1ef9f80de499d8ce28520242  asterisk-1.6.0.15-stripped.tar.gz
-
-Source0: asterisk-%{version}-stripped.tar.gz
+Source0: http://downloads.asterisk.org/pub/telephony/asterisk/releases/asterisk-%{version}%{?beta:-beta%{beta}}.tar.gz
 Source1: asterisk-logrotate
 Source2: menuselect.makedeps
 Source3: menuselect.makeopts
-Source4: asterisk-strip.sh
+Source4: http://downloads.asterisk.org/pub/telephony/asterisk/releases/asterisk-%{version}%{?beta:-beta%{beta}}.tar.gz.asc
 
 Patch1:  0001-Modify-init-scripts-for-better-Fedora-compatibility.patch
 Patch2:  0002-Modify-modules.conf-so-that-different-voicemail-modu.patch
@@ -90,6 +66,8 @@ Obsoletes: asterisk-conference <= 1.6.0-0.14.beta9
 
 # we are dropping the chan_mobile patch
 Obsoletes: asterisk-mobile <= 1.6.0.5-2
+
+Obsoletes: asterisk-firmware < 1.6.0.17-1
 
 %description
 Asterisk is a complete PBX in software. It runs on Linux and provides
@@ -176,15 +154,6 @@ Requires: festival
 
 %description festival
 Application for the Asterisk PBX that uses Festival to convert text to speech.
-
-%package firmware
-Summary: Firmware for the Digium S101I (IAXy)
-Group: Applications/Internet
-License: Redistributable, no modification permitted
-Requires: asterisk = %{version}-%{release}
-
-%description firmware
-Firmware for the Digium S101I (IAXy).
 
 %package ices
 Summary: Stream audio from Asterisk to an IceCast server
@@ -515,23 +484,23 @@ install -D -p -m 0644 doc/digium-mib.txt %{buildroot}%{_datadir}/snmp/mibs/DIGIU
 
 rm %{buildroot}%{_libdir}/asterisk/modules/app_directory.so
 rm %{buildroot}%{_libdir}/asterisk/modules/app_voicemail.so
-install -D -p -m 0755 apps/app_directory_imap.so %{buildroot}%{_libdir}/asterisk/modules/
-install -D -p -m 0755 apps/app_voicemail_imap.so %{buildroot}%{_libdir}/asterisk/modules/
-install -D -p -m 0755 apps/app_directory_odbc.so %{buildroot}%{_libdir}/asterisk/modules/
-install -D -p -m 0755 apps/app_voicemail_odbc.so %{buildroot}%{_libdir}/asterisk/modules/
-install -D -p -m 0755 apps/app_directory_plain.so %{buildroot}%{_libdir}/asterisk/modules/
-install -D -p -m 0755 apps/app_voicemail_plain.so %{buildroot}%{_libdir}/asterisk/modules/
+install -D -p -m 0755 apps/app_directory_imap.so %{buildroot}%{_libdir}/asterisk/modules
+install -D -p -m 0755 apps/app_voicemail_imap.so %{buildroot}%{_libdir}/asterisk/modules
+install -D -p -m 0755 apps/app_directory_odbc.so %{buildroot}%{_libdir}/asterisk/modules
+install -D -p -m 0755 apps/app_voicemail_odbc.so %{buildroot}%{_libdir}/asterisk/modules
+install -D -p -m 0755 apps/app_directory_plain.so %{buildroot}%{_libdir}/asterisk/modules
+install -D -p -m 0755 apps/app_voicemail_plain.so %{buildroot}%{_libdir}/asterisk/modules
 
 # create some directories that need to be packaged
-mkdir -p %{buildroot}%{_datadir}/asterisk/moh/
-mkdir -p %{buildroot}%{_datadir}/asterisk/sounds/
+mkdir -p %{buildroot}%{_datadir}/asterisk/moh
+mkdir -p %{buildroot}%{_datadir}/asterisk/sounds
 mkdir -p %{buildroot}%{_localstatedir}/lib/asterisk
 mkdir -p %{buildroot}%{_localstatedir}/lib/asterisk/keys
-mkdir -p %{buildroot}%{_localstatedir}/log/asterisk/cdr-custom/
-mkdir -p %{buildroot}%{_localstatedir}/spool/asterisk/festival/
-mkdir -p %{buildroot}%{_localstatedir}/spool/asterisk/monitor/
-mkdir -p %{buildroot}%{_localstatedir}/spool/asterisk/outgoing/
-mkdir -p %{buildroot}%{_localstatedir}/spool/asterisk/uploads/
+mkdir -p %{buildroot}%{_localstatedir}/log/asterisk/cdr-custom
+mkdir -p %{buildroot}%{_localstatedir}/spool/asterisk/festival
+mkdir -p %{buildroot}%{_localstatedir}/spool/asterisk/monitor
+mkdir -p %{buildroot}%{_localstatedir}/spool/asterisk/outgoing
+mkdir -p %{buildroot}%{_localstatedir}/spool/asterisk/uploads
 
 # We're not going to package any of the sample AGI scripts
 rm -f %{buildroot}%{_datadir}/asterisk/agi-bin/*
@@ -545,6 +514,9 @@ rm -rf %{buildroot}%{_datadir}/asterisk/phoneprov/*
 # these are compiled with -O0 and thus include unfortified code.
 rm -rf %{buildroot}%{_sbindir}/hashtest
 rm -rf %{buildroot}%{_sbindir}/hashtest2
+
+# don't package the iaxy firmware
+rm -rf %{buildroot}%{_datadir}/asterisk/firmware/iaxy/iaxy.bin
 
 %if %{with_apidoc}
 find doc/api/html -name \*.map -size 0 -delete
@@ -815,28 +787,30 @@ fi
 
 %config(noreplace) %{_sysconfdir}/logrotate.d/asterisk
 
-%dir %{_datadir}/asterisk/
-%dir %{_datadir}/asterisk/agi-bin/
-%{_datadir}/asterisk/images/
-%{_datadir}/asterisk/keys/
-%{_datadir}/asterisk/phoneprov/
-%{_datadir}/asterisk/static-http/
-%dir %{_datadir}/asterisk/moh/
-%dir %{_datadir}/asterisk/sounds/
+%dir %{_datadir}/asterisk
+%dir %{_datadir}/asterisk/agi-bin
+%dir %{_datadir}/asterisk/firmware
+%dir %{_datadir}/asterisk/firmware/iaxy
+%{_datadir}/asterisk/images
+%{_datadir}/asterisk/keys
+%{_datadir}/asterisk/phoneprov
+%{_datadir}/asterisk/static-http
+%dir %{_datadir}/asterisk/moh
+%dir %{_datadir}/asterisk/sounds
 
-%attr(0750,asterisk,asterisk) %dir %{_localstatedir}/lib/asterisk/
+%attr(0750,asterisk,asterisk) %dir %{_localstatedir}/lib/asterisk
 %attr(0750,asterisk,asterisk) %dir %{_localstatedir}/lib/asterisk/keys
 
-%attr(0750,asterisk,asterisk) %dir %{_localstatedir}/log/asterisk/
-%attr(0750,asterisk,asterisk) %dir %{_localstatedir}/log/asterisk/cdr-csv/
-%attr(0750,asterisk,asterisk) %dir %{_localstatedir}/log/asterisk/cdr-custom/
+%attr(0750,asterisk,asterisk) %dir %{_localstatedir}/log/asterisk
+%attr(0750,asterisk,asterisk) %dir %{_localstatedir}/log/asterisk/cdr-csv
+%attr(0750,asterisk,asterisk) %dir %{_localstatedir}/log/asterisk/cdr-custom
 
-%attr(0750,asterisk,asterisk) %dir %{_localstatedir}/spool/asterisk/
-%attr(0770,asterisk,asterisk) %dir %{_localstatedir}/spool/asterisk/monitor/
-%attr(0770,asterisk,asterisk) %dir %{_localstatedir}/spool/asterisk/outgoing/
-%attr(0750,asterisk,asterisk) %dir %{_localstatedir}/spool/asterisk/tmp/
-%attr(0750,asterisk,asterisk) %dir %{_localstatedir}/spool/asterisk/uploads/
-%attr(0750,asterisk,asterisk) %dir %{_localstatedir}/spool/asterisk/voicemail/
+%attr(0750,asterisk,asterisk) %dir %{_localstatedir}/spool/asterisk
+%attr(0770,asterisk,asterisk) %dir %{_localstatedir}/spool/asterisk/monitor
+%attr(0770,asterisk,asterisk) %dir %{_localstatedir}/spool/asterisk/outgoing
+%attr(0750,asterisk,asterisk) %dir %{_localstatedir}/spool/asterisk/tmp
+%attr(0750,asterisk,asterisk) %dir %{_localstatedir}/spool/asterisk/uploads
+%attr(0750,asterisk,asterisk) %dir %{_localstatedir}/spool/asterisk/voicemail
 
 %attr(0755,asterisk,asterisk) %dir %{_localstatedir}/run/asterisk
 
@@ -897,12 +871,8 @@ fi
 %files festival
 %defattr(-,root,root,-)
 %config(noreplace) %{_sysconfdir}/asterisk/festival.conf
-%attr(0750,asterisk,asterisk) %dir %{_localstatedir}/spool/asterisk/festival/
+%attr(0750,asterisk,asterisk) %dir %{_localstatedir}/spool/asterisk/festival
 %{_libdir}/asterisk/modules/app_festival.so
-
-%files firmware
-%defattr(-,root,root,-)
-%{_datadir}/asterisk/firmware/
 
 %files ices
 %defattr(-,root,root,-)
@@ -1048,6 +1018,11 @@ fi
 %{_libdir}/asterisk/modules/app_voicemail_plain.so
 
 %changelog
+* Wed Nov  4 2009 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.6.0.17-1
+- Update to 1.6.0.17 to fix AST-2009-009/CVE-2008-7220
+- Merge the firmware subpackage back into the main package.
+- Don't package the iaxy firmware anymore.
+
 * Thu Sep  3 2009 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.6.0.15-2
 - Create /var/lib/asterisk/keys
 
