@@ -2,8 +2,8 @@
 
 Summary: The Open Source PBX
 Name: asterisk
-Version: 1.6.0.17
-Release: 2%{?dist}
+Version: 1.6.0.18
+Release: 1%{?dist}
 License: GPLv2
 Group: Applications/Internet
 URL: http://www.asterisk.org/
@@ -18,7 +18,6 @@ Patch1:  0001-Modify-init-scripts-for-better-Fedora-compatibility.patch
 Patch2:  0002-Modify-modules.conf-so-that-different-voicemail-modu.patch
 Patch3:  0003-Allow-alternate-extensions-to-be-specified-in-users.patch
 Patch4:  0004-Minor-changes-to-reduce-packaging-changes-made-by-th.patch
-Patch8:  0008-Revert-changes-to-pbx_lua-from-rev-126363-that-cause.patch
 Patch9:  0009-change-configure.ac-to-look-for-pkg-config-gmime-2.4.patch
 Patch14: 0014-Fix-up-some-paths.patch
 Patch15: 0015-Add-LDAP-schema-that-is-compatible-with-Fedora-Direc.patch
@@ -94,15 +93,6 @@ Requires: asterisk = %{version}-%{release}
 %description apidoc
 API documentation for Asterisk.
 %endif
-
-#%package conference
-#Summary: Audio/video conferencing application for Asterisk
-#Group: Applications/Internet
-#Requires: asterisk = %{version}-%{release}
-#BuildRequires: speex-devel
-#
-#%description conference
-#Audio/video conferencing application for Asterisk.
 
 %package curl
 Summary: Modules for Asterisk that use cURL
@@ -230,16 +220,6 @@ Requires: asterisk = %{version}-%{release}
 
 %description minivm
 MiniVM application for Asterisk.
-
-#%package mobile
-#Summary: Asterisk channel driver for bluetooth phones and headsets
-#Group: Applications/Internet
-#Requires: asterisk = %{version}-%{release}
-#BuildRequires: bluez-libs-devel
-#
-#%description mobile
-#Asterisk channel driver to allow Bluetooth cell/mobile phones to be
-#used as FXO devices, and headsets as FXS devices.
 
 %package odbc
 Summary: Applications for Asterisk that use ODBC (except voicemail)
@@ -389,11 +369,10 @@ local filesystem.
 
 %prep
 %setup0 -q
-%patch1 -p1
+%patch1 -p0
 %patch2 -p0
 %patch3 -p1
 %patch4 -p0
-%patch8 -p1
 %patch9 -p1
 %patch14 -p1
 %patch15 -p1
@@ -825,16 +804,6 @@ fi
 %doc doc/api/html/*
 %endif
 
-#%files conference
-#%defattr(-,root,root,-)
-#%doc apps/conference/CLI.txt
-#%doc apps/conference/Flags.txt
-#%doc apps/conference/LICENSE
-#%doc apps/conference/README
-#%doc apps/conference/README.videoswitch
-#%doc apps/conference/TODO
-#%{_libdir}/asterisk/modules/app_conference.so
-
 %files curl
 %defattr(-,root,root,-)
 %{_libdir}/asterisk/modules/func_curl.so
@@ -1018,6 +987,10 @@ fi
 %{_libdir}/asterisk/modules/app_voicemail_plain.so
 
 %changelog
+* Thu Nov 19 2009 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.6.0.18-1
+- Update to 1.6.0.18
+- Drop unneeded patch to get Lua building
+
 * Thu Nov  5 2009 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.6.0.17-2
 - Fix firmware path
 
