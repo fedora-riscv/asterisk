@@ -1,5 +1,5 @@
 # Makefile for source rpm: asterisk
-# $Id: Makefile,v 1.1 2007/12/12 04:44:32 ausil Exp $
+# $Id: Makefile,v 1.2 2009/11/26 01:31:00 notting Exp $
 NAME := asterisk
 SPECFILE = $(firstword $(wildcard *.spec))
 
