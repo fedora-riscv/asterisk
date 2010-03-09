@@ -2,7 +2,7 @@
 Summary: The Open Source PBX
 Name: asterisk
 Version: 1.6.2.6
-Release: 0.1%{?_rc:.rc%{_rc}}%{?dist}
+Release: 0.1%{?_rc:.rc%{_rc}}%{?dist}.1
 License: GPLv2
 Group: Applications/Internet
 URL: http://www.asterisk.org/
@@ -1038,6 +1038,9 @@ fi
 %{_libdir}/asterisk/modules/app_voicemail_plain.so
 
 %changelog
+* Tue Mar  9 2010 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.6.2.6-0.1.rc2.1
+- Don't forget to cvs add all the patches.
+
 * Mon Mar  8 2010 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.6.2.6-0.1.rc2
 - Update to 1.6.2.6-rc2
 
