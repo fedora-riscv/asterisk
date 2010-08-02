@@ -1,7 +1,7 @@
-#global _rc 3
+#global _rc 1
 Summary: The Open Source PBX
 Name: asterisk
-Version: 1.6.2.7
+Version: 1.6.2.10
 Release: 1%{?_rc:.rc%{_rc}}%{?dist}
 License: GPLv2
 Group: Applications/Internet
@@ -13,17 +13,16 @@ Source2: menuselect.makedeps
 Source3: menuselect.makeopts
 Source5: http://downloads.asterisk.org/pub/telephony/asterisk/releases/asterisk-%{version}%{?_rc:-rc%{_rc}}.tar.gz.asc
 
-Patch1:  0001-Modify-init-scripts-for-better-Fedora-compatibility.patch
+Patch1:  0001-Modify-init-scripts-for-better-Fedora-compatibilty.patch
 Patch2:  0002-Modify-modules.conf-so-that-different-voicemail-modu.patch
-
 # Submitted upstream: https://issues.asterisk.org/view.php?id=16858
-Patch5:  0005-Build-using-external-libedit.patch
-Patch6:  0006-Fix-history-loading-when-using-external-libedit.patch
-
+Patch3:  0003-Allow-linking-building-against-an-external-libedit.patch
+Patch4:  0004-Use-the-library-function-for-loading-command-history.patch
 # Submitted upstream: https://issues.asterisk.org/view.php?id=16155
-Patch8:  0008-change-configure.ac-to-look-for-pkg-config-gmime-2.0.patch
-Patch11: 0011-Fix-up-some-paths.patch
-Patch12: 0012-Add-LDAP-schema-that-is-compatible-with-Fedora-Direc.patch
+Patch5:  0005-Change-configure.ac-to-look-for-pkg-config-gmime-2.0.patch
+Patch6:  0006-Fix-up-some-paths.patch
+Patch7:  0007-Add-LDAP-schema-that-is-compatible-with-Fedora-Direc.patch
+Patch8:  0008-Tell-laxtex2html-to-copy-icons-when-building-documen.patch
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-root-%(%{__id_u} -n)
 
@@ -53,6 +52,7 @@ BuildRequires: doxygen
 BuildRequires: graphviz
 BuildRequires: graphviz-gd
 BuildRequires: libxml2-devel
+BuildRequires: latex2html
 
 # for codec_speex
 BuildRequires: speex-devel >= 1.2
@@ -72,9 +72,6 @@ Requires(pre): %{_sbindir}/groupadd
 Requires(post): /sbin/chkconfig
 Requires(preun): /sbin/chkconfig
 Requires(preun): /sbin/service
-
-# needed for icons used from %{_datadir}/asterisk/static-http/*
-Requires: latex2html
 
 # asterisk-conference package removed since patch no longer compiles
 Obsoletes: asterisk-conference <= 1.6.0-0.14.beta9
@@ -391,13 +388,14 @@ local filesystem.
 
 %prep
 %setup0 -q -n asterisk-%{version}%{?_rc:-rc%{_rc}}
-%patch1 -p0
-%patch2 -p0
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
 %patch5 -p1
 %patch6 -p1
-%patch8 -p0
-%patch11 -p0
-%patch12 -p1
+%patch7 -p1
+%patch8 -p1
 
 cp %{SOURCE2} menuselect.makedeps
 cp %{SOURCE3} menuselect.makeopts
@@ -475,6 +473,8 @@ ASTCFLAGS="%{optflags}" make progdocs DEBUG= OPTIMIZE= ASTVARRUNDIR=%{_localstat
 
 # fix dates so that we don't get multilib conflicts
 find doc/api/html -type f -print0 | xargs --null touch -r ChangeLog
+
+cd doc/tex && ASTCFLAGS="%{optflags}" make html
 
 %install
 rm -rf %{buildroot}
@@ -735,10 +735,6 @@ fi
 %if 0%{?fedora} > 0
 %{_libdir}/asterisk/modules/res_timing_timerfd.so
 %endif
-%{_libdir}/asterisk/modules/test_dlinklists.so
-%{_libdir}/asterisk/modules/test_heap.so
-%{_libdir}/asterisk/modules/test_sched.so
-%{_libdir}/asterisk/modules/test_skel.so
 
 %{_sbindir}/aelparse
 %{_sbindir}/astcanary
@@ -1039,6 +1035,15 @@ fi
 %{_libdir}/asterisk/modules/app_voicemail_plain.so
 
 %changelog
+* Sat Jul 31 2010 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.6.2.10-1
+- Update to 1.6.2.10
+
+* Wed Jul 14 2010 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.6.2.8-0.3.rc1
+- Add patch to remove requirement on latex2html
+
+* Tue Jun 01 2010 Marcela Maslanova <mmaslano@redhat.com> - 1.6.2.8-0.2.rc1
+- Mass rebuild with perl-5.12.0
+
 * Tue May  4 2010 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.6.2.7-1
 -  * Fix building CDR and CEL SQLite3 modules.
 -    (Closes issue #17017. Reported by alephlg. Patched by seanbright)
