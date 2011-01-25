@@ -1,8 +1,8 @@
-%global _rc 1
+#global _rc 1
 Summary: The Open Source PBX
 Name: asterisk
-Version: 1.6.2.14
-Release: 0.1%{?_rc:.rc%{_rc}}%{?dist}
+Version: 1.6.2.16.1
+Release: 1%{?_rc:.rc%{_rc}}%{?dist}
 License: GPLv2
 Group: Applications/Internet
 URL: http://www.asterisk.org/
@@ -18,11 +18,9 @@ Patch2:  0002-Modify-modules.conf-so-that-different-voicemail-modu.patch
 # Submitted upstream: https://issues.asterisk.org/view.php?id=16858
 Patch3:  0003-Allow-linking-building-against-an-external-libedit.patch
 Patch4:  0004-Use-the-library-function-for-loading-command-history.patch
-# Submitted upstream: https://issues.asterisk.org/view.php?id=16155
-Patch5:  0005-Change-configure.ac-to-look-for-pkg-config-gmime-2.0.patch
-Patch6:  0006-Fix-up-some-paths.patch
-Patch7:  0007-Add-LDAP-schema-that-is-compatible-with-Fedora-Direc.patch
-Patch8:  0008-Tell-laxtex2html-to-copy-icons-when-building-documen.patch
+Patch5:  0005-Fix-up-some-paths.patch
+Patch6:  0006-Add-LDAP-schema-that-is-compatible-with-Fedora-Direc.patch
+Patch7:  0007-Tell-laxtex2html-to-copy-icons-when-building-documen.patch
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-root-%(%{__id_u} -n)
 
@@ -395,7 +393,6 @@ local filesystem.
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
-%patch8 -p1
 
 cp %{SOURCE2} menuselect.makedeps
 cp %{SOURCE3} menuselect.makeopts
@@ -1035,6 +1032,169 @@ fi
 %{_libdir}/asterisk/modules/app_voicemail_plain.so
 
 %changelog
+* Tue Jan 25 2011 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.6.2.16.1-1
+-
+- The Asterisk Development Team has announced security releases for the following
+- versions of Asterisk:
+-
+- * 1.4.38.1
+- * 1.4.39.1
+- * 1.6.1.21
+- * 1.6.2.15.1
+- * 1.6.2.16.1
+- * 1.8.1.2
+- * 1.8.2.1
+-
+- These releases are available for immediate download at
+- http://downloads.asterisk.org/pub/telephony/asterisk/releases
+-
+- The releases of Asterisk 1.4.38.1, 1.4.39.1, 1.6.1.21, 1.6.2.15.1, 1.6.2.16.2,
+- 1.8.1.2, and 1.8.2.1 resolve an issue when forming an outgoing SIP request while
+- in pedantic mode, which can cause a stack buffer to be made to overflow if
+- supplied with carefully crafted caller ID information. The issue and resolution
+- are described in the AST-2011-001 security advisory.
+-
+- For more information about the details of this vulnerability, please read the
+- security advisory AST-2011-001, which was released at the same time as this
+- announcement.
+-
+- For a full list of changes in the current releases, please see the ChangeLog:
+-
+- http://downloads.asterisk.org/pub/telephony/asterisk/releases/ChangeLog-1.4.38.1
+- http://downloads.asterisk.org/pub/telephony/asterisk/releases/ChangeLog-1.4.39.1
+- http://downloads.asterisk.org/pub/telephony/asterisk/releases/ChangeLog-1.6.1.21
+- http://downloads.asterisk.org/pub/telephony/asterisk/releases/ChangeLog-1.6.2.15.1
+- http://downloads.asterisk.org/pub/telephony/asterisk/releases/ChangeLog-1.6.2.16.1
+- http://downloads.asterisk.org/pub/telephony/asterisk/releases/ChangeLog-1.8.1.2
+- http://downloads.asterisk.org/pub/telephony/asterisk/releases/ChangeLog-1.8.2.1
+-
+- Security advisory AST-2011-001 is available at:
+-
+- http://downloads.asterisk.org/pub/security/AST-2011-001.pdf
+
+* Tue Jan 25 2011 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.6.2.16.1-1
+-
+- The Asterisk Development Team has announced the release of Asterisk 1.6.2.16.
+- This release is available for immediate download at
+- http://downloads.asterisk.org/pub/telephony/asterisk/
+-
+- The release of Asterisk 1.6.2.16 resolves several issues reported by the
+- community and would have not been possible without your participation.
+- Thank you!
+-
+- The following is a sample of the issues resolved in this release:
+-
+- * Fix cache of device state changes for multiple servers.
+-  (Closes issue #18284, #18280. Reported, tested by klaus3000. Patched, tested
+-  by russellb)
+-
+- * Resolve issue where channel redirect function (CLI or AMI) hangs up the call
+-  instead of redirecting the call.
+-  (Closes issue #18171. Reported by: SantaFox)
+-  (Closes issue #18185. Reported by: kwemheuer)
+-  (Closes issue #18211. Reported by: zahir_koradia)
+-  (Closes issue #18230. Reported by: vmarrone)
+-  (Closes issue #18299. Reported by: mbrevda)
+-  (Closes issue #18322. Reported by: nerbos)
+-
+- * Linux and *BSD disagree on the elements within the ucred structure. Detect
+-  which one is in use on the system.
+-  (Closes issue #18384. Reported, patched, tested by bjm, tilghman)
+-
+- * app_followme: Don't create a Local channel if the target extension does not
+-  exist.
+-  (Closes issue #18126. Reported, patched by junky)
+-
+- * Revert code that changed SSRC for DTMF.
+-  (Closes issue #17404, #18189, #18352. Reported by sdolloff, marcbou. rsw686.
+-  Tested by cmbaker82)
+-
+- * Resolve issue where REGISTER request with a Call-ID matching an existing
+-  transaction is received it was possible that the REGISTER request would
+-  overwrite the initreq of the private structure.
+-  (Closes issue #18051. Reported by eeman. Patched, tested by twilson)
+-
+- For a full list of changes in this release, please see the ChangeLog:
+-
+- http://downloads.asterisk.org/pub/telephony/asterisk/ChangeLog-1.6.2.16
+
+* Tue Jan 25 2011 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.6.2.16.1-1
+-
+- The Asterisk Development Team has announced the release of Asterisk 1.6.2.15.
+- This release is available for immediate download at
+- http://downloads.asterisk.org/pub/telephony/asterisk/
+-
+- The release of Asterisk 1.6.2.15 resolves several issues reported by the
+- community and would have not been possible without your participation.
+- Thank you!
+-
+- The following is a sample of the issues resolved in this release:
+-
+- * When using chan_skinny, don't crash when parking a non-bridged call.
+-   (Closes issue #17680. Reported, tested by jmhunter. Patched, tested by DEA)
+-
+- * Add ability for Asterisk to try both the encoded and unencoded subscription
+-   URI for a match in hints.
+-   (Closes issue #17785. Reported, tested by ramonpeek. Patched by tilghman)
+-
+- * Set the caller id on CDRs when it is set on the parent channel.
+-   (Closes issue #17569. Reported, patched by tbelder)
+-
+- * Ensure user portion of SIP URI matches dialplan when using encoded characters
+-   (Closes issue #17892. Reported by wdoekes. Patched by jpeeler)
+-
+- * Resolve issue where Party A in an analog 3-way call would continue to hear
+-   ringback after party C answers.
+-   (Patched by rmudgett)
+-
+- * Fix problem with qualify option packets for realtime peers never stopping.
+-   The option packets not only never stopped, but if a realtime peer was not in
+-   the peer list multiple options dialogs could accumulate over time.
+-   (Closes issue #16382. Reported by lftsy. Tested by zerohalo. Patched by
+-   jpeeler)
+-
+- * Multiple fixes related to Local channels.
+-
+- For a full list of changes in this release, please see the ChangeLog:
+-
+- http://downloads.asterisk.org/pub/telephony/asterisk/ChangeLog-1.6.2.15
+
+* Tue Jan 25 2011 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.6.2.16.1-1
+-
+- The Asterisk Development Team has announced the release of Asterisk
+- 1.6.2.14.  This release is available for immediate download at
+- http://downloads.asterisk.org/pub/telephony/asterisk/
+-
+- The release of Asterisk 1.6.2.14 resolves several issues reported by the
+- community and would have not been possible without your participation.
+- Thank you!
+-
+- The following is a sample of the issues resolved in this release:
+-
+-  * Fix issue where session timers would be advertised as supported even
+-   when session-timers=refuse was set in sip.conf. Also fix
+-   interoperability problems with session timer behavior in Asterisk.
+-   (Closes issue #17005. Reported by alexcarey. Patched by dvossel)
+-
+-  * Parse all "Accept" headers for SIP SUBSCRIBE requests.
+-   (Closes issue #17758. Reported by ibc. Patched by dvossel)
+-
+-  * Fix issue where queue stats would be reset on reload.
+-   (Closes issue #17535. Reported by raarts. Patched by tilghman)
+-
+-  * Fix issue where MoH files were no longer rescanned on during a
+-   reload.
+-   (Closes issue #16744. Reported by pj. Patched by Qwell)
+-
+-  * Fix issue with dialplan pattern matching where the specificity for
+-   pattern ranges and pattern characters was inconsistent.
+-   (Closes issue #16903. Reported, patched by Nick_Lewis)
+-
+- For a full list of changes in the current release, please see the
+- ChangeLog:
+-
+- http://downloads.asterisk.org/pub/telephony/asterisk/ChangeLog-1.6.2.14
+
 * Fri Oct  8 2010 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.6.2.14-0.1.rc1
 - The release of Asterisk 1.6.2.14-rc1 resolves several issues reported by the
 - community and would have not been possible without your participation.
