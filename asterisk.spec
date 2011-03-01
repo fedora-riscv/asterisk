@@ -1,7 +1,7 @@
 #global _rc 1
 Summary: The Open Source PBX
 Name: asterisk
-Version: 1.6.2.16.2
+Version: 1.6.2.17
 Release: 1%{?_rc:.rc%{_rc}}%{?dist}
 License: GPLv2
 Group: Applications/Internet
@@ -1032,6 +1032,61 @@ fi
 %{_libdir}/asterisk/modules/app_voicemail_plain.so
 
 %changelog
+* Tue Mar  1 2011  <jeff@ocjtech.us> - 1.6.2.17-1
+- The Asterisk Development Team has announced the release of Asterisk 1.6.2.17.
+- This release is available for immediate download at
+- http://downloads.asterisk.org/pub/telephony/asterisk/
+-
+- The release of Asterisk 1.6.2.17 resolves several issues reported by the
+- community and would have not been possible without your participation.
+- Thank you!
+-
+- The following is a sample of the issues resolved in this release:
+-
+- * Resolve duplicated data in the AstDB when using DIALGROUP()
+-  (Closes issue #18091. Reported by bunny. Patched by tilghman)
+-
+- * Correct issue where res_config_odbc could populate fields with invalid data.
+-  (Closes issue #18251, #18279. Reported by bcnit, zerohalo. Tested by trev,
+-  jthurman, elguero, zerohalo. Patched by tilghman)
+-
+- * When using cdr_pgsql the billsec field was not populated correctly on
+-  unanswered calls.
+-  (Closes issue #18406. Reported by joscas. Patched by tilghman)
+-
+- * Resolve issue where re-transmissions of SUBSCRIBE could break presence.
+-  (Closes issue #18075. Reported by mdu113. Patched by twilson)
+-
+- * Fix regression causing forwarding voicemails to not work with file storage.
+-  (Closes issue #18358. Reported by cabal95. Patched by jpeeler)
+-
+- * This version of Asterisk includes the new Compiler Flags option
+-  BETTER_BACKTRACES which uses libbfd to search for better symbol information
+-  within both the Asterisk binary, as well as loaded modules, to assist when
+-  using inline backtraces to track down problems.
+-  (Patched by tilghman)
+-
+- * Resolve several issues with DTMF based attended transfers.
+-  (Closes issues #17999, #17096, #18395, #17273. Reported by iskatel, gelo,
+-  shihchaun, grecco. Patched by rmudgett).
+-  NOTE: Be sure to read the ChangeLog for more information about these changes.
+-
+- * Resolve issue where no Music On Hold may be triggered when using
+-  res_timing_dahdi.
+-  (Closes issues #18262. Reported by francesco_r. Patched by cjacobson. Tested
+-  by francesco_r, rfrantik, one47)
+-
+- * Fix regression that changed behavior of queues when ringing a queue member.
+-  (Closes issue #18747, #18733. Reported by vrban. Patched by qwell.)
+-
+- Additionally, this release has the changes related to security bulletin
+- AST-2011-002 which can be found at
+- http://downloads.asterisk.org/pub/security/AST-2011-002.pdf
+-
+- For a full list of changes in this release, please see the ChangeLog:
+-
+- http://downloads.asterisk.org/pub/telephony/asterisk/ChangeLog-1.6.2.17
+
 * Mon Feb 21 2011  <jeff@ocjtech.us> - 1.6.2.16.2-1
 -
 -              Asterisk Project Security Advisory - AST-2011-002
