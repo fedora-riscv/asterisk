@@ -1,4 +1,4 @@
-From 9cd780b2d1ed0c91949781ce64234023d1eb67f2 Mon Sep 17 00:00:00 2001
+From b7448140ce8a86ec812e28b99d62ba59371d8c5c Mon Sep 17 00:00:00 2001
 From: Jeffrey C. Ollie <jeff@ocjtech.us>
 Date: Fri, 5 Mar 2010 14:10:52 -0600
 Subject: [PATCH 3/7] Allow linking/building against an external libedit.
@@ -31,7 +31,7 @@ index dba1b8f..2c2466f 100644
  LUA=@PBX_LUA@
  MISDN=@PBX_MISDN@
 diff --git a/configure.ac b/configure.ac
-index d3af0fa..71c5f34 100644
+index 0dbc3f5..072d670 100644
 --- a/configure.ac
 +++ b/configure.ac
 @@ -320,6 +320,7 @@ AST_EXT_LIB_SETUP([ISDNNET], [ISDN4Linux], [isdnnet])
@@ -134,5 +134,5 @@ index 83ae26b..143a12e 100644
 +LIBEDIT_LIB=@LIBEDIT_LIB@
 +LIBEDIT_OBJ=@LIBEDIT_OBJ@
 -- 
-1.7.4
+1.7.4.4
 
