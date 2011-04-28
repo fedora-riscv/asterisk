@@ -1,7 +1,7 @@
 #global _rc 1
 Summary: The Open Source PBX
 Name: asterisk
-Version: 1.6.2.17.3
+Version: 1.6.2.18
 Release: 1%{?_rc:.rc%{_rc}}%{?dist}
 License: GPLv2
 Group: Applications/Internet
@@ -1032,6 +1032,52 @@ fi
 %{_libdir}/asterisk/modules/app_voicemail_plain.so
 
 %changelog
+* Thu Apr 28 2011 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.6.2.18-1
+-
+- The Asterisk Development Team has announced the release of Asterisk 1.6.2.18.
+- This release is available for immediate download at
+- http://downloads.asterisk.org/pub/telephony/asterisk/
+-
+- The release of Asterisk 1.6.2.18 resolves several issues reported by the
+- community and would have not been possible without your participation.
+- Thank you!
+-
+- The following is a sample of the issues resolved in this release:
+-
+-  * Only offer codecs both sides support for directmedia.
+-   (Closes issue #17403. Reported, patched by one47)
+-
+-  * Resolution of several DTMF based attended transfer issues.
+-   (Closes issue #17999, #17096, #18395, #17273. Reported by iskatel, gelo,
+-   shihchuan, grecco. Patched by rmudgett)
+-   NOTE: Be sure to read the ChangeLog for more information about these changes.
+-
+-  * Resolve deadlocks related to device states in chan_sip
+-   (Closes issue #18310. Reported, patched by one47. Patched by jpeeler)
+-
+-  * Fix channel redirect out of MeetMe() and other issues with channel softhangup
+-   (Closes issue #18585. Reported by oej. Tested by oej, wedhorn, russellb.
+-   Patched by russellb)
+-
+-  * Fix voicemail sequencing for file based storage.
+-   (Closes issue #18498, #18486. Reported by JJCinAZ, bluefox. Patched by
+-   jpeeler)
+-
+-  * Guard against retransmitting BYEs indefinitely during attended transfers with
+-   chan_sip.
+-   (Review: https://reviewboard.asterisk.org/r/1077/)
+-
+- In addition to the changes listed above, commits to resolve security issues
+- AST-2011-005 and AST-2011-006 have been merged into this release. More
+- information about AST-2011-005 and AST-2011-006 can be found at:
+-
+- http://downloads.asterisk.org/pub/security/AST-2011-005.pdf
+- http://downloads.asterisk.org/pub/security/AST-2011-006.pdf
+-
+- For a full list of changes in this release, please see the ChangeLog:
+-
+- http://downloads.asterisk.org/pub/telephony/asterisk/ChangeLog-1.6.2.18
+
 * Fri Apr 22 2011 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.6.2.17.3-1
 - The Asterisk Development Team has announced security releases for Asterisk
 - branches 1.4, 1.6.1, 1.6.2, and 1.8. The available security releases are
