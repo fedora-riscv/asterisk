@@ -1,7 +1,7 @@
 #global _rc 1
 Summary: The Open Source PBX
 Name: asterisk
-Version: 1.6.2.18
+Version: 1.6.2.18.1
 Release: 1%{?_rc:.rc%{_rc}}%{?dist}
 License: GPLv2
 Group: Applications/Internet
@@ -1032,6 +1032,55 @@ fi
 %{_libdir}/asterisk/modules/app_voicemail_plain.so
 
 %changelog
+* Sat Jun 25 2011 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.6.2.18.1-1
+- The Asterisk Development Team has announced the release of Asterisk versions
+- 1.4.41.1, 1.6.2.18.1, and 1.8.4.3, which are security releases.
+- 
+- These releases are available for immediate download at
+- http://downloads.asterisk.org/pub/telephony/asterisk/releases
+- 
+- The release of Asterisk 1.4.41.1, 1.6.2.18, and 1.8.4.3 resolves several issues
+- as outlined below:
+- 
+- * AST-2011-008: If a remote user sends a SIP packet containing a null,
+-  Asterisk assumes available data extends past the null to the
+-  end of the packet when the buffer is actually truncated when
+-  copied.  This causes SIP header parsing to modify data past
+-  the end of the buffer altering unrelated memory structures.
+-  This vulnerability does not affect TCP/TLS connections.
+-  -- Resolved in 1.6.2.18.1 and 1.8.4.3
+- 
+- * AST-2011-009: A remote user sending a SIP packet containing a Contact header
+-  with a missing left angle bracket (<) causes Asterisk to
+-  access a null pointer.
+-  -- Resolved in 1.8.4.3
+- 
+- * AST-2011-010: A memory address was inadvertently transmitted over the
+-  network via IAX2 via an option control frame and the remote party would try
+-  to access it.
+-  -- Resolved in 1.4.41.1, 1.6.2.18.1, and 1.8.4.3
+- 
+- 
+- The issues and resolutions are described in the AST-2011-008, AST-2011-009, and
+- AST-2011-010 security advisories.
+- 
+- For more information about the details of these vulnerabilities, please read
+- the security advisories AST-2011-008, AST-2011-009, and AST-2011-010, which were
+- released at the same time as this announcement.
+- 
+- For a full list of changes in the current releases, please see the ChangeLog:
+- 
+- http://downloads.asterisk.org/pub/telephony/asterisk/releases/ChangeLog-1.4.41.1
+- http://downloads.asterisk.org/pub/telephony/asterisk/releases/ChangeLog-1.6.2.18.1
+- http://downloads.asterisk.org/pub/telephony/asterisk/releases/ChangeLog-1.8.4.3
+- 
+- Security advisories AST-2011-008, AST-2011-009, and AST-2011-010 are available
+- at:
+- 
+- http://downloads.asterisk.org/pub/security/AST-2011-008.pdf
+- http://downloads.asterisk.org/pub/security/AST-2011-009.pdf
+- http://downloads.asterisk.org/pub/security/AST-2011-010.pdf
+
 * Thu Apr 28 2011 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.6.2.18-1
 -
 - The Asterisk Development Team has announced the release of Asterisk 1.6.2.18.
