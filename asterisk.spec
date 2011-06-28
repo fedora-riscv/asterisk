@@ -1,8 +1,8 @@
-#global _rc 1
+%global _rc 1
 Summary: The Open Source PBX
 Name: asterisk
-Version: 1.6.2.18.1
-Release: 1%{?_rc:.rc%{_rc}}%{?dist}
+Version: 1.6.2.19
+Release: 0.1%{?_rc:.rc%{_rc}}%{?dist}
 License: GPLv2
 Group: Applications/Internet
 URL: http://www.asterisk.org/
@@ -1032,16 +1032,59 @@ fi
 %{_libdir}/asterisk/modules/app_voicemail_plain.so
 
 %changelog
+* Tue Jun 28 2011 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.6.2.19-0.1:
+- The Asterisk Development Team has announced the first release
+- candidate of Asterisk 1.6.2.19. This release candidate is available
+- for immediate download at
+- http://downloads.asterisk.org/pub/telephony/asterisk/
+-
+- Please note that Asterisk 1.6.2.19 will be the final maintenance
+- release from the 1.6.2 branch. Support for security related issues
+- will continue for one additional year. For more information about
+- support of the various Asterisk branches, see
+- https://wiki.asterisk.org/wiki/display/AST/Asterisk+Versions
+-
+- The release of Asterisk 1.6.2.19-rc1 resolves several issues reported
+- by the community and would have not been possible without your
+- participation.  Thank you!
+-
+- The following is a sample of the issues resolved in this release candidate:
+-
+- * Don't broadcast FullyBooted to every AMI connection The FullyBooted
+-  event should not be sent to every AMI connection every time someone
+-  connects via AMI. It should only be sent to the user who just
+-  connected.  (Closes issue #18168. Reported, patched by FeyFre)
+-
+- * Fix thread blocking issue in the sip TCP/TLS implementation.
+-  (Closes issue #18497. Reported by vois. Tested by vois, rossbeer,
+-  kowalma, Freddi_Fonet. Patched by dvossel)
+-
+- * Don't delay DTMF in core bridge while listening for DTMF features.
+-  (Closes issue #15642, #16625. Reported by jasonshugart,
+-  sharvanek. Tested by globalnetinc, jde. Patched by oej, twilson)
+-
+- * Fix chan_local crashs in local_fixup() Thanks OEJ for tracking down
+-  the issue and submitting the patch.  (Closes issue #19053. Reported,
+-  patched by oej)
+-
+- * Don't offer video to directmedia callee unless caller offered it as
+-  well (Closes issue #19195. Reported, patched by one47)
+-
+- For a full list of changes in this release candidate, please see the
+- ChangeLog:
+-
+- http://downloads.asterisk.org/pub/telephony/asterisk/ChangeLog-1.6.2.19-rc1
+
 * Sat Jun 25 2011 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.6.2.18.1-1
 - The Asterisk Development Team has announced the release of Asterisk versions
 - 1.4.41.1, 1.6.2.18.1, and 1.8.4.3, which are security releases.
-- 
+-
 - These releases are available for immediate download at
 - http://downloads.asterisk.org/pub/telephony/asterisk/releases
-- 
+-
 - The release of Asterisk 1.4.41.1, 1.6.2.18, and 1.8.4.3 resolves several issues
 - as outlined below:
-- 
+-
 - * AST-2011-008: If a remote user sends a SIP packet containing a null,
 -  Asterisk assumes available data extends past the null to the
 -  end of the packet when the buffer is actually truncated when
@@ -1049,34 +1092,34 @@ fi
 -  the end of the buffer altering unrelated memory structures.
 -  This vulnerability does not affect TCP/TLS connections.
 -  -- Resolved in 1.6.2.18.1 and 1.8.4.3
-- 
+-
 - * AST-2011-009: A remote user sending a SIP packet containing a Contact header
 -  with a missing left angle bracket (<) causes Asterisk to
 -  access a null pointer.
 -  -- Resolved in 1.8.4.3
-- 
+-
 - * AST-2011-010: A memory address was inadvertently transmitted over the
 -  network via IAX2 via an option control frame and the remote party would try
 -  to access it.
 -  -- Resolved in 1.4.41.1, 1.6.2.18.1, and 1.8.4.3
-- 
-- 
+-
+-
 - The issues and resolutions are described in the AST-2011-008, AST-2011-009, and
 - AST-2011-010 security advisories.
-- 
+-
 - For more information about the details of these vulnerabilities, please read
 - the security advisories AST-2011-008, AST-2011-009, and AST-2011-010, which were
 - released at the same time as this announcement.
-- 
+-
 - For a full list of changes in the current releases, please see the ChangeLog:
-- 
+-
 - http://downloads.asterisk.org/pub/telephony/asterisk/releases/ChangeLog-1.4.41.1
 - http://downloads.asterisk.org/pub/telephony/asterisk/releases/ChangeLog-1.6.2.18.1
 - http://downloads.asterisk.org/pub/telephony/asterisk/releases/ChangeLog-1.8.4.3
-- 
+-
 - Security advisories AST-2011-008, AST-2011-009, and AST-2011-010 are available
 - at:
-- 
+-
 - http://downloads.asterisk.org/pub/security/AST-2011-008.pdf
 - http://downloads.asterisk.org/pub/security/AST-2011-009.pdf
 - http://downloads.asterisk.org/pub/security/AST-2011-010.pdf
