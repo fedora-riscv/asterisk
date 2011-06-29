@@ -1,8 +1,8 @@
-%global _rc 1
+#global _rc 1
 Summary: The Open Source PBX
 Name: asterisk
 Version: 1.6.2.19
-Release: 0.1%{?_rc:.rc%{_rc}}%{?dist}
+Release: 1%{?_rc:.rc%{_rc}}%{?dist}
 License: GPLv2
 Group: Applications/Internet
 URL: http://www.asterisk.org/
@@ -1032,6 +1032,46 @@ fi
 %{_libdir}/asterisk/modules/app_voicemail_plain.so
 
 %changelog
+* Wed Jun 29 2011 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.6.2.19-1:
+- The Asterisk Development Team has announced the final maintenance release of
+- Asterisk, version 1.6.2.19. This release is available for immediate download at
+- http://downloads.asterisk.org/pub/telephony/asterisk/
+-
+- Please note that Asterisk 1.6.2.19 is the final maintenance release from the
+- 1.6.2 branch. Support for security related issues will continue until April 21,
+- 2012. For more information about support of the various Asterisk branches, see
+- https://wiki.asterisk.org/wiki/display/AST/Asterisk+Versions
+-
+- The release of Asterisk 1.6.2.19 resolves several issues reported by the
+- community and would have not been possible without your participation.
+- Thank you!
+-
+- The following is a sample of the issues resolved in this release:
+-
+- * Don't broadcast FullyBooted to every AMI connection
+-  The FullyBooted event should not be sent to every AMI connection
+-  every time someone connects via AMI. It should only be sent to
+-  the user who just connected.
+-  (Closes issue #18168. Reported, patched by FeyFre)
+- * Fix thread blocking issue in the sip TCP/TLS implementation.
+-  (Closes issue #18497. Reported by vois. Tested by vois, rossbeer, kowalma,
+-  Freddi_Fonet. Patched by dvossel)
+- * Don't delay DTMF in core bridge while listening for DTMF features.
+-  (Closes issue #15642, #16625. Reported by jasonshugart, sharvanek. Tested by
+-  globalnetinc, jde. Patched by oej, twilson)
+- * Fix chan_local crashs in local_fixup()
+-  Thanks OEJ for tracking down the issue and submitting the patch.
+-  (Closes issue #19053. Reported, patched by oej)
+- * Don't offer video to directmedia callee unless caller offered it as well
+-  (Closes issue #19195. Reported, patched by one47)
+-
+- Additionally security announcements AST-2011-008, AST-2011-010, and
+- AST-2011-011 have been resolved in this release.
+-
+- For a full list of changes in this release, please see the ChangeLog:
+-
+- http://downloads.asterisk.org/pub/telephony/asterisk/ChangeLog-1.6.2.19
+
 * Tue Jun 28 2011 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.6.2.19-0.1:
 - The Asterisk Development Team has announced the first release
 - candidate of Asterisk 1.6.2.19. This release candidate is available
