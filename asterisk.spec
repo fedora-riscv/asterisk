@@ -18,7 +18,7 @@
 Summary: The Open Source PBX
 Name: asterisk
 Version: 1.8.4.4
-Release: 2%{?_rc:.rc%{_rc}}%{?_beta:.beta%{_beta}}%{?dist}
+Release: 3%{?_rc:.rc%{_rc}}%{?_beta:.beta%{_beta}}%{?dist}
 License: GPLv2
 Group: Applications/Internet
 URL: http://www.asterisk.org/
@@ -1251,6 +1251,9 @@ fi
 %{_libdir}/asterisk/modules/app_voicemail_plain.so
 
 %changelog
+* Fri Jul  1 2011 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.8.4.4-3
+- Bump release
+
 * Fri Jul  1 2011 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.8.4.4-2
 - Fix systemd dependencies in EL6 and F15
 
