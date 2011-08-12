@@ -1,4 +1,4 @@
-#global _rc 1
+%global _rc 1
 #global _beta 5
 
 %if 0%{?fedora} >= 15
@@ -17,8 +17,8 @@
 
 Summary: The Open Source PBX
 Name: asterisk
-Version: 1.8.5.0
-Release: 1%{?_rc:.rc%{_rc}}%{?_beta:.beta%{_beta}}%{?dist}.2
+Version: 1.8.6.0
+Release: 0.1%{?_rc:.rc%{_rc}}%{?_beta:.beta%{_beta}}%{?dist}
 License: GPLv2
 Group: Applications/Internet
 URL: http://www.asterisk.org/
@@ -1252,6 +1252,52 @@ fi
 %{_libdir}/asterisk/modules/app_voicemail_plain.so
 
 %changelog
+* Thu Aug 11 2011  <jeff@ocjtech.us> - 1.8.6.0-0.1.rc1
+- The Asterisk Development Team announces the first release candidate of
+- Asterisk 1.8.6.0. This release candidate is available for immediate download at
+- http://downloads.asterisk.org/pub/telephony/asterisk/
+-
+- The release of Asterisk 1.8.6.0-rc1 resolves several issues reported by the
+- community and would have not been possible without your participation.
+- Thank you!
+-
+- The following is a sample of the issues resolved in this release candidate:
+-
+- * Fix an issue with Music on Hold classes losing files in playlist when realtime
+-  is used.
+-  (Closes issue ASTERISK-17875. Reported by David Cunningham. Patched by Igor
+-   Goncharovsky)
+-
+- * Resolve a potential crash in chan_sip when utilizing auth= and performing a
+-  'sip reload' from the console.
+-  (Closes issue ASTERISK-17939. Reported by wdoekes. Patched by Richard Mudgett)
+-
+- * Address some improper sql statements in res_odbc that would cause an update
+-  to fail on realtime peers due to trying to set as "(NULL)" rather than an
+-  actual NULL.
+-  (Closes issue ASTERISK-17791. Reported by marcelloceschia. Patched by Tilghman
+-   Lesher)
+-
+- * Resolve issue where 403 Forbidden would always be sent maximum number of times
+-  regardless to receipt of ACK.
+-  (Patched by Richard Mudgett)
+-
+- * Updated chan_gtalk to work with changes made by Google.
+-  (Closes issue ASTERISK-18804. Patched by Terry Wilson)
+-
+- * Resolve issue where if a call to MeetMe includes both the dynamic(D) and
+-  always request PIN(P) options, MeetMe will ask for the PIN two times: once for
+-  creating the conference and once for entering the conference.
+-  (Patched by Kinsey Moore)
+-
+- * Fix New Zealand indications profile based on
+-  http://www.telepermit.co.nz/TNA102.pdf
+-  (Closes issue ASTERISK-16263. Reported, Patched by richardf)
+-
+- For a full list of changes in this release candidate, please see the ChangeLog:
+-
+- http://downloads.asterisk.org/pub/telephony/asterisk/ChangeLog-1.8.6.0-rc1
+
 * Thu Jul 21 2011 Petr Sabata <contyk@redhat.com> - 1.8.5.0-1.2
 - Perl mass rebuild
 
