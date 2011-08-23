@@ -1,4 +1,4 @@
-%global _rc 1
+%global _rc 2
 #global _beta 5
 
 %if 0%{?fedora} >= 15
@@ -18,7 +18,7 @@
 Summary: The Open Source PBX
 Name: asterisk
 Version: 1.8.6.0
-Release: 0.1%{?_rc:.rc%{_rc}}%{?_beta:.beta%{_beta}}%{?dist}
+Release: 0.2%{?_rc:.rc%{_rc}}%{?_beta:.beta%{_beta}}%{?dist}
 License: GPLv2
 Group: Applications/Internet
 URL: http://www.asterisk.org/
@@ -1252,7 +1252,30 @@ fi
 %{_libdir}/asterisk/modules/app_voicemail_plain.so
 
 %changelog
-* Thu Aug 11 2011  <jeff@ocjtech.us> - 1.8.6.0-0.1.rc1
+* Tue Aug 23 2011 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.8.6.0-0.2.rc2
+- The Asterisk Development Team has announced the second release candidate of
+- Asterisk 1.8.6.0. This release candidate is available for immediate download at
+- http://downloads.asterisk.org/pub/telephony/asterisk/
+-
+- The release of Asterisk 1.8.6.0-rc2 resolves several issues reported by the
+- community and would have not been possible without your participation.
+- Thank you!
+-
+- The following is a sample of the issues resolved in this release candidate:
+-
+- * --- Segfault in shell_helper in func_shell.c ---
+-  (Closes issue ASTERISK-18109.
+-   Reported by Michael Myles, patched by Richard Mudgett)
+-
+- * --- Re-add support for spaces in pathnames ---
+-  (Closes issue ASTERISK-18290.
+-   Reported by Paul Belanger, patched by Tilghman Lesher)
+-
+- For a full list of changes in this release candidate, please see the ChangeLog:
+-
+- http://downloads.asterisk.org/pub/telephony/asterisk/ChangeLog-1.8.6.0-rc2
+
+* Thu Aug 11 2011 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.8.6.0-0.1.rc1
 - The Asterisk Development Team announces the first release candidate of
 - Asterisk 1.8.6.0. This release candidate is available for immediate download at
 - http://downloads.asterisk.org/pub/telephony/asterisk/
