@@ -1,7 +1,7 @@
 From d7df9875b514750095d24cb6e169ae57bb73c453 Mon Sep 17 00:00:00 2001
 From: "Jeffrey C. Ollie" <jeff@ocjtech.us>
 Date: Mon, 8 Mar 2010 12:38:56 -0600
-Subject: [PATCH 04/13] Use the library function for loading command history
+Subject: [PATCH 04/14] Use the library function for loading command history
  rather than implementing our own.
 
 ---

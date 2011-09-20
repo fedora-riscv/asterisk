@@ -18,7 +18,7 @@
 Summary: The Open Source PBX
 Name: asterisk
 Version: 1.8.6.0
-Release: 3%{?_rc:.rc%{_rc}}%{?_beta:.beta%{_beta}}%{?dist}
+Release: 4%{?_rc:.rc%{_rc}}%{?_beta:.beta%{_beta}}%{?dist}
 License: GPLv2
 Group: Applications/Internet
 URL: http://www.asterisk.org/
@@ -46,6 +46,7 @@ Patch10: 0010-Make-sure-that-the-Fedora-init-script-can-find-the-p.patch
 Patch11: 0011-This-fixes-the-inotify-code-to-handle-call-files-bei.patch
 Patch12: 0012-Fix-two-problems-with-app_sms.patch
 Patch13: 0013-Remove-blank-lines-to-improve-compat-with-389-Direct.patch
+Patch14: 0014-Comment-out-the-config-in-res_pktccops.conf-for-extr.patch
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-root-%(%{__id_u} -n)
 
@@ -481,6 +482,7 @@ local filesystem.
 %patch11 -p1
 %patch12 -p1
 %patch13 -p1
+%patch14 -p1
 
 cp %{S:3} menuselect.makedeps
 cp %{S:4} menuselect.makeopts
@@ -1267,6 +1269,12 @@ fi
 %{_libdir}/asterisk/modules/app_voicemail_plain.so
 
 %changelog
+* Tue Sep 20 2011 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.8.6.0-4
+- Add additional patch for res_pktccops.
+
+* Tue Sep 20 2011 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.8.6.0-3
+- Add patch to fix compatibility with 389 directory server.
+
 * Tue Sep 20 2011 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.8.6.0-2
 - Add patches to fix many bug reports from bugzilla.
 
