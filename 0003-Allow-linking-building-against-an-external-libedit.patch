@@ -1,7 +1,7 @@
 From 2ec862ecc0024bd4e9a14bd0a2ddc62ad75465ea Mon Sep 17 00:00:00 2001
 From: "Jeffrey C. Ollie" <jeff@ocjtech.us>
 Date: Fri, 5 Mar 2010 14:10:52 -0600
-Subject: [PATCH 03/12] Allow linking/building against an external libedit.
+Subject: [PATCH 03/13] Allow linking/building against an external libedit.
 
 The Asterisk tarball includes a very old copy of the editline library
 that manages command line history and editing.  Fedora (and several

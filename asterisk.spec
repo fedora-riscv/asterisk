@@ -18,7 +18,7 @@
 Summary: The Open Source PBX
 Name: asterisk
 Version: 1.8.6.0
-Release: 2%{?_rc:.rc%{_rc}}%{?_beta:.beta%{_beta}}%{?dist}
+Release: 3%{?_rc:.rc%{_rc}}%{?_beta:.beta%{_beta}}%{?dist}
 License: GPLv2
 Group: Applications/Internet
 URL: http://www.asterisk.org/
@@ -45,6 +45,7 @@ Patch10: 0010-Make-sure-that-the-Fedora-init-script-can-find-the-p.patch
 # Submitted upstream: https://issues.asterisk.org/jira/browse/ASTERISK-18331
 Patch11: 0011-This-fixes-the-inotify-code-to-handle-call-files-bei.patch
 Patch12: 0012-Fix-two-problems-with-app_sms.patch
+Patch13: 0013-Remove-blank-lines-to-improve-compat-with-389-Direct.patch
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-root-%(%{__id_u} -n)
 
@@ -479,6 +480,7 @@ local filesystem.
 %patch10 -p1
 %patch11 -p1
 %patch12 -p1
+%patch13 -p1
 
 cp %{S:3} menuselect.makedeps
 cp %{S:4} menuselect.makeopts

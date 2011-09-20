@@ -1,7 +1,7 @@
 From 6a57b68b22473802e2a5d133ba24fd8f24f4be20 Mon Sep 17 00:00:00 2001
 From: "Jeffrey C. Ollie" <jeff@ocjtech.us>
 Date: Tue, 20 Sep 2011 09:12:57 -0500
-Subject: [PATCH 10/12] Make sure that the Fedora init script can find the pid
+Subject: [PATCH 10/13] Make sure that the Fedora init script can find the pid
  file.
 
 ---

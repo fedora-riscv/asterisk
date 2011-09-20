@@ -1,7 +1,7 @@
 From 4401cf3bcf07723bf30724f76074942eb7aaa7be Mon Sep 17 00:00:00 2001
 From: David Woodhouse <dwmw2@infradead.org>
 Date: Tue, 20 Sep 2011 09:21:47 -0500
-Subject: [PATCH 12/12] Fix two problems with app_sms.
+Subject: [PATCH 12/13] Fix two problems with app_sms.
 
 Firstly, the 'flags' field on the stack in sms_exec() is
 uninitialised, causing it to use the wrong protocol in some cases.

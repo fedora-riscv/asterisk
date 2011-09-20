@@ -1,7 +1,7 @@
 From 7ee9833fa5ad62c5ce3584d9ff3262a7731796b8 Mon Sep 17 00:00:00 2001
 From: David Woodhouse <dwmw2@infradead.org>
 Date: Tue, 20 Sep 2011 09:19:22 -0500
-Subject: [PATCH 11/12] This fixes the inotify code to handle call files being
+Subject: [PATCH 11/13] This fixes the inotify code to handle call files being
  hardlinked into the spool directory.
 
 The smsq utility does this, instead of rename(), to ensure that it
