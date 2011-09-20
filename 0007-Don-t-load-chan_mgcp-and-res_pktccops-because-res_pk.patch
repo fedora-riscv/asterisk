@@ -1,0 +1,26 @@
+From f1233019198363c12025f76b710995dfee0e2d38 Mon Sep 17 00:00:00 2001
+From: "Jeffrey C. Ollie" <jeff@ocjtech.us>
+Date: Tue, 20 Sep 2011 08:40:49 -0500
+Subject: [PATCH 07/12] Don't load chan_mgcp and res_pktccops because
+ res_pktccops floods 192.168.0.24 in the default
+ config
+
+---
+ configs/modules.conf.sample |    4 ++++
+ 1 files changed, 4 insertions(+), 0 deletions(-)
+
+diff --git a/configs/modules.conf.sample b/configs/modules.conf.sample
+index 9a1c1c3..3dc2b74 100644
+--- a/configs/modules.conf.sample
++++ b/configs/modules.conf.sample
+@@ -69,3 +69,7 @@ noload => app_voicemail_odbc.so
+ ;
+ ;noload => app_directory_plain.so
+ ;noload => app_voicemail_plain.so
++
++; Don't load chan_mgcp and res_pktccops automatically
++noload => chan_mgcp.so
++noload => res_pktccops.so
+-- 
+1.7.6.2
+

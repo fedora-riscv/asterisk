@@ -1,0 +1,63 @@
+From 48a7a760e910ce6afd59e83ca1e01e62876c59cc Mon Sep 17 00:00:00 2001
+From: "Jeffrey C. Ollie" <jeff@ocjtech.us>
+Date: Tue, 20 Sep 2011 09:11:13 -0500
+Subject: [PATCH 08/12] Make sure that AST_ARGS is used consistently in Fedora
+ init script
+
+---
+ contrib/init.d/rc.redhat.asterisk |   20 ++++++++++----------
+ 1 files changed, 10 insertions(+), 10 deletions(-)
+
+diff --git a/contrib/init.d/rc.redhat.asterisk b/contrib/init.d/rc.redhat.asterisk
+index 0d53a57..186fc18 100755
+--- a/contrib/init.d/rc.redhat.asterisk
++++ b/contrib/init.d/rc.redhat.asterisk
+@@ -101,35 +101,35 @@ start() {
+ 		AST_ARGS="$AST_ARGS -G $AST_GROUP"
+ 	fi
+ 	if [ $AST_CONFIG ]; then
+-		ASTARGS="$ASTARGS -C $AST_CONFIG"
++		AST_ARGS="$AST_ARGS -C $AST_CONFIG"
+ 	elif [ $ALTCONF ]; then
+-		ASTARGS="$ASTARGS -C $ALTCONF"
++		AST_ARGS="$AST_ARGS -C $ALTCONF"
+ 	fi
+ 	if [ "x$COREDUMP" = "xyes" ]; then
+-		ASTARGS="$ASTARGS -g"
++		AST_ARGS="$AST_ARGS -g"
+ 	fi
+ 	if [ "0$MAXLOAD" -gt "0" ]; then
+-		ASTARGS="$ASTARGS -L $MAXLOAD"
++		AST_ARGS="$AST_ARGS -L $MAXLOAD"
+ 	fi
+ 	if [ "0$MAXCALLS" -gt "0" ]; then
+-		ASTARGS="$ASTARGS -M $MAXCALLS"
++		AST_ARGS="$AST_ARGS -M $MAXCALLS"
+ 	fi
+ 	if [ "0$VERBOSITY" -gt "0" ]; then
+ 		for i in `seq 1 $VERBOSITY`; do
+-			ASTARGS="$ASTARGS -v"
++			AST_ARGS="$AST_ARGS -v"
+ 		done
+ 	fi
+ 	if [ "x$INTERNALTIMING" = "xyes" ]; then
+-		ASTARGS="$ASTARGS -I"
++		AST_ARGS="$AST_ARGS -I"
+ 	fi
+ 	if [ "x$TEMPRECORDINGLOCATION" = "xyes" -o "x$TMPRECORDINGLOCATION" = "xyes" ]; then
+-		ASTARGS="$ASTARGS -t"
++		AST_ARGS="$AST_ARGS -t"
+ 	fi
+ 	if [ "x$COLOR" = "xyes" ]; then
+ 		export TERM=linux
+-		daemon sh -c "$DAEMON $ASTARGS $AST_EXTRA_ARGS -c" >/dev/null </dev/null 2>&1 &
++		daemon sh -c "$DAEMON $AST_ARGS $AST_EXTRA_ARGS -c" >/dev/null </dev/null 2>&1 &
+ 	else
+-		daemon $DAEMON $ASTARGS $AST_EXTRA_ARGS
++		daemon $DAEMON $AST_ARGS $AST_EXTRA_ARGS
+ 	fi
+ 	RETVAL=$?
+ 	[ $RETVAL -eq 0 ] && touch /var/lock/subsys/asterisk
+-- 
+1.7.6.2
+

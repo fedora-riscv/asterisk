@@ -1,4 +1,4 @@
-%global _rc 2
+#global _rc 2
 #global _beta 5
 
 %if 0%{?fedora} >= 15
@@ -18,7 +18,7 @@
 Summary: The Open Source PBX
 Name: asterisk
 Version: 1.8.6.0
-Release: 0.2%{?_rc:.rc%{_rc}}%{?_beta:.beta%{_beta}}%{?dist}
+Release: 2%{?_rc:.rc%{_rc}}%{?_beta:.beta%{_beta}}%{?dist}
 License: GPLv2
 Group: Applications/Internet
 URL: http://www.asterisk.org/
@@ -38,6 +38,13 @@ Patch3:  0003-Allow-linking-building-against-an-external-libedit.patch
 Patch4:  0004-Use-the-library-function-for-loading-command-history.patch
 Patch5:  0005-Fix-up-some-paths.patch
 Patch6:  0006-Add-LDAP-schema-that-is-compatible-with-Fedora-Direc.patch
+Patch7:  0007-Don-t-load-chan_mgcp-and-res_pktccops-because-res_pk.patch
+Patch8:	 0008-Make-sure-that-AST_ARGS-is-used-consistently-in-Fedo.patch
+Patch9:	 0009-Use-consistently-in-the-Fedora-init-script.patch
+Patch10: 0010-Make-sure-that-the-Fedora-init-script-can-find-the-p.patch
+# Submitted upstream: https://issues.asterisk.org/jira/browse/ASTERISK-18331
+Patch11: 0011-This-fixes-the-inotify-code-to-handle-call-files-bei.patch
+Patch12: 0012-Fix-two-problems-with-app_sms.patch
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-root-%(%{__id_u} -n)
 
@@ -466,6 +473,12 @@ local filesystem.
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
+%patch7 -p1
+%patch8 -p1
+%patch9 -p1
+%patch10 -p1
+%patch11 -p1
+%patch12 -p1
 
 cp %{S:3} menuselect.makedeps
 cp %{S:4} menuselect.makeopts
@@ -1252,6 +1265,56 @@ fi
 %{_libdir}/asterisk/modules/app_voicemail_plain.so
 
 %changelog
+* Tue Sep 20 2011 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.8.6.0-2
+- Add patches to fix many bug reports from bugzilla.
+
+* Tue Sep 20 2011 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.8.6.0-1
+- The Asterisk Development Team announces the release of Asterisk 1.8.6.0. This
+- release is available for immediate download at
+- http://downloads.asterisk.org/pub/telephony/asterisk/
+-
+- The release of Asterisk 1.8.6.0 resolves several issues reported by the
+- community and would have not been possible without your participation.
+- Thank you!
+-
+- The following is a sample of the issues resolved in this release:
+-
+- * Fix an issue with Music on Hold classes losing files in playlist when realtime
+-  is used.
+-  (Closes issue ASTERISK-17875. Reported by David Cunningham. Patched by Igor
+-  Goncharovsky)
+-
+- * Resolve a potential crash in chan_sip when utilizing auth= and performing a
+-  'sip reload' from the console.
+-  (Closes issue ASTERISK-17939. Reported by wdoekes. Patched by Richard Mudgett)
+-
+- * Address some improper sql statements in res_odbc that would cause an update
+-  to fail on realtime peers due to trying to set as "(NULL)" rather than an
+-  actual NULL.
+-  (Closes issue ASTERISK-17791. Reported by marcelloceschia. Patched by Tilghman
+-  Lesher)
+-
+- * Resolve issue where 403 Forbidden would always be sent maximum number of times
+-  regardless to receipt of ACK.
+-  (Patched by Richard Mudgett)
+-
+- * Resolve issue where if a call to MeetMe includes both the dynamic(D) and
+-  always request PIN(P) options, MeetMe will ask for the PIN two times: once for
+-  creating the conference and once for entering the conference.
+-  (Patched by Kinsey Moore)
+-
+- * Fix New Zealand indications profile based on
+-  http://www.telepermit.co.nz/TNA102.pdf
+-  (Closes issue ASTERISK-16263. Reported, Patched by richardf)
+-
+- * Segfault in shell_helper in func_shell.c
+-  (Closes issue ASTERISK-18109. Reported by Michael Myles, patched by Richard
+-  Mudgett)
+-
+- For a full list of changes in this release, please see the ChangeLog:
+-
+- http://downloads.asterisk.org/pub/telephony/asterisk/ChangeLog-1.8.6.0
+
 * Tue Aug 23 2011 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.8.6.0-0.2.rc2
 - The Asterisk Development Team has announced the second release candidate of
 - Asterisk 1.8.6.0. This release candidate is available for immediate download at
