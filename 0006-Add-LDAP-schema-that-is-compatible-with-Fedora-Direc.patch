@@ -1,8 +1,8 @@
-From bf688f55238e2c4a7db12e9721830d3f7f7e35d6 Mon Sep 17 00:00:00 2001
+From 802da5c86e571b909bd198fc9460ac5230ef4191 Mon Sep 17 00:00:00 2001
 From: "Jeffrey C. Ollie" <jeff@ocjtech.us>
 Date: Sun, 4 Jan 2009 19:22:39 -0600
-Subject: [PATCH 6/6] Add LDAP schema that is compatible with Fedora Directory
- Server.
+Subject: [PATCH 06/13] Add LDAP schema that is compatible with Fedora
+ Directory Server.
 
 ---
  contrib/scripts/99asterisk.ldif |  489 +++++++++++++++++++++++++++++++++++++++
@@ -505,5 +505,5 @@ index 0000000..f3bdf4e
 +      $ AstConfigVariableName $ AstConfigVariableValue $ AstConfigCommented )
 +  )
 -- 
-1.7.5.2
+1.7.6.2
 

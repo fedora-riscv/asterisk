@@ -1,7 +1,7 @@
-From 931c4451f75158ec3ef1e1a5edea248e3d139961 Mon Sep 17 00:00:00 2001
+From 2ec862ecc0024bd4e9a14bd0a2ddc62ad75465ea Mon Sep 17 00:00:00 2001
 From: "Jeffrey C. Ollie" <jeff@ocjtech.us>
 Date: Fri, 5 Mar 2010 14:10:52 -0600
-Subject: [PATCH 3/6] Allow linking/building against an external libedit.
+Subject: [PATCH 03/13] Allow linking/building against an external libedit.
 
 The Asterisk tarball includes a very old copy of the editline library
 that manages command line history and editing.  Fedora (and several
@@ -31,7 +31,7 @@ index 35573c3..4425204 100644
  LUA=@PBX_LUA@
  MISDN=@PBX_MISDN@
 diff --git a/configure.ac b/configure.ac
-index 889586a..f9bb9ac 100644
+index c05d33f..4bd07ed 100644
 --- a/configure.ac
 +++ b/configure.ac
 @@ -388,6 +388,7 @@ AST_EXT_LIB_SETUP([JACK], [Jack Audio Connection Kit], [jack])
@@ -42,7 +42,7 @@ index 889586a..f9bb9ac 100644
  AST_EXT_LIB_SETUP([LIBXML2], [LibXML2], [libxml2])
  AST_EXT_LIB_SETUP([LTDL], [libtool], [ltdl])
  AST_EXT_LIB_SETUP([LUA], [Lua], [lua])
-@@ -2158,6 +2159,27 @@ AC_SUBST(PBX_GTK2)
+@@ -2161,6 +2162,27 @@ AC_SUBST(PBX_GTK2)
  AC_SUBST(GTK2_INCLUDE)
  AC_SUBST(GTK2_LIB)
  
@@ -71,10 +71,10 @@ index 889586a..f9bb9ac 100644
  # or iODBC
  
 diff --git a/main/Makefile b/main/Makefile
-index 64ad43f..27ef6c8 100644
+index 07143aa..269ca10 100644
 --- a/main/Makefile
 +++ b/main/Makefile
-@@ -143,6 +143,8 @@ testexpr2: ast_expr2f.c ast_expr2.c ast_expr2.h
+@@ -144,6 +144,8 @@ testexpr2: ast_expr2f.c ast_expr2.c ast_expr2.h
  	$(CC) -g -o testexpr2 ast_expr2f.o ast_expr2.o -lm
  	rm ast_expr2.o ast_expr2f.o 
  
@@ -83,7 +83,7 @@ index 64ad43f..27ef6c8 100644
  ifneq ($(findstring ENABLE_UPLOADS,$(MENUSELECT_CFLAGS)),)
  http.o: _ASTCFLAGS+=$(GMIME_INCLUDE)
  endif
-@@ -177,13 +179,13 @@ endif
+@@ -178,13 +180,13 @@ endif
  
  $(OBJS): _ASTCFLAGS+=-DAST_MODULE=\"core\"
  
@@ -102,7 +102,7 @@ index 64ad43f..27ef6c8 100644
  
  ifeq ($(GNU_LD),1)
 diff --git a/main/cli.c b/main/cli.c
-index 7f4c179..b85c219 100644
+index 407973f..52faf4d 100644
 --- a/main/cli.c
 +++ b/main/cli.c
 @@ -36,6 +36,8 @@ ASTERISK_FILE_VERSION(__FILE__, "$Revision$")
@@ -135,5 +135,5 @@ index 3cde814..f86b166 100644
 +LIBEDIT_LIB=@LIBEDIT_LIB@
 +LIBEDIT_OBJ=@LIBEDIT_OBJ@
 -- 
-1.7.5.2
+1.7.6.2
 
