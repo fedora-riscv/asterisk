@@ -1,7 +1,7 @@
-From 2a65d7a5c9bcad7d2bfed34220cad5288fac51b1 Mon Sep 17 00:00:00 2001
-From: Jeffrey C. Ollie <jeff@ocjtech.us>
+From dea8b4e977998aac18ae2e08f491165d5f5f0d47 Mon Sep 17 00:00:00 2001
+From: "Jeffrey C. Ollie" <jeff@ocjtech.us>
 Date: Wed, 28 Jul 2010 07:27:48 -0500
-Subject: [PATCH 5/7] Fix up some paths
+Subject: [PATCH 05/12] Fix up some paths
 
 ---
  UPGRADE-1.4.txt                             |    2 +-
@@ -612,5 +612,5 @@ index 3c66be2..bedb8d8 100644
  exten => 762,1,agi(tts-riddle.agi)
  exten => 762,2,Background(gsm/what-time-it-is2)
 -- 
-1.7.4.4
+1.7.6.2
 

@@ -1,7 +1,7 @@
-From c9f2e1e0d29076980cbf5750718b05c480bcfe3f Mon Sep 17 00:00:00 2001
-From: Jeffrey C. Ollie <jeff@ocjtech.us>
+From 55aa7fa87fb53be641f4f436c3e9ea4f0959ed54 Mon Sep 17 00:00:00 2001
+From: "Jeffrey C. Ollie" <jeff@ocjtech.us>
 Date: Mon, 8 Mar 2010 12:38:56 -0600
-Subject: [PATCH 4/7] Use the library function for loading command history
+Subject: [PATCH 04/12] Use the library function for loading command history
  rather than implementing our own.
 
 ---
@@ -45,5 +45,5 @@ index 431a9ea..ce356c3 100644
  
  static void ast_remotecontrol(char *data)
 -- 
-1.7.4.4
+1.7.6.2
 

@@ -1,7 +1,7 @@
-From 6431e84e83fdf9e0e60570c36aa1129c62b15fb0 Mon Sep 17 00:00:00 2001
-From: Jeffrey C. Ollie <jeff@ocjtech.us>
+From 9cf889ce1074871c9d26127b3655db11d3bf755d Mon Sep 17 00:00:00 2001
+From: "Jeffrey C. Ollie" <jeff@ocjtech.us>
 Date: Wed, 28 Jul 2010 07:32:19 -0500
-Subject: [PATCH 7/7] Tell laxtex2html to copy icons when building
+Subject: [PATCH 07/12] Tell laxtex2html to copy icons when building
  documentation so that we don't have run-time
  dependencies on latex2html.
 
@@ -23,5 +23,5 @@ index 4add45a..e448c95 100644
  
  txt: asterisk.txt
 -- 
-1.7.4.4
+1.7.6.2
 

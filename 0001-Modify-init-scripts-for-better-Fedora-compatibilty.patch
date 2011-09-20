@@ -1,7 +1,7 @@
-From d592be20a6e7142140dd8916daac8d73cca25cd0 Mon Sep 17 00:00:00 2001
-From: Jeffrey C. Ollie <jeff@ocjtech.us>
+From f841a588117ad72e821a4194a6e97cfed40a42cd Mon Sep 17 00:00:00 2001
+From: "Jeffrey C. Ollie" <jeff@ocjtech.us>
 Date: Wed, 28 Jul 2010 07:22:21 -0500
-Subject: [PATCH 1/7] Modify init scripts for better Fedora compatibilty.
+Subject: [PATCH 01/12] Modify init scripts for better Fedora compatibilty.
 
 ---
  contrib/init.d/rc.redhat.asterisk |   75 +++++++++++++++++--------------------
@@ -168,5 +168,5 @@ index 0000000..dab2e33
 +# A place to specify extra arguments for the Asterisk command line
 +AST_EXTRA_ARGS=""
 -- 
-1.7.4.4
+1.7.6.2
 

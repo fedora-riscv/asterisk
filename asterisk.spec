@@ -1,7 +1,7 @@
 #global _rc 1
 Summary: The Open Source PBX
 Name: asterisk
-Version: 1.6.2.19
+Version: 1.6.2.20
 Release: 1%{?_rc:.rc%{_rc}}%{?dist}
 License: GPLv2
 Group: Applications/Internet
@@ -21,6 +21,10 @@ Patch4:  0004-Use-the-library-function-for-loading-command-history.patch
 Patch5:  0005-Fix-up-some-paths.patch
 Patch6:  0006-Add-LDAP-schema-that-is-compatible-with-Fedora-Direc.patch
 Patch7:  0007-Tell-laxtex2html-to-copy-icons-when-building-documen.patch
+Patch9:  0009-Make-sure-that-AST_ARGS-is-used-consistently-in-Fedo.patch
+Patch10: 0010-Use-consistently-in-the-Fedora-init-script.patch
+Patch11: 0011-Make-sure-that-the-Fedora-init-script-can-find-the-p.patch
+Patch12: 0012-Remove-blank-lines-to-improve-compat-with-389-Direct.patch
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-root-%(%{__id_u} -n)
 
@@ -393,6 +397,10 @@ local filesystem.
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
+%patch9 -p1
+%patch10 -p1
+%patch11 -p1
+%patch12 -p1
 
 cp %{SOURCE2} menuselect.makedeps
 cp %{SOURCE3} menuselect.makeopts
@@ -1032,6 +1040,21 @@ fi
 %{_libdir}/asterisk/modules/app_voicemail_plain.so
 
 %changelog
+* Mon Sep 20 2011 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.6.2.20-1:
+- The Asterisk Development Team announces the release of Asterisk 1.6.2.20. This
+- release is available for immediate download at
+- http://downloads.asterisk.org/pub/telephony/asterisk/
+-
+- The release of Asterisk 1.6.2.20 resolves a regression that was introduced just
+- prior to the release of Asterisk 1.6.2.19.
+-
+- * Fix reload crash caused by destroying default parking lot.
+-  (Closes issue ASTERISK-18103. Reported by 808blogger. Patched by jrose.
+-
+- For a full list of changes in this release, please see the ChangeLog:
+-
+- http://downloads.asterisk.org/pub/telephony/asterisk/releases/ChangeLog-1.6.2.20
+
 * Wed Jun 29 2011 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.6.2.19-1:
 - The Asterisk Development Team has announced the final maintenance release of
 - Asterisk, version 1.6.2.19. This release is available for immediate download at

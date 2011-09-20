@@ -1,0 +1,27 @@
+From 553cd8397ba0c55cb08c8c8f2ec7455271f9b40a Mon Sep 17 00:00:00 2001
+From: "Jeffrey C. Ollie" <jeff@ocjtech.us>
+Date: Tue, 20 Sep 2011 09:12:57 -0500
+Subject: [PATCH 11/12] Make sure that the Fedora init script can find the pid
+ file.
+
+---
+ contrib/init.d/rc.redhat.asterisk |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
+
+diff --git a/contrib/init.d/rc.redhat.asterisk b/contrib/init.d/rc.redhat.asterisk
+index 4425175..4f35791 100755
+--- a/contrib/init.d/rc.redhat.asterisk
++++ b/contrib/init.d/rc.redhat.asterisk
+@@ -126,7 +126,8 @@ start() {
+ stop() {
+ 	# Stop daemon.
+ 	echo -n $"Stopping asterisk: "
+-	killproc `basename $DAEMON`
++	piddir=`awk '$1 == "astrundir" { print $3 }' $AST_CONFIG`
++	killproc -p $piddir/asterisk.pid `basename $DAEMON`
+ 	RETVAL=$?
+ 	[ $RETVAL -eq 0 ] && rm -f /var/lock/subsys/asterisk
+ 	echo
+-- 
+1.7.6.2
+
