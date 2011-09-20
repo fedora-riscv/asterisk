@@ -1,7 +1,7 @@
 From f1233019198363c12025f76b710995dfee0e2d38 Mon Sep 17 00:00:00 2001
 From: "Jeffrey C. Ollie" <jeff@ocjtech.us>
 Date: Tue, 20 Sep 2011 08:40:49 -0500
-Subject: [PATCH 07/13] Don't load chan_mgcp and res_pktccops because
+Subject: [PATCH 07/14] Don't load chan_mgcp and res_pktccops because
  res_pktccops floods 192.168.0.24 in the default
  config
 
