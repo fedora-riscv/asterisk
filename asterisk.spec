@@ -1,4 +1,4 @@
-#global _rc 2
+%global _rc 2
 #global _beta 5
 
 %if 0%{?fedora} >= 15
@@ -17,8 +17,8 @@
 
 Summary: The Open Source PBX
 Name: asterisk
-Version: 1.8.6.0
-Release: 4%{?_rc:.rc%{_rc}}%{?_beta:.beta%{_beta}}%{?dist}
+Version: 1.8.7.0
+Release: 0.1%{?_rc:.rc%{_rc}}%{?_beta:.beta%{_beta}}%{?dist}
 License: GPLv2
 Group: Applications/Internet
 URL: http://www.asterisk.org/
