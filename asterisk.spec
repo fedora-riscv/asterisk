@@ -47,6 +47,8 @@ Patch11: 0011-This-fixes-the-inotify-code-to-handle-call-files-bei.patch
 Patch12: 0012-Fix-two-problems-with-app_sms.patch
 Patch13: 0013-Remove-blank-lines-to-improve-compat-with-389-Direct.patch
 
+Patch14: 0001-Revert-Don-t-enable-modules-that-are-explicitly-disa.patch
+
 BuildRoot: %{_tmppath}/%{name}-%{version}-root-%(%{__id_u} -n)
 
 BuildRequires: autoconf
@@ -481,6 +483,10 @@ local filesystem.
 %patch11 -p1
 %patch12 -p1
 %patch13 -p1
+
+pushd menuselect
+%patch14 -p1
+popd
 
 cp %{S:3} menuselect.makedeps
 cp %{S:4} menuselect.makeopts

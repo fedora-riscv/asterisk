@@ -1,0 +1,40 @@
+From ff210ce111360ce07afa2793be3e7dc699e330ff Mon Sep 17 00:00:00 2001
+From: "Jeffrey C. Ollie" <jeff@ocjtech.us>
+Date: Thu, 6 Oct 2011 16:06:08 -0500
+Subject: [PATCH] Revert "Don't enable modules that are explicitly disabled by
+ default."
+
+This reverts commit 8394488ba473b38c5a8fba0c6b72fef3da0997a7.
+---
+ menuselect.c |   10 +++++-----
+ 1 files changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/menuselect.c b/menuselect.c
+index 1cc21f8..2a5d7dc 100644
+--- a/menuselect.c
++++ b/menuselect.c
+@@ -287,16 +287,16 @@ static int parse_tree(const char *tree_file)
+ 				mem->explicitly_enabled_only = !strcasecmp(tmp, "yes");
+ 			}
+ 
++			if (!cat->positive_output) {
++				mem->was_enabled = mem->enabled = 1;
++				print_debug("Enabling %s because the category does not have positive output\n", mem->name);
++			}
++
+ 			cur3 = mxmlFindElement(cur2, cur2, "defaultenabled", NULL, NULL, MXML_DESCEND);
+ 			if (cur3 && cur3->child) {
+ 				mem->defaultenabled = cur3->child->value.opaque;
+ 			}
+ 
+-			if (!cat->positive_output && (!mem->defaultenabled || !strcasecmp(mem->defaultenabled, "yes"))) {
+-				mem->was_enabled = mem->enabled = 1;
+-				print_debug("Enabling %s because the category does not have positive output\n", mem->name);
+-			}
+-
+ 			cur3 = mxmlFindElement(cur2, cur2, "support_level", NULL, NULL, MXML_DESCEND);
+ 			if (cur3 && cur3->child) {
+ 				mem->support_level = cur3->child->value.opaque;
+-- 
+1.7.6.4
+
