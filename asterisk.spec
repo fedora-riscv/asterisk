@@ -17,8 +17,8 @@
 
 Summary: The Open Source PBX
 Name: asterisk
-Version: 1.8.6.0
-Release: 4%{?_rc:.rc%{_rc}}%{?_beta:.beta%{_beta}}%{?dist}
+Version: 1.8.7.0
+Release: 1%{?_rc:.rc%{_rc}}%{?_beta:.beta%{_beta}}%{?dist}
 License: GPLv2
 Group: Applications/Internet
 URL: http://www.asterisk.org/
@@ -1269,6 +1269,89 @@ fi
 %{_libdir}/asterisk/modules/app_voicemail_plain.so
 
 %changelog
+* Mon Oct  3 2011 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.8.7.0-1
+- The Asterisk Development Team announces the release of Asterisk 1.8.7.0. This
+- release is available for immediate download at
+- http://downloads.asterisk.org/pub/telephony/asterisk/
+-
+- The release of Asterisk 1.8.7.0 resolves several issues reported by the
+- community and would have not been possible without your participation.
+- Thank you!
+-
+- Please note that a significant numbers of changes and fixes have gone into
+- features.c in this release (call parking, built-in transfers, call pickup,
+- etc.).
+-
+- NOTE:
+-
+- Recently, we were notified that the mechanism included in our Asterisk source
+- code releases to download and build support for the iLBC codec had stopped
+- working correctly; a little investigation revealed that this occurred because of
+- some changes on the ilbcfreeware.org website. These changes occurred as a result
+- of Google's acquisition of GIPS, who produced (and provided licenses for) the
+- iLBC codec.
+-
+- If you are a user of Asterisk and iLBC together, and you've already executed a
+- license agreement with GIPS, we believe you can continue using iLBC with
+- Asterisk. If you are a user of Asterisk and iLBC together, but you had not
+- executed a license agreement with GIPS, we encourage you to research the
+- situation and consult with your own legal representatives to determine what
+- actions you may want to take (or avoid taking).
+-
+- More information is available on the Asterisk blog:
+-
+- http://blogs.asterisk.org/2011/09/19/ilbc-support-in-asterisk-after-googles-acquisition-of-gips/
+-
+- The following is a sample of the issues resolved in this release:
+-
+- * Added the 'storesipcause' option to sip.conf to allow the user to disable the
+-  setting of HASH(SIP_CAUSE,) on the channel. Having chan_sip set
+-  HASH(SIP_CAUSE,) on the channel carries a significant performance
+-  penalty because of the usage of the MASTER_CHANNEL() dialplan function.
+-
+-  We've decided to disable this feature by default in future 1.8 versions. This
+-  would be an unexpected behavior change for anyone depending on that SIP_CAUSE
+-  update in their dialplan. Please refer to the asterisk-dev mailing list more
+-  information:
+-
+-  http://lists.digium.com/pipermail/asterisk-dev/2011-August/050626.html
+-
+- * Significant fixes and improvements to parking lots.
+-  (Closes issues ASTERISK-17183, ASTERISK-17870, ASTERISK-17430, ASTERISK-17452,
+-  ASTERISK-17452, ASTERISK-15792. Reported by: David Cabrejos, Remi Quezada,
+-  Philippe Lindheimer, David Woolley, Mat Murdock. Patched by: rmudgett)
+-
+- * Numerous issues have been reported for deadlocks that are caused by a blocking
+-  read in res_timing_timerfd on a file descriptor that will never be written to.
+-
+-  A change to Asterisk adds some checks to make sure that the timerfd is both
+-  valid and armed before calling read(). Should fix: ASTERISK-18142,
+-  ASTERISK-18197, ASTERISK-18166 and possibly others.
+-  (In essence, this change should make res_timing_timerfd usable.)
+-
+- * Resolve segfault when publishing device states via XMPP and not connected.
+-  (Closes issue ASTERISK-18078. Reported, patched by: Michael L. Young. Tested
+-  by Jonathan Rose)
+-
+- * Refresh peer address if DNS unavailable at peer creation.
+-  (Closes issue ASTERISK-18000)
+-
+- * Fix the missing DAHDI channels when using the newer chan_dahdi.conf sections
+-  for channel configuration.
+-  (Closes issue ASTERISK-18496. Reported by Sean Darcy. Patched by Richard
+-  Mudgett)
+-
+- * Remove unnecessary libpri dependency checks in the configure script.
+-  (Closes issue ASTERISK-18535. Reported by Michael Keuter. Patched by Richard
+-  Mudgett)
+-
+- * Update get_ilbc_source.sh script to work again.
+-  (Closes issue ASTERISK-18412)
+-
+- For a full list of changes in this release, please see the ChangeLog:
+-
+- http://downloads.asterisk.org/pub/telephony/asterisk/ChangeLog-1.8.7.0
+
 * Tue Sep 20 2011 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.8.6.0-4
 - Add additional patch for res_pktccops.
 
