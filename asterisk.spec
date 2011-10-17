@@ -1,4 +1,4 @@
-#global _rc 2
+#global _rc 1
 #global _beta 5
 
 %if 0%{?fedora} >= 15
@@ -17,7 +17,7 @@
 
 Summary: The Open Source PBX
 Name: asterisk
-Version: 1.8.7.0
+Version: 1.8.7.1
 Release: 1%{?_rc:.rc%{_rc}}%{?_beta:.beta%{_beta}}%{?dist}
 License: GPLv2
 Group: Applications/Internet
@@ -46,7 +46,6 @@ Patch10: 0010-Make-sure-that-the-Fedora-init-script-can-find-the-p.patch
 Patch11: 0011-This-fixes-the-inotify-code-to-handle-call-files-bei.patch
 Patch12: 0012-Fix-two-problems-with-app_sms.patch
 Patch13: 0013-Remove-blank-lines-to-improve-compat-with-389-Direct.patch
-Patch14: 0014-Comment-out-the-config-in-res_pktccops.conf-for-extr.patch
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-root-%(%{__id_u} -n)
 
@@ -482,7 +481,6 @@ local filesystem.
 %patch11 -p1
 %patch12 -p1
 %patch13 -p1
-%patch14 -p1
 
 cp %{S:3} menuselect.makedeps
 cp %{S:4} menuselect.makeopts
@@ -1269,6 +1267,29 @@ fi
 %{_libdir}/asterisk/modules/app_voicemail_plain.so
 
 %changelog
+* Mon Oct 17 2011 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.8.7.1-1
+- The Asterisk Development Team has announced a security release for Asterisk 1.8.
+- The available security release is released as version 1.8.7.1.
+-
+- This release is available for immediate download at
+- http://downloads.asterisk.org/pub/telephony/asterisk/releases
+-
+- The release of Asterisk 1.8.7.1 resolves an issue with SIP URI parsing which can
+- lead to a remotely exploitable crash:
+-
+-    Remote Crash Vulnerability in SIP channel driver (AST-2011-012)
+-
+- The issue and resolution is described in the AST-2011-012 security
+- advisory.
+-
+- For more information about the details of this vulnerability, please read the
+- security advisory AST-2011-012, which was released at the same time as this
+- announcement.
+-
+- For a full list of changes in the current release, please see the ChangeLog:
+-
+- http://downloads.asterisk.org/pub/telephony/asterisk/releases/ChangeLog-1.8.7.1
+
 * Mon Oct  3 2011 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.8.7.0-1
 - The Asterisk Development Team announces the release of Asterisk 1.8.7.0. This
 - release is available for immediate download at
