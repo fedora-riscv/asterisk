@@ -1,4 +1,4 @@
-%global _rc 1
+#global _rc 1
 #global _beta 5
 
 %if 0%{?fedora} >= 15
@@ -17,8 +17,8 @@
 
 Summary: The Open Source PBX
 Name: asterisk
-Version: 1.8.8.0
-Release: 0.1%{?_rc:.rc%{_rc}}%{?_beta:.beta%{_beta}}%{?dist}
+Version: 1.8.7.1
+Release: 1%{?_rc:.rc%{_rc}}%{?_beta:.beta%{_beta}}%{?dist}
 License: GPLv2
 Group: Applications/Internet
 URL: http://www.asterisk.org/
@@ -46,8 +46,6 @@ Patch10: 0010-Make-sure-that-the-Fedora-init-script-can-find-the-p.patch
 Patch11: 0011-This-fixes-the-inotify-code-to-handle-call-files-bei.patch
 Patch12: 0012-Fix-two-problems-with-app_sms.patch
 Patch13: 0013-Remove-blank-lines-to-improve-compat-with-389-Direct.patch
-
-Patch14: 0001-Revert-Don-t-enable-modules-that-are-explicitly-disa.patch
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-root-%(%{__id_u} -n)
 
@@ -483,10 +481,6 @@ local filesystem.
 %patch11 -p1
 %patch12 -p1
 %patch13 -p1
-
-pushd menuselect
-%patch14 -p1
-popd
 
 cp %{S:3} menuselect.makedeps
 cp %{S:4} menuselect.makeopts
@@ -1273,58 +1267,28 @@ fi
 %{_libdir}/asterisk/modules/app_voicemail_plain.so
 
 %changelog
-* Thu Oct  6 2011 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.8.8.0-0.1.rc1
-- The Asterisk Development Team announces the first release candidate of
-- Asterisk 1.8.8.0. This release candidate is available for immediate download at
-- http://downloads.asterisk.org/pub/telephony/asterisk/
+* Mon Oct 17 2011 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.8.7.1-1
+- The Asterisk Development Team has announced a security release for Asterisk 1.8.
+- The available security release is released as version 1.8.7.1.
 -
-- The release of Asterisk 1.8.8.0-rc1 resolves several issues reported by the
-- community and would have not been possible without your participation.
-- Thank you!
+- This release is available for immediate download at
+- http://downloads.asterisk.org/pub/telephony/asterisk/releases
 -
-- The following is a sample of the issues resolved in this release candidate:
+- The release of Asterisk 1.8.7.1 resolves an issue with SIP URI parsing which can
+- lead to a remotely exploitable crash:
 -
--  * Updated SIP 484 handling; added Incomplete control frame
--   When a SIP phone uses the dial application and receives a 484 Address
--   Incomplete response, if overlapped dialing is enabled for SIP, then the 484
--   Address Incomplete is forwarded back to the SIP phone and the HANGUPCAUSE
--   channel variable is set to 28. Previously, the Incomplete application
--   dialplan logic was automatically triggered; now, explicit dialplan usage of
--   the application is required.
--   (Closes ASTERISK-17288. Reported by: Mikael Carlsson Tested by: Matthew
--    Jordan Review: https://reviewboard.asterisk.org/r/1416/)
+-    Remote Crash Vulnerability in SIP channel driver (AST-2011-012)
 -
--  * Prevent IAX2 from getting IPv6 addresses via DNS IAX2 does not support IPv6
--   and getting such addresses from DNS can cause error messages on the remote
--   end involving bad IPv4 address casts in the presence of IPv6/IPv4 tunnels.
--   (Closes issue ASTERISK-18090. Patched by Kinsey Moore)
+- The issue and resolution is described in the AST-2011-012 security
+- advisory.
 -
--  * Fix bad RTP media bridges in directmedia calls on peers separated by multiple
--   Asterisk nodes.
--   (Closes issue ASTERISK-18340. Reported by: Thomas Arimont. Closes issue
--    ASTERISK-17725. Reported by: kwk. Tested by: twilson, jrose)
+- For more information about the details of this vulnerability, please read the
+- security advisory AST-2011-012, which was released at the same time as this
+- announcement.
 -
--  * Fix crashes in ast_rtcp_write()
--   (Closes issue ASTERISK-18570)
--   Related issues that look like they are the same problem:
--   (Issue ASTERISK-17560, ASTERISK-15406, ASTERISK-15257, ASTERISK-13334,
--    ASTERISK-9977, ASTERISK-9716)
--   Review: https://reviewboard.asterisk.org/r/1444/
--   Patched by: Russell Bryant
+- For a full list of changes in the current release, please see the ChangeLog:
 -
--  * Fix for incorrect voicemail duration in external notifications.
--   This patch fixes an issue where the voicemail duration was being reported
--   with a duration significantly less than the actual sound file duration.
--   (Closes ASTERISK-16981. Reported by: Mary Ciuciu, Byron Clark, Brad House,
--    Karsten Wemheuer, KevinH Tested by: Matt Jordan
--    Review: https://reviewboard.asterisk.org/r/1443)
--
--  * Prevent segfault if call arrives before Asterisk is fully booted.
--   (Patched by alecdavis. https://reviewboard.asterisk.org/r/1407/)
--
-- For a full list of changes in this release candidate, please see the ChangeLog:
--
-- http://downloads.asterisk.org/pub/telephony/asterisk/ChangeLog-1.8.8.0-rc1
+- http://downloads.asterisk.org/pub/telephony/asterisk/releases/ChangeLog-1.8.7.1
 
 * Mon Oct  3 2011 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.8.7.0-1
 - The Asterisk Development Team announces the release of Asterisk 1.8.7.0. This

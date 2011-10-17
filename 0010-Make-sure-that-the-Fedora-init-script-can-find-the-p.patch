@@ -1,7 +1,7 @@
-From 777399984360df8c3e0bf781aea58f58542c7654 Mon Sep 17 00:00:00 2001
+From 6a57b68b22473802e2a5d133ba24fd8f24f4be20 Mon Sep 17 00:00:00 2001
 From: "Jeffrey C. Ollie" <jeff@ocjtech.us>
 Date: Tue, 20 Sep 2011 09:12:57 -0500
-Subject: [PATCH 10/13] Make sure that the Fedora init script can find the pid
+Subject: [PATCH 10/14] Make sure that the Fedora init script can find the pid
  file.
 
 ---
@@ -9,7 +9,7 @@ Subject: [PATCH 10/13] Make sure that the Fedora init script can find the pid
  1 files changed, 2 insertions(+), 1 deletions(-)
 
 diff --git a/contrib/init.d/rc.redhat.asterisk b/contrib/init.d/rc.redhat.asterisk
-index 76ffcfd..991b829 100755
+index 7415138..95e83ef 100755
 --- a/contrib/init.d/rc.redhat.asterisk
 +++ b/contrib/init.d/rc.redhat.asterisk
 @@ -140,7 +140,8 @@ start() {
@@ -23,5 +23,5 @@ index 76ffcfd..991b829 100755
  	[ $RETVAL -eq 0 ] && rm -f /var/lock/subsys/asterisk
  	echo
 -- 
-1.7.6.4
+1.7.6.2
 

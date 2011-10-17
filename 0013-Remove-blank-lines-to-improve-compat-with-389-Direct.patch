@@ -1,7 +1,7 @@
-From 4a0aa22b6f150fa1aa9b5d9b5967e9f1bbe370bc Mon Sep 17 00:00:00 2001
+From 0ee8123802c0dbc4b0d4837d1941df9299abf1a5 Mon Sep 17 00:00:00 2001
 From: "Jeffrey C. Ollie" <jeff@ocjtech.us>
 Date: Tue, 20 Sep 2011 10:21:04 -0500
-Subject: [PATCH 13/13] Remove blank lines to improve compat with 389
+Subject: [PATCH 13/14] Remove blank lines to improve compat with 389
  Directory Server
 
 ---
@@ -428,5 +428,5 @@ index f3bdf4e..d5cd6a1 100644
    DESC 'Asterisk configuration Information'
    SUP top
 -- 
-1.7.6.4
+1.7.6.2
 

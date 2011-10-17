@@ -1,7 +1,7 @@
-From 49f4f57190f7b041b271c3f6c7c0c5ae265d3c54 Mon Sep 17 00:00:00 2001
+From c9e668f62d3cce2df1ab80f16727debd99739764 Mon Sep 17 00:00:00 2001
 From: "Jeffrey C. Ollie" <jeff@ocjtech.us>
 Date: Wed, 28 Jul 2010 07:22:21 -0500
-Subject: [PATCH 01/13] Modify init scripts for better Fedora compatibilty.
+Subject: [PATCH 01/14] Modify init scripts for better Fedora compatibilty.
 
 ---
  contrib/init.d/rc.redhat.asterisk |   70 ++++++++++++++++++++-----------------
@@ -10,7 +10,7 @@ Subject: [PATCH 01/13] Modify init scripts for better Fedora compatibilty.
  create mode 100644 contrib/sysconfig/asterisk
 
 diff --git a/contrib/init.d/rc.redhat.asterisk b/contrib/init.d/rc.redhat.asterisk
-index 01ab862..049ff8f 100755
+index abf3951..0d53a57 100755
 --- a/contrib/init.d/rc.redhat.asterisk
 +++ b/contrib/init.d/rc.redhat.asterisk
 @@ -3,7 +3,7 @@
@@ -169,5 +169,5 @@ index 0000000..dab2e33
 +# A place to specify extra arguments for the Asterisk command line
 +AST_EXTRA_ARGS=""
 -- 
-1.7.6.4
+1.7.6.2
 
