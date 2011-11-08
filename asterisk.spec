@@ -1,4 +1,4 @@
-#global _rc 1
+%global _rc 2
 #global _beta 5
 
 %if 0%{?fedora} >= 15
@@ -17,8 +17,8 @@
 
 Summary: The Open Source PBX
 Name: asterisk
-Version: 1.8.7.1
-Release: 1%{?_rc:.rc%{_rc}}%{?_beta:.beta%{_beta}}%{?dist}
+Version: 1.8.8.0
+Release: 0.2%{?_rc:.rc%{_rc}}%{?_beta:.beta%{_beta}}%{?dist}
 License: GPLv2
 Group: Applications/Internet
 URL: http://www.asterisk.org/
@@ -31,7 +31,7 @@ Source4: menuselect.makeopts
 Source5: asterisk.service
 Source6: asterisk-tmpfiles
 
-Patch1:  0001-Modify-init-scripts-for-better-Fedora-compatibilty.patch
+#Patch1:  0001-Modify-init-scripts-for-better-Fedora-compatibilty.patch
 Patch2:  0002-Modify-modules.conf-so-that-different-voicemail-modu.patch
 # Submitted upstream: https://issues.asterisk.org/view.php?id=16858
 Patch3:  0003-Allow-linking-building-against-an-external-libedit.patch
@@ -39,9 +39,9 @@ Patch4:  0004-Use-the-library-function-for-loading-command-history.patch
 Patch5:  0005-Fix-up-some-paths.patch
 Patch6:  0006-Add-LDAP-schema-that-is-compatible-with-Fedora-Direc.patch
 Patch7:  0007-Don-t-load-chan_mgcp-and-res_pktccops-because-res_pk.patch
-Patch8:	 0008-Make-sure-that-AST_ARGS-is-used-consistently-in-Fedo.patch
-Patch9:	 0009-Use-consistently-in-the-Fedora-init-script.patch
-Patch10: 0010-Make-sure-that-the-Fedora-init-script-can-find-the-p.patch
+#Patch8:	 0008-Make-sure-that-AST_ARGS-is-used-consistently-in-Fedo.patch
+#Patch9:	 0009-Use-consistently-in-the-Fedora-init-script.patch
+#Patch10: 0010-Make-sure-that-the-Fedora-init-script-can-find-the-p.patch
 # Submitted upstream: https://issues.asterisk.org/jira/browse/ASTERISK-18331
 Patch11: 0011-This-fixes-the-inotify-code-to-handle-call-files-bei.patch
 Patch12: 0012-Fix-two-problems-with-app_sms.patch
@@ -468,16 +468,16 @@ local filesystem.
 
 %prep
 %setup0 -q -n asterisk-%{version}%{?_rc:-rc%{_rc}}%{?_beta:-beta%{_beta}}
-%patch1 -p1
+#patch1 -p1
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
-%patch8 -p1
-%patch9 -p1
-%patch10 -p1
+#patch8 -p1
+#patch9 -p1
+#patch10 -p1
 %patch11 -p1
 %patch12 -p1
 %patch13 -p1
@@ -1267,6 +1267,92 @@ fi
 %{_libdir}/asterisk/modules/app_voicemail_plain.so
 
 %changelog
+* Tue Nov  8 2011 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.8.8.0-0.2.rc2
+- The Asterisk Development Team has announced the second release candidate of
+- Asterisk 1.8.8.0. This release candidate is available for immediate download at
+- http://downloads.asterisk.org/pub/telephony/asterisk/
+-
+- The release of Asterisk 1.8.8.0-rc2 resolves several issues reported by the
+- community and would have not been possible without your participation.
+- Thank you!
+-
+- The following is a sample of the issues resolved in this release candidate:
+-
+- * --- Fix remote Crash Vulnerability in SIP channel driver (AST-2011-012) ---
+-  http://downloads.asterisk.org/pub/security/AST-2011-012.pdf
+-
+- * --- Fix locking order in app_queue.c which caused deadlocks ---
+-  (Closes issue ASTERISK-18101. Reported by Paul Rolfe, patched by Gregory Nietsky)
+-  (Closes issue ASTERISK-18487. Reported by Jason Legault, patched by Gregory
+- Nietsky)
+-
+- * --- Fix regression in configure script for libpri capability checks ---
+-  (Closes issue ASTERISK-18687. Reported by norbert, patched by Richard Mudgett)
+-
+- * --- Properly ignore AST_CONTROL_UPDATE_RTP_PEER in more places ---
+-  (Closes issue ASTERISK-18610. Reported by Kristijan_Vrban, patched by Terry
+- Wilson, and again by Kristijan_Vrban)
+-
+- * --- Fix issue with removing peers by IP ---
+-  (Closes issue ASTERISK-18696. Reported by rsw686, patched by Terry Wilson)
+-
+- For a full list of changes in this release candidate, please see the ChangeLog:
+-
+- http://downloads.asterisk.org/pub/telephony/asterisk/ChangeLog-1.8.8.0-rc2
+
+* Tue Nov  8 2011 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.8.8.0-0.1.rc1
+- The Asterisk Development Team announces the first release candidate of
+- Asterisk 1.8.8.0. This release candidate is available for immediate download at
+- http://downloads.asterisk.org/pub/telephony/asterisk/
+-
+- The release of Asterisk 1.8.8.0-rc1 resolves several issues reported by the
+- community and would have not been possible without your participation.
+- Thank you!
+-
+- The following is a sample of the issues resolved in this release candidate:
+-
+-  * Updated SIP 484 handling; added Incomplete control frame
+-   When a SIP phone uses the dial application and receives a 484 Address
+-   Incomplete response, if overlapped dialing is enabled for SIP, then the 484
+-   Address Incomplete is forwarded back to the SIP phone and the HANGUPCAUSE
+-   channel variable is set to 28. Previously, the Incomplete application
+-   dialplan logic was automatically triggered; now, explicit dialplan usage of
+-   the application is required.
+-   (Closes ASTERISK-17288. Reported by: Mikael Carlsson Tested by: Matthew
+-    Jordan Review: https://reviewboard.asterisk.org/r/1416/)
+-
+-  * Prevent IAX2 from getting IPv6 addresses via DNS IAX2 does not support IPv6
+-   and getting such addresses from DNS can cause error messages on the remote
+-   end involving bad IPv4 address casts in the presence of IPv6/IPv4 tunnels.
+-   (Closes issue ASTERISK-18090. Patched by Kinsey Moore)
+-
+-  * Fix bad RTP media bridges in directmedia calls on peers separated by multiple
+-   Asterisk nodes.
+-   (Closes issue ASTERISK-18340. Reported by: Thomas Arimont. Closes issue
+-    ASTERISK-17725. Reported by: kwk. Tested by: twilson, jrose)
+-
+-  * Fix crashes in ast_rtcp_write()
+-   (Closes issue ASTERISK-18570)
+-   Related issues that look like they are the same problem:
+-   (Issue ASTERISK-17560, ASTERISK-15406, ASTERISK-15257, ASTERISK-13334,
+-    ASTERISK-9977, ASTERISK-9716)
+-   Review: https://reviewboard.asterisk.org/r/1444/
+-   Patched by: Russell Bryant
+-
+-  * Fix for incorrect voicemail duration in external notifications.
+-   This patch fixes an issue where the voicemail duration was being reported
+-   with a duration significantly less than the actual sound file duration.
+-   (Closes ASTERISK-16981. Reported by: Mary Ciuciu, Byron Clark, Brad House,
+-    Karsten Wemheuer, KevinH Tested by: Matt Jordan
+-    Review: https://reviewboard.asterisk.org/r/1443)
+-
+-  * Prevent segfault if call arrives before Asterisk is fully booted.
+-   (Patched by alecdavis. https://reviewboard.asterisk.org/r/1407/)
+-
+- For a full list of changes in this release candidate, please see the ChangeLog:
+-
+- http://downloads.asterisk.org/pub/telephony/asterisk/ChangeLog-1.8.8.0-rc1
+
 * Mon Oct 17 2011 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.8.7.1-1
 - The Asterisk Development Team has announced a security release for Asterisk 1.8.
 - The available security release is released as version 1.8.7.1.
