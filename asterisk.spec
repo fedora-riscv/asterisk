@@ -1,4 +1,4 @@
-%global _rc 2
+%global _rc 4
 #global _beta 5
 
 %if 0%{?fedora} >= 15
@@ -18,7 +18,7 @@
 Summary: The Open Source PBX
 Name: asterisk
 Version: 1.8.8.0
-Release: 0.2%{?_rc:.rc%{_rc}}%{?_beta:.beta%{_beta}}%{?dist}
+Release: 0.4%{?_rc:.rc%{_rc}}%{?_beta:.beta%{_beta}}%{?dist}
 License: GPLv2
 Group: Applications/Internet
 URL: http://www.asterisk.org/
@@ -46,6 +46,8 @@ Patch7:  0007-Don-t-load-chan_mgcp-and-res_pktccops-because-res_pk.patch
 Patch11: 0011-This-fixes-the-inotify-code-to-handle-call-files-bei.patch
 Patch12: 0012-Fix-two-problems-with-app_sms.patch
 Patch13: 0013-Remove-blank-lines-to-improve-compat-with-389-Direct.patch
+
+Patch99: ogg_vorbis_use_libvorbisfile.patch
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-root-%(%{__id_u} -n)
 
@@ -481,6 +483,8 @@ local filesystem.
 %patch11 -p1
 %patch12 -p1
 %patch13 -p1
+
+%patch99 -p0
 
 cp %{S:3} menuselect.makedeps
 cp %{S:4} menuselect.makeopts
@@ -1267,6 +1271,47 @@ fi
 %{_libdir}/asterisk/modules/app_voicemail_plain.so
 
 %changelog
+* Thu Nov 17 2011 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.8.8.0-0.4.rc4
+- The Asterisk Development Team has announced the fourth release candidate of
+- Asterisk 1.8.8.0. This release candidate is available for immediate download at
+- http://downloads.asterisk.org/pub/telephony/asterisk/
+-
+- The release of Asterisk 1.8.8.0-rc4 resolves a particular issue with BLF
+- subscriptions. A change in Asterisk 1.8.8.0-rc3 had the potential to cause a
+- segfault, and this release candidate was created to resolve that.
+-
+- For a full list of changes in this release candidate, please see the ChangeLog:
+-
+- http://downloads.asterisk.org/pub/telephony/asterisk/ChangeLog-1.8.8.0-rc4
+
+* Thu Nov 10 2011 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.8.8.0-0.3.rc3
+- The Asterisk Development Team has announced the third release candidate of
+- Asterisk 1.8.8.0. This release candidate is available for immediate download at
+- http://downloads.asterisk.org/pub/telephony/asterisk/
+-
+- The release of Asterisk 1.8.8.0-rc3 resolves several issues reported by the
+- community and would have not been possible without your participation.
+- Thank you!
+-
+- The following is a sample of the issues resolved in this release candidate:
+-
+- * Prevent BLF subscriptions from causing deadlocks.
+-  (Closes issue ASTERISK-18663)
+-  Review: https://reviewboard.asterisk.org/r/1563/
+-
+- * Fix deadlock if peer is destroyed while sending MWI notice.
+-  (Closes issue ASTERISK-18747)
+-  Reported by: Gregory Hinton Nietsky
+-
+- * Fix issue with setting defaultenabled on categories that are already enabled
+-  by default.
+-  (Closes issue ASTERISK-18738)
+-  Reported by: Paul Belanger
+-
+- For a full list of changes in this release candidate, please see the ChangeLog:
+-
+- http://downloads.asterisk.org/pub/telephony/asterisk/ChangeLog-1.8.8.0-rc3
+
 * Tue Nov  8 2011 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.8.8.0-0.2.rc2
 - The Asterisk Development Team has announced the second release candidate of
 - Asterisk 1.8.8.0. This release candidate is available for immediate download at
