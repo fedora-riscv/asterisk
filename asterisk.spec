@@ -17,7 +17,7 @@
 
 Summary: The Open Source PBX
 Name: asterisk
-Version: 1.8.7.1
+Version: 1.8.7.2
 Release: 1%{?_rc:.rc%{_rc}}%{?_beta:.beta%{_beta}}%{?dist}
 License: GPLv2
 Group: Applications/Internet
@@ -1267,6 +1267,41 @@ fi
 %{_libdir}/asterisk/modules/app_voicemail_plain.so
 
 %changelog
+* Fri Dec  9 2011 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.8.7.2-1
+- The Asterisk Development Team has announced security releases for Asterisk 1.4,
+- 1.6.2 and 1.8. The available security releases are released as versions 1.4.43,
+- 1.6.2.21 and 1.8.7.2.
+-
+- These releases are available for immediate download at
+- http://downloads.asterisk.org/pub/telephony/asterisk/releases
+-
+- The release of Asterisk versions 1.4.43, 1.6.2.21, and 1.8.7.2 resolves an issue
+- with possible remote enumeration of SIP endpoints with differing NAT settings.
+-
+- The release of Asterisk versions 1.6.2.21 and 1.8.7.2 resolves a remote crash
+- possibility with SIP when the "automon" feature is enabled.
+-
+- The issues and resolutions are described in the AST-2011-013 and AST-2011-014
+- security advisories.
+-
+- For more information about the details of these vulnerabilities, please read the
+- security advisories AST-2011-013 and AST-2011-014, which were released at the
+- same time as this announcement.
+-
+- For a full list of changes in the current releases, please see the ChangeLogs:
+-
+- http://downloads.asterisk.org/pub/telephony/asterisk/releases/ChangeLog-1.4.43
+- http://downloads.asterisk.org/pub/telephony/asterisk/releases/ChangeLog-1.6.2.21
+- http://downloads.asterisk.org/pub/telephony/asterisk/releases/ChangeLog-1.8.7.2
+-
+- Security advisory AST-2011-013 is available at:
+-
+-  * http://downloads.asterisk.org/pub/security/AST-2011-013.pdf
+-
+- Security advisory AST-2011-014 is available at:
+-
+-  * http://downloads.asterisk.org/pub/security/AST-2011-014.pdf
+
 * Mon Oct 17 2011 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.8.7.1-1
 - The Asterisk Development Team has announced a security release for Asterisk 1.8.
 - The available security release is released as version 1.8.7.1.
