@@ -1,4 +1,4 @@
-#global _rc 1
+#global _rc 4
 #global _beta 5
 
 %if 0%{?fedora} >= 15
@@ -17,7 +17,7 @@
 
 Summary: The Open Source PBX
 Name: asterisk
-Version: 1.8.7.1
+Version: 1.8.10.1
 Release: 1%{?_rc:.rc%{_rc}}%{?_beta:.beta%{_beta}}%{?dist}
 License: GPLv2
 Group: Applications/Internet
@@ -39,11 +39,11 @@ Patch4:  0004-Use-the-library-function-for-loading-command-history.patch
 Patch5:  0005-Fix-up-some-paths.patch
 Patch6:  0006-Add-LDAP-schema-that-is-compatible-with-Fedora-Direc.patch
 Patch7:  0007-Don-t-load-chan_mgcp-and-res_pktccops-because-res_pk.patch
-Patch8:	 0008-Make-sure-that-AST_ARGS-is-used-consistently-in-Fedo.patch
-Patch9:	 0009-Use-consistently-in-the-Fedora-init-script.patch
-Patch10: 0010-Make-sure-that-the-Fedora-init-script-can-find-the-p.patch
-# Submitted upstream: https://issues.asterisk.org/jira/browse/ASTERISK-18331
-Patch11: 0011-This-fixes-the-inotify-code-to-handle-call-files-bei.patch
+#Patch8:	 0008-Make-sure-that-AST_ARGS-is-used-consistently-in-Fedo.patch
+#Patch9:	 0009-Use-consistently-in-the-Fedora-init-script.patch
+#Patch10: 0010-Make-sure-that-the-Fedora-init-script-can-find-the-p.patch
+# Submitted upstream: https://issues.asterisk.org/jira/browse/ASTERISK-18331 (now merged)
+#Patch11: 0011-This-fixes-the-inotify-code-to-handle-call-files-bei.patch
 Patch12: 0012-Fix-two-problems-with-app_sms.patch
 Patch13: 0013-Remove-blank-lines-to-improve-compat-with-389-Direct.patch
 
@@ -475,10 +475,10 @@ local filesystem.
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
-%patch8 -p1
-%patch9 -p1
-%patch10 -p1
-%patch11 -p1
+#patch8 -p1
+#patch9 -p1
+#patch10 -p1
+#patch11 -p1
 %patch12 -p1
 %patch13 -p1
 
@@ -1267,6 +1267,13 @@ fi
 %{_libdir}/asterisk/modules/app_voicemail_plain.so
 
 %changelog
+* Sat Mar 17 2012 Russell Bryant <russell@russellbryant.net> - 1.8.10.1-1
+- Update to 1.8.10.1 from upstream.
+- Fix remote stack overflow in app_milliwatt.
+- Fix remote stack overflow, including possible code injection, in HTTP digest
+  authentication handling.
+- Resolves: rhbz#804045, rhbz#804038, rhbz#804042
+
 * Mon Oct 17 2011 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.8.7.1-1
 - The Asterisk Development Team has announced a security release for Asterisk 1.8.
 - The available security release is released as version 1.8.7.1.
