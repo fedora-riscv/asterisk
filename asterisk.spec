@@ -61,7 +61,9 @@ BuildRequires: libtermcap-devel
 BuildRequires: ncurses-devel
 BuildRequires: libcap-devel
 BuildRequires: gtk2-devel
+%ifnarch ppc64
 BuildRequires: libsrtp-devel
+%endif
 %if %{systemd}
 BuildRequires: systemd-units
 %endif
@@ -528,9 +530,21 @@ pushd menuselect
 popd
 
 %if 0%{?fedora} > 0
+
+%ifnarch ppc64
 %configure --with-imap=system --with-gsm=/usr --with-libedit=yes --with-srtp
 %else
+%configure --with-imap=system --with-gsm=/usr --with-libedit=yes
+%endif
+
+%else
+
+%ifnarch ppc64
 %configure --with-gsm=/usr --with-libedit=yes --with-gmime=no --with-srtp
+%else
+%configure --with-gsm=/usr --with-libedit=yes --with-gmime=no
+%endif
+
 %endif
 
 make menuselect-tree
@@ -899,7 +913,9 @@ fi
 %{_libdir}/asterisk/modules/res_security_log.so
 %{_libdir}/asterisk/modules/res_smdi.so
 %{_libdir}/asterisk/modules/res_speech.so
+%ifnarch ppc64
 %{_libdir}/asterisk/modules/res_srtp.so
+%endif
 %{_libdir}/asterisk/modules/res_stun_monitor.so
 %{_libdir}/asterisk/modules/res_timing_pthread.so
 %if 0%{?fedora} > 0 || 0%{?rhel} >= 6
@@ -1272,6 +1288,7 @@ fi
 - Fix remote stack overflow in app_milliwatt.
 - Fix remote stack overflow, including possible code injection, in HTTP digest
   authentication handling.
+- Diable build of SRTP on ppc64, as it doesn't build right now.
 - Resolves: rhbz#804045, rhbz#804038, rhbz#804042
 
 * Mon Oct 17 2011 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.8.7.1-1
