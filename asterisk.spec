@@ -17,7 +17,7 @@
 
 Summary: The Open Source PBX
 Name: asterisk
-Version: 1.8.10.1
+Version: 1.8.11.0
 Release: 1%{?_rc:.rc%{_rc}}%{?_beta:.beta%{_beta}}%{?dist}
 License: GPLv2
 Group: Applications/Internet
@@ -1287,6 +1287,9 @@ fi
 %{_libdir}/asterisk/modules/app_voicemail_plain.so
 
 %changelog
+* Fri Mar 30 2012 Russell Bryant <russell@russellbryant.net> - 1.8.11.0-1
+- Update to 1.8.11.0
+
 * Sat Mar 17 2012 Russell Bryant <russell@russellbryant.net> - 1.8.10.1-1
 - Update to 1.8.10.1 from upstream.
 - Fix remote stack overflow in app_milliwatt.
