@@ -17,7 +17,7 @@
 
 Summary: The Open Source PBX
 Name: asterisk
-Version: 1.8.10.1
+Version: 1.8.11.0
 Release: 1%{?_rc:.rc%{_rc}}%{?_beta:.beta%{_beta}}%{?dist}
 License: GPLv2
 Group: Applications/Internet
@@ -46,8 +46,6 @@ Patch7:  0007-Don-t-load-chan_mgcp-and-res_pktccops-because-res_pk.patch
 #Patch11: 0011-This-fixes-the-inotify-code-to-handle-call-files-bei.patch
 Patch12: 0012-Fix-two-problems-with-app_sms.patch
 Patch13: 0013-Remove-blank-lines-to-improve-compat-with-389-Direct.patch
-
-Patch99: ogg_vorbis_use_libvorbisfile.patch
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-root-%(%{__id_u} -n)
 
@@ -483,8 +481,6 @@ local filesystem.
 #patch11 -p1
 %patch12 -p1
 %patch13 -p1
-
-%patch99 -p0
 
 cp %{S:3} menuselect.makedeps
 cp %{S:4} menuselect.makeopts
@@ -1271,6 +1267,9 @@ fi
 %{_libdir}/asterisk/modules/app_voicemail_plain.so
 
 %changelog
+* Fri Mar 30 2012 Russell Bryant <russell@russellbryant.net> - 1.8.11.0-1
+- Update to 1.8.11.0
+
 * Sat Mar 17 2012 Russell Bryant <russell@russellbryant.net> - 1.8.10.1-1
 - Update to 1.8.10.1 from upstream.
 - Fix remote stack overflow in app_milliwatt.
