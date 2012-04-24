@@ -17,7 +17,7 @@
 
 Summary: The Open Source PBX
 Name: asterisk
-Version: 1.8.11.0
+Version: 1.8.11.1
 Release: 1%{?_rc:.rc%{_rc}}%{?_beta:.beta%{_beta}}%{?dist}
 License: GPLv2
 Group: Applications/Internet
@@ -61,7 +61,9 @@ BuildRequires: libtermcap-devel
 BuildRequires: ncurses-devel
 BuildRequires: libcap-devel
 BuildRequires: gtk2-devel
+%ifnarch ppc64
 BuildRequires: libsrtp-devel
+%endif
 %if %{systemd}
 BuildRequires: systemd-units
 %endif
@@ -502,6 +504,10 @@ chmod -x contrib/scripts/dbsep.cgi
 %{__perl} -pi -e 's/^MENUSELECT_RES=(.*)$/MENUSELECT_RES=\1 res_ais res_http_post/g' menuselect.makeopts
 %endif
 
+%ifarch ppc64
+%{__perl} -pi -e 's/^MENUSELECT_RES=(.*)$/MENUSELECT_RES=\1 res_srtp/g' menuselect.makeopts
+%endif
+
 %if 0%{?rhel} == 5
 # Get the autoconf scripts working with 2.59
 %{__perl} -pi -e 's/AC_PREREQ\(2\.60\)/AC_PREREQ\(2\.59\)/g' configure.ac
@@ -528,9 +534,21 @@ pushd menuselect
 popd
 
 %if 0%{?fedora} > 0
+
+%ifnarch ppc64
 %configure --with-imap=system --with-gsm=/usr --with-libedit=yes --with-srtp
 %else
+%configure --with-imap=system --with-gsm=/usr --with-libedit=yes
+%endif
+
+%else
+
+%ifnarch ppc64
 %configure --with-gsm=/usr --with-libedit=yes --with-gmime=no --with-srtp
+%else
+%configure --with-gsm=/usr --with-libedit=yes --with-gmime=no
+%endif
+
 %endif
 
 make menuselect-tree
@@ -899,7 +917,9 @@ fi
 %{_libdir}/asterisk/modules/res_security_log.so
 %{_libdir}/asterisk/modules/res_smdi.so
 %{_libdir}/asterisk/modules/res_speech.so
+%ifnarch ppc64
 %{_libdir}/asterisk/modules/res_srtp.so
+%endif
 %{_libdir}/asterisk/modules/res_stun_monitor.so
 %{_libdir}/asterisk/modules/res_timing_pthread.so
 %if 0%{?fedora} > 0 || 0%{?rhel} >= 6
@@ -1267,6 +1287,55 @@ fi
 %{_libdir}/asterisk/modules/app_voicemail_plain.so
 
 %changelog
+* Tue Apr 24 2012 Jeffrey Ollie <jeff@ocjtech.us> - 1.8.11.1-1:
+- The Asterisk Development Team has announced security releases for Asterisk 1.6.2,
+- 1.8, and 10. The available security releases are released as versions 1.6.2.24,
+- 1.8.11.1, and 10.3.1.
+-
+- These releases are available for immediate download at
+- http://downloads.asterisk.org/pub/telephony/asterisk/releases
+-
+- The release of Asterisk 1.6.2.24, 1.8.11.1, and 10.3.1 resolve the following two
+- issues:
+-
+-  * A permission escalation vulnerability in Asterisk Manager Interface.  This
+-   would potentially allow remote authenticated users the ability to execute
+-   commands on the system shell with the privileges of the user running the
+-   Asterisk application.
+-
+-  * A heap overflow vulnerability in the Skinny Channel driver.  The keypad
+-   button message event failed to check the length of a fixed length buffer
+-   before appending a received digit to the end of that buffer.  A remote
+-   authenticated user could send sufficient keypad button message events that the
+-   buffer would be overrun.
+-
+- In addition, the release of Asterisk 1.8.11.1 and 10.3.1 resolve the following
+- issue:
+-
+-  * A remote crash vulnerability in the SIP channel driver when processing UPDATE
+-   requests.  If a SIP UPDATE request was received indicating a connected line
+-   update after a channel was terminated but before the final destruction of the
+-   associated SIP dialog, Asterisk would attempt a connected line update on a
+-   non-existing channel, causing a crash.
+-
+- These issues and their resolution are described in the security advisories.
+-
+- For more information about the details of these vulnerabilities, please read
+- security advisories AST-2012-004, AST-2012-005, and AST-2012-006, which were
+- released at the same time as this announcement.
+-
+- For a full list of changes in the current releases, please see the ChangeLogs:
+-
+- http://downloads.asterisk.org/pub/telephony/asterisk/releases/ChangeLog-1.6.2.24
+- http://downloads.asterisk.org/pub/telephony/asterisk/releases/ChangeLog-1.8.11.1
+- http://downloads.asterisk.org/pub/telephony/asterisk/releases/ChangeLog-10.3.1
+-
+- The security advisories are available at:
+-
+-  * http://downloads.asterisk.org/pub/security/AST-2012-004.pdf
+-  * http://downloads.asterisk.org/pub/security/AST-2012-005.pdf
+-  * http://downloads.asterisk.org/pub/security/AST-2012-006.pdf
+
 * Fri Mar 30 2012 Russell Bryant <russell@russellbryant.net> - 1.8.11.0-1
 - Update to 1.8.11.0
 
@@ -1275,6 +1344,7 @@ fi
 - Fix remote stack overflow in app_milliwatt.
 - Fix remote stack overflow, including possible code injection, in HTTP digest
   authentication handling.
+- Diable build of SRTP on ppc64, as it doesn't build right now.
 - Resolves: rhbz#804045, rhbz#804038, rhbz#804042
 
 * Thu Nov 17 2011 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.8.8.0-0.4.rc4
@@ -1695,6 +1765,12 @@ fi
 - Rebuild for net-snmp 5.7
 
 * Fri Jul  1 2011 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.8.5-0.1.rc1
+- Fix systemd dependencies in EL6 and F15
+
+* Fri Jul  1 2011 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.8.4.4-3
+- Bump release
+
+* Fri Jul  1 2011 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.8.4.4-2
 - Fix systemd dependencies in EL6 and F15
 
 * Thu Jun 30 2011 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.8.5-0.1.rc1
