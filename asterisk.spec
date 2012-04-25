@@ -17,7 +17,7 @@
 
 Summary: The Open Source PBX
 Name: asterisk
-Version: 1.8.10.1
+Version: 1.8.11.1
 Release: 1%{?_rc:.rc%{_rc}}%{?_beta:.beta%{_beta}}%{?dist}
 License: GPLv2
 Group: Applications/Internet
@@ -61,7 +61,9 @@ BuildRequires: libtermcap-devel
 BuildRequires: ncurses-devel
 BuildRequires: libcap-devel
 BuildRequires: gtk2-devel
+%ifnarch ppc64
 BuildRequires: libsrtp-devel
+%endif
 %if %{systemd}
 BuildRequires: systemd-units
 %endif
@@ -502,6 +504,10 @@ chmod -x contrib/scripts/dbsep.cgi
 %{__perl} -pi -e 's/^MENUSELECT_RES=(.*)$/MENUSELECT_RES=\1 res_ais res_http_post/g' menuselect.makeopts
 %endif
 
+%ifarch ppc64
+%{__perl} -pi -e 's/^MENUSELECT_RES=(.*)$/MENUSELECT_RES=\1 res_srtp/g' menuselect.makeopts
+%endif
+
 %if 0%{?rhel} == 5
 # Get the autoconf scripts working with 2.59
 %{__perl} -pi -e 's/AC_PREREQ\(2\.60\)/AC_PREREQ\(2\.59\)/g' configure.ac
@@ -528,9 +534,21 @@ pushd menuselect
 popd
 
 %if 0%{?fedora} > 0
+
+%ifnarch ppc64
 %configure --with-imap=system --with-gsm=/usr --with-libedit=yes --with-srtp
 %else
+%configure --with-imap=system --with-gsm=/usr --with-libedit=yes
+%endif
+
+%else
+
+%ifnarch ppc64
 %configure --with-gsm=/usr --with-libedit=yes --with-gmime=no --with-srtp
+%else
+%configure --with-gsm=/usr --with-libedit=yes --with-gmime=no
+%endif
+
 %endif
 
 make menuselect-tree
@@ -899,7 +917,9 @@ fi
 %{_libdir}/asterisk/modules/res_security_log.so
 %{_libdir}/asterisk/modules/res_smdi.so
 %{_libdir}/asterisk/modules/res_speech.so
+%ifnarch ppc64
 %{_libdir}/asterisk/modules/res_srtp.so
+%endif
 %{_libdir}/asterisk/modules/res_stun_monitor.so
 %{_libdir}/asterisk/modules/res_timing_pthread.so
 %if 0%{?fedora} > 0 || 0%{?rhel} >= 6
@@ -1267,11 +1287,64 @@ fi
 %{_libdir}/asterisk/modules/app_voicemail_plain.so
 
 %changelog
+* Tue Apr 24 2012 Jeffrey Ollie <jeff@ocjtech.us> - 1.8.11.1-1:
+- The Asterisk Development Team has announced security releases for Asterisk 1.6.2,
+- 1.8, and 10. The available security releases are released as versions 1.6.2.24,
+- 1.8.11.1, and 10.3.1.
+-
+- These releases are available for immediate download at
+- http://downloads.asterisk.org/pub/telephony/asterisk/releases
+-
+- The release of Asterisk 1.6.2.24, 1.8.11.1, and 10.3.1 resolve the following two
+- issues:
+-
+-  * A permission escalation vulnerability in Asterisk Manager Interface.  This
+-   would potentially allow remote authenticated users the ability to execute
+-   commands on the system shell with the privileges of the user running the
+-   Asterisk application.
+-
+-  * A heap overflow vulnerability in the Skinny Channel driver.  The keypad
+-   button message event failed to check the length of a fixed length buffer
+-   before appending a received digit to the end of that buffer.  A remote
+-   authenticated user could send sufficient keypad button message events that the
+-   buffer would be overrun.
+-
+- In addition, the release of Asterisk 1.8.11.1 and 10.3.1 resolve the following
+- issue:
+-
+-  * A remote crash vulnerability in the SIP channel driver when processing UPDATE
+-   requests.  If a SIP UPDATE request was received indicating a connected line
+-   update after a channel was terminated but before the final destruction of the
+-   associated SIP dialog, Asterisk would attempt a connected line update on a
+-   non-existing channel, causing a crash.
+-
+- These issues and their resolution are described in the security advisories.
+-
+- For more information about the details of these vulnerabilities, please read
+- security advisories AST-2012-004, AST-2012-005, and AST-2012-006, which were
+- released at the same time as this announcement.
+-
+- For a full list of changes in the current releases, please see the ChangeLogs:
+-
+- http://downloads.asterisk.org/pub/telephony/asterisk/releases/ChangeLog-1.6.2.24
+- http://downloads.asterisk.org/pub/telephony/asterisk/releases/ChangeLog-1.8.11.1
+- http://downloads.asterisk.org/pub/telephony/asterisk/releases/ChangeLog-10.3.1
+-
+- The security advisories are available at:
+-
+-  * http://downloads.asterisk.org/pub/security/AST-2012-004.pdf
+-  * http://downloads.asterisk.org/pub/security/AST-2012-005.pdf
+-  * http://downloads.asterisk.org/pub/security/AST-2012-006.pdf
+
+* Fri Mar 30 2012 Russell Bryant <russell@russellbryant.net> - 1.8.11.0-1
+- Update to 1.8.11.0
+
 * Sat Mar 17 2012 Russell Bryant <russell@russellbryant.net> - 1.8.10.1-1
 - Update to 1.8.10.1 from upstream.
 - Fix remote stack overflow in app_milliwatt.
 - Fix remote stack overflow, including possible code injection, in HTTP digest
   authentication handling.
+- Diable build of SRTP on ppc64, as it doesn't build right now.
 - Resolves: rhbz#804045, rhbz#804038, rhbz#804042
 
 * Fri Dec  9 2011 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.8.7.2-1
@@ -1308,6 +1381,133 @@ fi
 - Security advisory AST-2011-014 is available at:
 -
 -  * http://downloads.asterisk.org/pub/security/AST-2011-014.pdf
+
+* Thu Nov 17 2011 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.8.8.0-0.4.rc4
+- The Asterisk Development Team has announced the fourth release candidate of
+- Asterisk 1.8.8.0. This release candidate is available for immediate download at
+- http://downloads.asterisk.org/pub/telephony/asterisk/
+-
+- The release of Asterisk 1.8.8.0-rc4 resolves a particular issue with BLF
+- subscriptions. A change in Asterisk 1.8.8.0-rc3 had the potential to cause a
+- segfault, and this release candidate was created to resolve that.
+-
+- For a full list of changes in this release candidate, please see the ChangeLog:
+-
+- http://downloads.asterisk.org/pub/telephony/asterisk/ChangeLog-1.8.8.0-rc4
+
+* Thu Nov 10 2011 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.8.8.0-0.3.rc3
+- The Asterisk Development Team has announced the third release candidate of
+- Asterisk 1.8.8.0. This release candidate is available for immediate download at
+- http://downloads.asterisk.org/pub/telephony/asterisk/
+-
+- The release of Asterisk 1.8.8.0-rc3 resolves several issues reported by the
+- community and would have not been possible without your participation.
+- Thank you!
+-
+- The following is a sample of the issues resolved in this release candidate:
+-
+- * Prevent BLF subscriptions from causing deadlocks.
+-  (Closes issue ASTERISK-18663)
+-  Review: https://reviewboard.asterisk.org/r/1563/
+-
+- * Fix deadlock if peer is destroyed while sending MWI notice.
+-  (Closes issue ASTERISK-18747)
+-  Reported by: Gregory Hinton Nietsky
+-
+- * Fix issue with setting defaultenabled on categories that are already enabled
+-  by default.
+-  (Closes issue ASTERISK-18738)
+-  Reported by: Paul Belanger
+-
+- For a full list of changes in this release candidate, please see the ChangeLog:
+-
+- http://downloads.asterisk.org/pub/telephony/asterisk/ChangeLog-1.8.8.0-rc3
+
+* Tue Nov  8 2011 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.8.8.0-0.2.rc2
+- The Asterisk Development Team has announced the second release candidate of
+- Asterisk 1.8.8.0. This release candidate is available for immediate download at
+- http://downloads.asterisk.org/pub/telephony/asterisk/
+-
+- The release of Asterisk 1.8.8.0-rc2 resolves several issues reported by the
+- community and would have not been possible without your participation.
+- Thank you!
+-
+- The following is a sample of the issues resolved in this release candidate:
+-
+- * --- Fix remote Crash Vulnerability in SIP channel driver (AST-2011-012) ---
+-  http://downloads.asterisk.org/pub/security/AST-2011-012.pdf
+-
+- * --- Fix locking order in app_queue.c which caused deadlocks ---
+-  (Closes issue ASTERISK-18101. Reported by Paul Rolfe, patched by Gregory Nietsky)
+-  (Closes issue ASTERISK-18487. Reported by Jason Legault, patched by Gregory
+- Nietsky)
+-
+- * --- Fix regression in configure script for libpri capability checks ---
+-  (Closes issue ASTERISK-18687. Reported by norbert, patched by Richard Mudgett)
+-
+- * --- Properly ignore AST_CONTROL_UPDATE_RTP_PEER in more places ---
+-  (Closes issue ASTERISK-18610. Reported by Kristijan_Vrban, patched by Terry
+- Wilson, and again by Kristijan_Vrban)
+-
+- * --- Fix issue with removing peers by IP ---
+-  (Closes issue ASTERISK-18696. Reported by rsw686, patched by Terry Wilson)
+-
+- For a full list of changes in this release candidate, please see the ChangeLog:
+-
+- http://downloads.asterisk.org/pub/telephony/asterisk/ChangeLog-1.8.8.0-rc2
+
+* Tue Nov  8 2011 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.8.8.0-0.1.rc1
+- The Asterisk Development Team announces the first release candidate of
+- Asterisk 1.8.8.0. This release candidate is available for immediate download at
+- http://downloads.asterisk.org/pub/telephony/asterisk/
+-
+- The release of Asterisk 1.8.8.0-rc1 resolves several issues reported by the
+- community and would have not been possible without your participation.
+- Thank you!
+-
+- The following is a sample of the issues resolved in this release candidate:
+-
+-  * Updated SIP 484 handling; added Incomplete control frame
+-   When a SIP phone uses the dial application and receives a 484 Address
+-   Incomplete response, if overlapped dialing is enabled for SIP, then the 484
+-   Address Incomplete is forwarded back to the SIP phone and the HANGUPCAUSE
+-   channel variable is set to 28. Previously, the Incomplete application
+-   dialplan logic was automatically triggered; now, explicit dialplan usage of
+-   the application is required.
+-   (Closes ASTERISK-17288. Reported by: Mikael Carlsson Tested by: Matthew
+-    Jordan Review: https://reviewboard.asterisk.org/r/1416/)
+-
+-  * Prevent IAX2 from getting IPv6 addresses via DNS IAX2 does not support IPv6
+-   and getting such addresses from DNS can cause error messages on the remote
+-   end involving bad IPv4 address casts in the presence of IPv6/IPv4 tunnels.
+-   (Closes issue ASTERISK-18090. Patched by Kinsey Moore)
+-
+-  * Fix bad RTP media bridges in directmedia calls on peers separated by multiple
+-   Asterisk nodes.
+-   (Closes issue ASTERISK-18340. Reported by: Thomas Arimont. Closes issue
+-    ASTERISK-17725. Reported by: kwk. Tested by: twilson, jrose)
+-
+-  * Fix crashes in ast_rtcp_write()
+-   (Closes issue ASTERISK-18570)
+-   Related issues that look like they are the same problem:
+-   (Issue ASTERISK-17560, ASTERISK-15406, ASTERISK-15257, ASTERISK-13334,
+-    ASTERISK-9977, ASTERISK-9716)
+-   Review: https://reviewboard.asterisk.org/r/1444/
+-   Patched by: Russell Bryant
+-
+-  * Fix for incorrect voicemail duration in external notifications.
+-   This patch fixes an issue where the voicemail duration was being reported
+-   with a duration significantly less than the actual sound file duration.
+-   (Closes ASTERISK-16981. Reported by: Mary Ciuciu, Byron Clark, Brad House,
+-    Karsten Wemheuer, KevinH Tested by: Matt Jordan
+-    Review: https://reviewboard.asterisk.org/r/1443)
+-
+-  * Prevent segfault if call arrives before Asterisk is fully booted.
+-   (Patched by alecdavis. https://reviewboard.asterisk.org/r/1407/)
+-
+- For a full list of changes in this release candidate, please see the ChangeLog:
+-
+- http://downloads.asterisk.org/pub/telephony/asterisk/ChangeLog-1.8.8.0-rc1
 
 * Mon Oct 17 2011 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.8.7.1-1
 - The Asterisk Development Team has announced a security release for Asterisk 1.8.
@@ -1600,6 +1800,12 @@ fi
 - Rebuild for net-snmp 5.7
 
 * Fri Jul  1 2011 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.8.5-0.1.rc1
+- Fix systemd dependencies in EL6 and F15
+
+* Fri Jul  1 2011 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.8.4.4-3
+- Bump release
+
+* Fri Jul  1 2011 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.8.4.4-2
 - Fix systemd dependencies in EL6 and F15
 
 * Thu Jun 30 2011 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.8.5-0.1.rc1
