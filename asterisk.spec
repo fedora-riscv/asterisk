@@ -39,8 +39,8 @@ Patch4:  0004-Use-the-library-function-for-loading-command-history.patch
 Patch5:  0005-Fix-up-some-paths.patch
 Patch6:  0006-Add-LDAP-schema-that-is-compatible-with-Fedora-Direc.patch
 Patch7:  0007-Don-t-load-chan_mgcp-and-res_pktccops-because-res_pk.patch
-#Patch8:	 0008-Make-sure-that-AST_ARGS-is-used-consistently-in-Fedo.patch
-#Patch9:	 0009-Use-consistently-in-the-Fedora-init-script.patch
+#Patch8:  0008-Make-sure-that-AST_ARGS-is-used-consistently-in-Fedo.patch
+#Patch9:  0009-Use-consistently-in-the-Fedora-init-script.patch
 #Patch10: 0010-Make-sure-that-the-Fedora-init-script-can-find-the-p.patch
 # Submitted upstream: https://issues.asterisk.org/jira/browse/ASTERISK-18331 (now merged)
 #Patch11: 0011-This-fixes-the-inotify-code-to-handle-call-files-bei.patch
@@ -595,8 +595,6 @@ install -D -p -m 0644 contrib/sysconfig/asterisk %{buildroot}%{_sysconfdir}/sysc
 %endif
 install -D -p -m 0644 contrib/scripts/99asterisk.ldif %{buildroot}%{_sysconfdir}/dirsrv/schema/99asterisk.ldif
 install -D -p -m 0644 %{S:2} %{buildroot}%{_sysconfdir}/logrotate.d/asterisk
-#install -D -p -m 0644 doc/asterisk-mib.txt %{buildroot}%{_datadir}/snmp/mibs/ASTERISK-MIB.txt
-#install -D -p -m 0644 doc/digium-mib.txt %{buildroot}%{_datadir}/snmp/mibs/DIGIUM-MIB.txt
 
 rm %{buildroot}%{_libdir}/asterisk/modules/app_directory.so
 rm %{buildroot}%{_libdir}/asterisk/modules/app_voicemail.so
@@ -661,7 +659,7 @@ rm -rf %{buildroot}
 %post
 %if %{systemd}
 if [ $1 -eq 1 ] ; then
-	/bin/systemctl daemon-reload >/dev/null 2>&1 || :
+        /bin/systemctl daemon-reload >/dev/null 2>&1 || :
 fi
 %else
 /sbin/chkconfig --add asterisk
@@ -670,13 +668,13 @@ fi
 %preun
 %if %{systemd}
 if [ "$1" -eq "0" ]; then
-	# Package removal, not upgrade
-	/bin/systemctl --no-reload disable asterisk.service > /dev/null 2>&1 || :
-	/bin/systemctl stop asterisk.service > /dev/null 2>&1 || :
+        # Package removal, not upgrade
+        /bin/systemctl --no-reload disable asterisk.service > /dev/null 2>&1 || :
+        /bin/systemctl stop asterisk.service > /dev/null 2>&1 || :
 fi
 %else
 if [ "$1" -eq "0" ]; then
-	# Package removal, not upgrade
+        # Package removal, not upgrade
         /sbin/service asterisk stop > /dev/null 2>&1 || :
         /sbin/chkconfig --del asterisk
 fi
@@ -945,7 +943,6 @@ fi
 
 %attr(0750,asterisk,asterisk) %dir %{_sysconfdir}/asterisk
 %attr(0640,asterisk,asterisk) %config(noreplace) %{_sysconfdir}/asterisk/adsi.conf
-#%attr(0640,asterisk,asterisk) %config(noreplace) %{_sysconfdir}/asterisk/adtranvofr.conf
 %attr(0640,asterisk,asterisk) %config(noreplace) %{_sysconfdir}/asterisk/agents.conf
 %attr(0640,asterisk,asterisk) %config(noreplace) %{_sysconfdir}/asterisk/alarmreceiver.conf
 %attr(0640,asterisk,asterisk) %config(noreplace) %{_sysconfdir}/asterisk/amd.conf
@@ -1078,7 +1075,6 @@ fi
 %{_libdir}/asterisk/modules/app_page.so
 %{_libdir}/asterisk/modules/app_dahdibarge.so
 %{_libdir}/asterisk/modules/app_dahdiras.so
-#%{_libdir}/asterisk/modules/app_dahdiscan.so
 %{_libdir}/asterisk/modules/chan_dahdi.so
 %{_libdir}/asterisk/modules/codec_dahdi.so
 %{_libdir}/asterisk/modules/res_timing_dahdi.so
@@ -1224,12 +1220,7 @@ fi
 
 %files snmp
 %defattr(-,root,root,-)
-#doc doc/asterisk-mib.txt
-#doc doc/digium-mib.txt
-#doc doc/snmp.txt
 %attr(0640,asterisk,asterisk) %config(noreplace) %{_sysconfdir}/asterisk/res_snmp.conf
-#%{_datadir}/snmp/mibs/ASTERISK-MIB.txt
-#%{_datadir}/snmp/mibs/DIGIUM-MIB.txt
 %{_libdir}/asterisk/modules/res_snmp.so
 
 %files sqlite
@@ -1249,7 +1240,6 @@ fi
 
 %files unistim
 %defattr(-,root,root,-)
-#doc doc/unistim.txt
 %attr(0640,asterisk,asterisk) %config(noreplace) %{_sysconfdir}/asterisk/unistim.conf
 %{_libdir}/asterisk/modules/chan_unistim.so
 
@@ -3107,11 +3097,11 @@ http://downloads.asterisk.org/pub/telephony/asterisk/ChangeLog-1.8.3-rc2
 * Wed Feb  3 2010 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.6.2.2-1
 - Update to 1.6.2.2
 -
--	* AST-2010-001: An attacker attempting to negotiate T.38 over SIP can
--	  remotely crash Asterisk by modifying the FaxMaxDatagram field of
--	  the SDP to contain either a negative or exceptionally large value.
--	  The same crash occurs when the FaxMaxDatagram field is omitted from
--	  the SDP as well.
+-       * AST-2010-001: An attacker attempting to negotiate T.38 over SIP can
+-         remotely crash Asterisk by modifying the FaxMaxDatagram field of
+-         the SDP to contain either a negative or exceptionally large value.
+-         The same crash occurs when the FaxMaxDatagram field is omitted from
+-         the SDP as well.
 
 * Fri Jan 15 2010 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.6.2.1-1
 - Update to 1.6.2.1 final:
@@ -3676,4 +3666,3 @@ http://downloads.asterisk.org/pub/telephony/asterisk/ChangeLog-1.8.3-rc2
 
 * Wed Jan 25 2006 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.2.3-1
 - First version for Fedora Extras.
-
