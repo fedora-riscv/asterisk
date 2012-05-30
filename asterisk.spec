@@ -17,7 +17,7 @@
 
 Summary: The Open Source PBX
 Name: asterisk
-Version: 1.8.11.1
+Version: 1.8.12.1
 Release: 1%{?_rc:.rc%{_rc}}%{?_beta:.beta%{_beta}}%{?dist}
 License: GPLv2
 Group: Applications/Internet
@@ -114,6 +114,9 @@ Requires(preun): /sbin/service
 Obsoletes: asterisk-conference <= 1.6.0-0.14.beta9
 Obsoletes: asterisk-mobile <= 1.6.1-0.23.rc1
 Obsoletes: asterisk-firmware <= 1.6.2.0-0.2.rc1
+
+# chan_usbradio was removed in 1.8.12.0
+Obsoletes: asterisk-usbradio <= 1.8.11.1-1
 
 %description
 Asterisk is a complete PBX in software. It runs on Linux and provides
@@ -411,16 +414,6 @@ Requires: asterisk = %{version}-%{release}
 %description unistim
 Unistim channel for Asterisk
 
-%package usbradio
-Summary: USB radio channel for Asterisk
-Group: Applications/Internet
-Requires: asterisk = %{version}-%{release}
-BuildRequires: libusb-devel
-BuildRequires: alsa-lib-devel
-
-%description usbradio
-Unistim channel for Asterisk
-
 %package voicemail
 Summary: Common Voicemail Modules for Asterisk
 Group: Applications/Internet
@@ -654,6 +647,8 @@ rm -rf %{buildroot}%{_libdir}/asterisk/modules/app_ices.so
 %if %{tmpfilesd}
 install -D -p -m 0644 %{SOURCE6} %{buildroot}/usr/lib/tmpfiles.d/asterisk.conf
 %endif
+
+rm %{buildroot}%{_sysconfdir}/asterisk/usbradio.conf
 
 %clean
 rm -rf %{buildroot}
@@ -1258,11 +1253,6 @@ fi
 %attr(0640,asterisk,asterisk) %config(noreplace) %{_sysconfdir}/asterisk/unistim.conf
 %{_libdir}/asterisk/modules/chan_unistim.so
 
-%files usbradio
-%defattr(-,root,root,-)
-%attr(0640,asterisk,asterisk) %config(noreplace) %{_sysconfdir}/asterisk/usbradio.conf
-%{_libdir}/asterisk/modules/chan_usbradio.so
-
 %files voicemail
 %defattr(-,root,root,-)
 %attr(0640,asterisk,asterisk) %config(noreplace) %{_sysconfdir}/asterisk/voicemail.conf
@@ -1287,6 +1277,81 @@ fi
 %{_libdir}/asterisk/modules/app_voicemail_plain.so
 
 %changelog
+* Wed May 30 2012 Jeffrey Ollie <jeff@ocjtech.us> - 1.8.12.1-1:
+- The Asterisk Development Team has announced security releases for Certified
+- Asterisk 1.8.11 and Asterisk 1.8 and 10. The available security releases are
+- released as versions 1.8.11-cert2, 1.8.12.1, and 10.4.1.
+-
+- These releases are available for immediate download at
+- http://downloads.asterisk.org/pub/telephony/asterisk/releases
+-
+- The release of Asterisk 1.8.11-cert2, 1.8.12.1, and 10.4.1 resolve the following
+- two issues:
+-
+- * A remotely exploitable crash vulnerability exists in the IAX2 channel
+-  driver if an established call is placed on hold without a suggested music
+-  class. Asterisk will attempt to use an invalid pointer to the music
+-  on hold class name, potentially causing a crash.
+-
+- * A remotely exploitable crash vulnerability was found in the Skinny (SCCP)
+-  Channel driver. When an SCCP client closes its connection to the server,
+-  a pointer in a structure is set to NULL.  If the client was not in the
+-  on-hook state at the time the connection was closed, this pointer is later
+-  dereferenced. This allows remote authenticated connections the ability to
+-  cause a crash in the server, denying services to legitimate users.
+-
+- These issues and their resolution are described in the security advisories.
+-
+- For more information about the details of these vulnerabilities, please read
+- security advisories AST-2012-007 and AST-2012-008, which were released at the
+- same time as this announcement.
+-
+- For a full list of changes in the current releases, please see the ChangeLogs:
+-
+- http://downloads.asterisk.org/pub/telephony/certified-asterisk/releases/ChangeLog-1.8.11-cert2
+- http://downloads.asterisk.org/pub/telephony/asterisk/releases/ChangeLog-1.8.12.1
+- http://downloads.asterisk.org/pub/telephony/asterisk/releases/ChangeLog-10.4.1
+-
+- The security advisories are available at:
+-
+-  * http://downloads.asterisk.org/pub/security/AST-2012-007.pdf
+-  * http://downloads.asterisk.org/pub/security/AST-2012-008.pdf
+
+* Thu May  3 2012 Jeffrey Ollie <jeff@ocjtech.us> - 1.8.12.0-1:
+- The Asterisk Development Team has announced the release of Asterisk 1.8.12.0.
+- This release is available for immediate download at
+- http://downloads.asterisk.org/pub/telephony/asterisk
+-
+- The release of Asterisk 1.8.12.0 resolves several issues reported by the
+- community and would have not been possible without your participation.
+- Thank you!
+-
+- The following are the issues resolved in this release:
+-
+- * --- Prevent chanspy from binding to zombie channels
+-  (Closes issue ASTERISK-19493. Reported by lvl)
+-
+- * --- Fix Dial m and r options and forked calls generating warnings
+-      for voice frames.
+-  (Closes issue ASTERISK-16901. Reported by Chris Gentle)
+-
+- * --- Remove ISDN hold restriction for non-bridged calls.
+-  (Closes issue ASTERISK-19388. Reported by Birger Harzenetter)
+-
+- * --- Fix copying of CDR(accountcode) to local channels.
+-  (Closes issue ASTERISK-19384. Reported by jamicque)
+-
+- * --- Ensure Asterisk acknowledges ACKs to 4xx on Replaces errors
+-  (Closes issue ASTERISK-19303. Reported by Jon Tsiros)
+-
+- * --- Eliminate double close of file descriptor in manager.c
+-  (Closes issue ASTERISK-18453. Reported by Jaco Kroon)
+-
+- For a full list of changes in this release, please see the ChangeLog:
+-
+- http://downloads.asterisk.org/pub/telephony/asterisk/ChangeLog-1.8.12.0
+
+
 * Tue Apr 24 2012 Jeffrey Ollie <jeff@ocjtech.us> - 1.8.11.1-1:
 - The Asterisk Development Team has announced security releases for Asterisk 1.6.2,
 - 1.8, and 10. The available security releases are released as versions 1.6.2.24,
