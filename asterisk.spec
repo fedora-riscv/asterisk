@@ -17,7 +17,7 @@
 
 Summary: The Open Source PBX
 Name: asterisk
-Version: 1.8.12.2
+Version: 1.8.15.1
 Release: 1%{?_rc:.rc%{_rc}}%{?_beta:.beta%{_beta}}%{?dist}
 License: GPLv2
 Group: Applications/Internet
@@ -512,7 +512,17 @@ chmod -x contrib/scripts/dbsep.cgi
 
 %build
 
-%define optflags %(rpm --eval %%{optflags}) -Werror-implicit-function-declaration
+%global optflags %{optflags} -Werror-implicit-function-declaration
+%ifarch s390
+%global ldflags -m31 -Wl,--as-needed,--library-path=%{_libdir}
+%else
+%global ldflags -m%{__isa_bits} -Wl,--as-needed,--library-path=%{_libdir}
+%endif
+
+export CFLAGS="%{optflags}"
+export CXXFLAGS="%{optflags}"
+export FFLAGS="%{optflags}"
+export LDFLAGS="%{ldflags}"
 
 aclocal -I autoconf
 autoconf
@@ -645,8 +655,6 @@ rm -rf %{buildroot}%{_libdir}/asterisk/modules/app_ices.so
 %if %{tmpfilesd}
 install -D -p -m 0644 %{SOURCE6} %{buildroot}/usr/lib/tmpfiles.d/asterisk.conf
 %endif
-
-rm %{buildroot}%{_sysconfdir}/asterisk/usbradio.conf
 
 %clean
 rm -rf %{buildroot}
@@ -986,7 +994,6 @@ fi
 %attr(0640,asterisk,asterisk) %config(noreplace) %{_sysconfdir}/asterisk/queues.conf
 %attr(0640,asterisk,asterisk) %config(noreplace) %{_sysconfdir}/asterisk/res_pktccops.conf
 %attr(0640,asterisk,asterisk) %config(noreplace) %{_sysconfdir}/asterisk/res_stun_monitor.conf
-%attr(0640,asterisk,asterisk) %config(noreplace) %{_sysconfdir}/asterisk/rpt.conf
 %attr(0640,asterisk,asterisk) %config(noreplace) %{_sysconfdir}/asterisk/rtp.conf
 %attr(0640,asterisk,asterisk) %config(noreplace) %{_sysconfdir}/asterisk/say.conf
 %attr(0640,asterisk,asterisk) %config(noreplace) %{_sysconfdir}/asterisk/sip.conf
@@ -1267,6 +1274,199 @@ fi
 %{_libdir}/asterisk/modules/app_voicemail_plain.so
 
 %changelog
+* Tue Sep  4 2012 Jeffrey Ollie <jeff@ocjtech.us> - 1.8.15.1-1
+- The Asterisk Development Team has announced security releases for Certified
+- Asterisk 1.8.11 and Asterisk 1.8 and 10. The available security releases are
+- released as versions 1.8.11-cert7, 1.8.15.1, 10.7.1, and 10.7.1-digiumphones.
+-
+- These releases are available for immediate download at
+- http://downloads.asterisk.org/pub/telephony/asterisk/releases
+-
+- The release of Asterisk 1.8.11-cert7, 1.8.15.1, 10.7.1, and 10.7.1-digiumphones
+- resolve the following two issues:
+-
+- * A permission escalation vulnerability in Asterisk Manager Interface.  This
+-   would potentially allow remote authenticated users the ability to execute
+-   commands on the system shell with the privileges of the user running the
+-   Asterisk application.  Please note that the README-SERIOUSLY.bestpractices.txt
+-   file delivered with Asterisk has been updated due to this and other related
+-   vulnerabilities fixed in previous versions of Asterisk.
+-
+- * When an IAX2 call is made using the credentials of a peer defined in a
+-   dynamic Asterisk Realtime Architecture (ARA) backend, the ACL rules for that
+-   peer are not applied to the call attempt. This allows for a remote attacker
+-   who is aware of a peer's credentials to bypass the ACL rules set for that
+-   peer.
+-
+- These issues and their resolutions are described in the security advisories.
+-
+- For more information about the details of these vulnerabilities, please read
+- security advisories AST-2012-012 and AST-2012-013, which were released at the
+- same time as this announcement.
+-
+- For a full list of changes in the current releases, please see the ChangeLogs:
+-
+- http://downloads.asterisk.org/pub/telephony/certified-asterisk/releases/ChangeLog-1.8.11-cert7
+- http://downloads.asterisk.org/pub/telephony/asterisk/releases/ChangeLog-1.8.15.1
+- http://downloads.asterisk.org/pub/telephony/asterisk/releases/ChangeLog-10.7.1
+- http://downloads.asterisk.org/pub/telephony/asterisk/releases/ChangeLog-10.7.1-digiumphones
+-
+- The security advisories are available at:
+-
+-  * http://downloads.asterisk.org/pub/security/AST-2012-012.pdf
+-  * http://downloads.asterisk.org/pub/security/AST-2012-013.pdf
+
+* Tue Sep  4 2012 Jeffrey Ollie <jeff@ocjtech.us> - 1.8.15.0-1
+- The Asterisk Development Team has announced the release of Asterisk 1.8.15.0.
+- This release is available for immediate download at
+- http://downloads.asterisk.org/pub/telephony/asterisk
+-
+- The release of Asterisk 1.8.15.0 resolves several issues reported by the
+- community and would have not been possible without your participation.
+- Thank you!
+-
+- The following is a sample of the issues resolved in this release:
+-
+- * --- Fix deadlock potential with ast_set_hangupsource() calls.
+-   (Closes issue ASTERISK-19801. Reported by Alec Davis)
+-
+- * --- Fix request routing issue when outboundproxy is used.
+-   (Closes issue ASTERISK-20008. Reported by Marcus Hunger)
+-
+- * --- Make the address family filter specific to the transport.
+-   (Closes issue ASTERISK-16618. Reported by Leif Madsen)
+-
+- * --- Fix NULL pointer segfault in ast_sockaddr_parse()
+-   (Closes issue ASTERISK-20006. Reported by Michael L. Young)
+-
+- * --- Do not perform install on existing directories
+-   (Closes issue ASTERISK-19492. Reported by Karl Fife)
+-
+- For a full list of changes in this release, please see the ChangeLog:
+-
+- http://downloads.asterisk.org/pub/telephony/asterisk/ChangeLog-1.8.15.0
+
+* Tue Sep  4 2012 Jeffrey Ollie <jeff@ocjtech.us> - 1.8.14.1-1
+- The Asterisk Development Team has announced the release of Asterisk 1.8.14.1.
+- This release is available for immediate download at
+- http://downloads.asterisk.org/pub/telephony/asterisk
+-
+- The release of Asterisk 1.8.14.1 resolves an issue reported by the
+- community and would have not been possible without your participation.
+- Thank you!
+-
+- The following is the issue resolved in this release:
+-
+- * --- Remove a superfluous and dangerous freeing of an SSL_CTX.
+-   (Closes issue ASTERISK-20074. Reported by Trevor Helmsley)
+-
+- For a full list of changes in this release, please see the ChangeLog:
+-
+- http://downloads.asterisk.org/pub/telephony/asterisk/ChangeLog-1.8.14.1
+
+* Tue Sep  4 2012 Jeffrey Ollie <jeff@ocjtech.us> - 1.8.14.0-1
+- The Asterisk Development Team has announced the release of Asterisk 1.8.14.0.
+- This release is available for immediate download at
+- http://downloads.asterisk.org/pub/telephony/asterisk
+-
+- The release of Asterisk 1.8.14.0 resolves several issues reported by the
+- community and would have not been possible without your participation.
+- Thank you!
+-
+- The following is a sample of the issues resolved in this release:
+-
+- * --- format_mp3: Fix a possible crash in mp3_read().
+-   (Closes issue ASTERISK-19761. Reported by Chris Maciejewsk)
+-
+- * --- Fix local channel chains optimizing themselves out of a call.
+-   (Closes issue ASTERISK-16711. Reported by Alec Davis)
+-
+- * --- Update a peer's LastMsgsSent when the peer is notified of
+-       waiting messages
+-   (Closes issue ASTERISK-17866. Reported by Steve Davies)
+-
+- * --- Prevent sip_pvt refleak when an ast_channel outlasts its
+-       corresponding sip_pvt.
+-   (Closes issue ASTERISK-19425. Reported by David Cunningham)
+-
+- * --- Send more accurate identification information in dialog-info SIP
+-       NOTIFYs.
+-   (Closes issue ASTERISK-16735. Reported by Maciej Krajewski)
+-
+- For a full list of changes in this release, please see the ChangeLog:
+-
+- http://downloads.asterisk.org/pub/telephony/asterisk/ChangeLog-1.8.14.0
+
+* Tue Sep  4 2012 Jeffrey Ollie <jeff@ocjtech.us> - 1.8.13.1-1
+- The Asterisk Development Team has announced security releases for Certified
+- Asterisk 1.8.11 and Asterisk 1.8 and 10. The available security releases are
+- released as versions 1.8.11-cert4, 1.8.13.1, 10.5.2, and 10.5.2-digiumphones.
+-
+- These releases are available for immediate download at
+- http://downloads.asterisk.org/pub/telephony/asterisk/releases
+-
+- The release of Asterisk 1.8.11-cert4, 1.8.13.1, 10.5.2, and 10.5.2-digiumphones
+- resolve the following two issues:
+-
+- * If Asterisk sends a re-invite and an endpoint responds to the re-invite with
+-   a provisional response but never sends a final response, then the SIP dialog
+-   structure is never freed and the RTP ports for the call are never released. If
+-   an attacker has the ability to place a call, they could create a denial of
+-   service by using all available RTP ports.
+-
+- * If a single voicemail account is manipulated by two parties simultaneously,
+-   a condition can occur where memory is freed twice causing a crash.
+-
+- These issues and their resolution are described in the security advisories.
+-
+- For more information about the details of these vulnerabilities, please read
+- security advisories AST-2012-010 and AST-2012-011, which were released at the
+- same time as this announcement.
+-
+- For a full list of changes in the current releases, please see the ChangeLogs:
+-
+- http://downloads.asterisk.org/pub/telephony/certified-asterisk/releases/ChangeLog-1.8.11-cert4
+- http://downloads.asterisk.org/pub/telephony/asterisk/releases/ChangeLog-1.8.13.1
+- http://downloads.asterisk.org/pub/telephony/asterisk/releases/ChangeLog-10.5.2
+- http://downloads.asterisk.org/pub/telephony/asterisk/releases/ChangeLog-10.5.2-digiumphones
+-
+- The security advisories are available at:
+-
+-  * http://downloads.asterisk.org/pub/security/AST-2012-010.pdf
+-  * http://downloads.asterisk.org/pub/security/AST-2012-011.pdf
+
+* Tue Sep  4 2012 Jeffrey Ollie <jeff@ocjtech.us> - 1.8.13.0-1
+- The Asterisk Development Team has announced the release of Asterisk 1.8.13.0.
+- This release is available for immediate download at
+- http://downloads.asterisk.org/pub/telephony/asterisk
+-
+- The release of Asterisk 1.8.13.0 resolves several issues reported by the
+- community and would have not been possible without your participation.
+- Thank you!
+-
+- The following is a sample of the issues resolved in this release:
+-
+- * --- Turn off warning message when bind address is set to any.
+-   (Closes issue ASTERISK-19456. Reported by Michael L. Young)
+-
+- * --- Prevent overflow in calculation in ast_tvdiff_ms on 32-bit
+-       machines
+-   (Closes issue ASTERISK-19727. Reported by Ben Klang)
+-
+- * --- Make DAHDISendCallreroutingFacility wait 5 seconds for a reply
+-       before disconnecting the call.
+-   (Closes issue ASTERISK-19708. Reported by mehdi Shirazi)
+-
+- * --- Fix recalled party B feature flags for a failed DTMF atxfer.
+-   (Closes issue ASTERISK-19383. Reported by lgfsantos)
+-
+- * --- Fix DTMF atxfer running h exten after the wrong bridge ends.
+-   (Closes issue ASTERISK-19717. Reported by Mario)
+-
+- For a full list of changes in this release, please see the ChangeLog:
+-
+- http://downloads.asterisk.org/pub/telephony/asterisk/ChangeLog-1.8.13.0
+
 * Wed May 30 2012 Jeffrey Ollie <jeff@ocjtech.us> - 1.8.12.2-1
 - The Asterisk Development Team has announced the release of Asterisk 1.8.12.2.
 - This release is available for immediate download at
