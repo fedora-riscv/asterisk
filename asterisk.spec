@@ -17,7 +17,7 @@
 
 Summary: The Open Source PBX
 Name: asterisk
-Version: 1.8.15.1
+Version: 1.8.16.0
 Release: 1%{?_rc:.rc%{_rc}}%{?_beta:.beta%{_beta}}%{?dist}
 License: GPLv2
 Group: Applications/Internet
@@ -1274,6 +1274,39 @@ fi
 %{_libdir}/asterisk/modules/app_voicemail_plain.so
 
 %changelog
+* Wed Sep 26 2012 Jeffrey Ollie <jeff@ocjtech.us> - 1.8.16.0-1
+- The Asterisk Development Team has announced the release of Asterisk 1.8.16.0.
+- This release is available for immediate download at
+- http://downloads.asterisk.org/pub/telephony/asterisk
+-
+- The release of Asterisk 1.8.16.0 resolves several issues reported by the
+- community and would have not been possible without your participation.
+- Thank you!
+-
+- The following is a sample of the issues resolved in this release:
+-
+- * --- AST-2012-012: Resolve AMI User Unauthorized Shell Access through
+-       ExternalIVR
+-   (Closes issue ASTERISK-20132. Reported by Zubair Ashraf of IBM X-Force Research)
+-
+- * --- AST-2012-013: Resolve ACL rules being ignored during calls by
+-       some IAX2 peers
+-   (Closes issue ASTERISK-20186. Reported by Alan Frisch)
+-
+- * --- Handle extremely out of order RFC 2833 DTMF
+-   (Closes issue ASTERISK-18404. Reported by Stephane Chazelas)
+-
+- * --- Resolve severe memory leak in CEL logging modules.
+-   (Closes issue AST-916. Reported by Thomas Arimont)
+-
+- * --- Only re-create an SRTP session when needed; respond with correct
+-       crypto policy
+-   (Issue ASTERISK-20194. Reported by Nicolo Mazzon)
+-
+- For a full list of changes in this release, please see the ChangeLog:
+-
+- http://downloads.asterisk.org/pub/telephony/asterisk/ChangeLog-1.8.16.0
+
 * Tue Sep  4 2012 Jeffrey Ollie <jeff@ocjtech.us> - 1.8.15.1-1
 - The Asterisk Development Team has announced security releases for Certified
 - Asterisk 1.8.11 and Asterisk 1.8 and 10. The available security releases are
