@@ -28,7 +28,7 @@
 
 Summary: The Open Source PBX
 Name: asterisk
-Version: 10.8.0
+Version: 10.9.0
 Release: 1%{?_rc:.rc%{_rc}}%{?_beta:.beta%{_beta}}%{?dist}
 License: GPLv2
 Group: Applications/Internet
@@ -1364,6 +1364,40 @@ fi
 %{_libdir}/asterisk/modules/app_voicemail_plain.so
 
 %changelog
+* Tue Oct  9 2012 Jeffrey Ollie <jeff@ocjtech.us> - 10.9.0-1
+- The Asterisk Development Team has announced the release of Asterisk 10.9.0.
+- This release is available for immediate download at
+- http://downloads.asterisk.org/pub/telephony/asterisk
+-
+- The release of Asterisk 10.9.0 resolves several issues reported by the
+- community and would have not been possible without your participation.
+- Thank you!
+-
+- The following is a sample of the issues resolved in this release:
+-
+- * --- Fix channel reference leak in ChanSpy.
+-   (Closes issue ASTERISK-19461. Reported by Irontec)
+-
+- * --- dsp.c: Fix multiple issues when no-interdigit delay is present,
+-       and fast DTMF 50ms/50ms
+-   (Closes issue ASTERISK-19610. Reported by Jean-Philippe Lord)
+-
+- * --- Fix bug where final queue member would not be removed from
+-       memory.
+-   (Closes issue ASTERISK-19793. Reported by Marcus Haas)
+-
+- * --- Fix memory leak when CEL is successfully written to PostgreSQL
+-       database
+-   (Closes issue ASTERISK-19991. Reported by Etienne Lessard)
+-
+- * --- Fix DUNDi message routing bug when neighboring peer is
+-       unreachable
+-   (Closes issue ASTERISK-19309. Reported by Peter Racz)
+-
+- For a full list of changes in this release, please see the ChangeLog:
+-
+- http://downloads.asterisk.org/pub/telephony/asterisk/ChangeLog-10.9.0
+
 * Wed Sep 26 2012 Jeffrey Ollie <jeff@ocjtech.us> - 10.8.0-1
 - The Asterisk Development Team has announced the release of Asterisk 10.8.0.
 - This release is available for immediate download at
