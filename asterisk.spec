@@ -17,7 +17,7 @@
 
 Summary: The Open Source PBX
 Name: asterisk
-Version: 1.8.16.0
+Version: 1.8.17.0
 Release: 1%{?_rc:.rc%{_rc}}%{?_beta:.beta%{_beta}}%{?dist}
 License: GPLv2
 Group: Applications/Internet
@@ -39,13 +39,8 @@ Patch4:  0004-Use-the-library-function-for-loading-command-history.patch
 Patch5:  0005-Fix-up-some-paths.patch
 Patch6:  0006-Add-LDAP-schema-that-is-compatible-with-Fedora-Direc.patch
 Patch7:  0007-Don-t-load-chan_mgcp-and-res_pktccops-because-res_pk.patch
-#Patch8:  0008-Make-sure-that-AST_ARGS-is-used-consistently-in-Fedo.patch
-#Patch9:  0009-Use-consistently-in-the-Fedora-init-script.patch
-#Patch10: 0010-Make-sure-that-the-Fedora-init-script-can-find-the-p.patch
-# Submitted upstream: https://issues.asterisk.org/jira/browse/ASTERISK-18331 (now merged)
-#Patch11: 0011-This-fixes-the-inotify-code-to-handle-call-files-bei.patch
-Patch12: 0012-Fix-two-problems-with-app_sms.patch
-Patch13: 0013-Remove-blank-lines-to-improve-compat-with-389-Direct.patch
+Patch8:  0008-Fix-two-problems-with-app_sms.patch
+Patch9:  0009-Remove-blank-lines-to-improve-compat-with-389-Direct.patch
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-root-%(%{__id_u} -n)
 
@@ -470,12 +465,8 @@ local filesystem.
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
-#patch8 -p1
-#patch9 -p1
-#patch10 -p1
-#patch11 -p1
-%patch12 -p1
-%patch13 -p1
+%patch8 -p1
+%patch9 -p1
 
 cp %{S:3} menuselect.makedeps
 cp %{S:4} menuselect.makeopts
@@ -1274,6 +1265,40 @@ fi
 %{_libdir}/asterisk/modules/app_voicemail_plain.so
 
 %changelog
+* Tue Oct  9 2012 Jeffrey Ollie <jeff@ocjtech.us> - 1.8.17.0-1
+- The Asterisk Development Team has announced the release of Asterisk 1.8.17.0.
+- This release is available for immediate download at
+- http://downloads.asterisk.org/pub/telephony/asterisk
+-
+- The release of Asterisk 1.8.17.0 resolves several issues reported by the
+- community and would have not been possible without your participation.
+- Thank you!
+-
+- The following is a sample of the issues resolved in this release:
+-
+- * --- Fix channel reference leak in ChanSpy.
+-   (Closes issue ASTERISK-19461. Reported by Irontec)
+-
+- * --- dsp.c: Fix multiple issues when no-interdigit delay is present,
+-       and fast DTMF 50ms/50ms
+-   (Closes issue ASTERISK-19610. Reported by Jean-Philippe Lord)
+-
+- * --- Fix bug where final queue member would not be removed from
+-       memory.
+-   (Closes issue ASTERISK-19793. Reported by Marcus Haas)
+-
+- * --- Fix memory leak when CEL is successfully written to PostgreSQL
+-       database
+-   (Closes issue ASTERISK-19991. Reported by Etienne Lessard)
+-
+- * --- Fix DUNDi message routing bug when neighboring peer is
+-       unreachable
+-   (Closes issue ASTERISK-19309. Reported by Peter Racz)
+-
+- For a full list of changes in this release, please see the ChangeLog:
+-
+- http://downloads.asterisk.org/pub/telephony/asterisk/ChangeLog-1.8.17.0
+
 * Wed Sep 26 2012 Jeffrey Ollie <jeff@ocjtech.us> - 1.8.16.0-1
 - The Asterisk Development Team has announced the release of Asterisk 1.8.16.0.
 - This release is available for immediate download at

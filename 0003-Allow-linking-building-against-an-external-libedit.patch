@@ -1,7 +1,7 @@
-From 2ec862ecc0024bd4e9a14bd0a2ddc62ad75465ea Mon Sep 17 00:00:00 2001
+From a7440988a6631515fda3b8fa09640b5bdfd914a0 Mon Sep 17 00:00:00 2001
 From: "Jeffrey C. Ollie" <jeff@ocjtech.us>
 Date: Fri, 5 Mar 2010 14:10:52 -0600
-Subject: [PATCH 03/14] Allow linking/building against an external libedit.
+Subject: [PATCH 3/9] Allow linking/building against an external libedit.
 
 The Asterisk tarball includes a very old copy of the editline library
 that manages command line history and editing.  Fedora (and several
@@ -11,15 +11,15 @@ be very difficult to track down all instances of the library.  This
 patch adds the option of building/linking against an external copy of
 the libedit library.
 ---
- build_tools/menuselect-deps.in |    1 +
- configure.ac                   |   22 ++++++++++++++++++++++
- main/Makefile                  |   10 ++++++----
- main/cli.c                     |    3 ++-
- makeopts.in                    |    4 ++++
+ build_tools/menuselect-deps.in |  1 +
+ configure.ac                   | 22 ++++++++++++++++++++++
+ main/Makefile                  | 10 ++++++----
+ main/cli.c                     |  3 ++-
+ makeopts.in                    |  4 ++++
  5 files changed, 35 insertions(+), 5 deletions(-)
 
 diff --git a/build_tools/menuselect-deps.in b/build_tools/menuselect-deps.in
-index 35573c3..4425204 100644
+index e159c20..720e60e 100644
 --- a/build_tools/menuselect-deps.in
 +++ b/build_tools/menuselect-deps.in
 @@ -26,6 +26,7 @@ JACK=@PBX_JACK@
@@ -31,7 +31,7 @@ index 35573c3..4425204 100644
  LUA=@PBX_LUA@
  MISDN=@PBX_MISDN@
 diff --git a/configure.ac b/configure.ac
-index c05d33f..4bd07ed 100644
+index aa93f96..7b6bcd0 100644
 --- a/configure.ac
 +++ b/configure.ac
 @@ -388,6 +388,7 @@ AST_EXT_LIB_SETUP([JACK], [Jack Audio Connection Kit], [jack])
@@ -42,7 +42,7 @@ index c05d33f..4bd07ed 100644
  AST_EXT_LIB_SETUP([LIBXML2], [LibXML2], [libxml2])
  AST_EXT_LIB_SETUP([LTDL], [libtool], [ltdl])
  AST_EXT_LIB_SETUP([LUA], [Lua], [lua])
-@@ -2161,6 +2162,27 @@ AC_SUBST(PBX_GTK2)
+@@ -2211,6 +2212,27 @@ AC_SUBST(PBX_GTK2)
  AC_SUBST(GTK2_INCLUDE)
  AC_SUBST(GTK2_LIB)
  
@@ -71,10 +71,10 @@ index c05d33f..4bd07ed 100644
  # or iODBC
  
 diff --git a/main/Makefile b/main/Makefile
-index 07143aa..269ca10 100644
+index e877c7d..5d54b62 100644
 --- a/main/Makefile
 +++ b/main/Makefile
-@@ -144,6 +144,8 @@ testexpr2: ast_expr2f.c ast_expr2.c ast_expr2.h
+@@ -141,6 +141,8 @@ testexpr2: ast_expr2f.c ast_expr2.c ast_expr2.h
  	$(CC) -g -o testexpr2 ast_expr2f.o ast_expr2.o -lm
  	rm ast_expr2.o ast_expr2f.o 
  
@@ -83,9 +83,9 @@ index 07143aa..269ca10 100644
  ifneq ($(findstring ENABLE_UPLOADS,$(MENUSELECT_CFLAGS)),)
  http.o: _ASTCFLAGS+=$(GMIME_INCLUDE)
  endif
-@@ -178,13 +180,13 @@ endif
+@@ -179,13 +181,13 @@ ssl.o: _ASTCFLAGS+=$(OPENSSL_INCLUDE)
  
- $(OBJS): _ASTCFLAGS+=-DAST_MODULE=\"core\"
+ tcptls.o: _ASTCFLAGS+=$(OPENSSL_INCLUDE)
  
 -$(MAIN_TGT): $(OBJS) editline/libedit.a db1-ast/libdb1.a $(AST_EMBED_LDSCRIPTS)
 +$(MAIN_TGT): $(OBJS) $(LIBEDIT_OBJ) db1-ast/libdb1.a $(AST_EMBED_LDSCRIPTS)
@@ -102,10 +102,10 @@ index 07143aa..269ca10 100644
  
  ifeq ($(GNU_LD),1)
 diff --git a/main/cli.c b/main/cli.c
-index 407973f..52faf4d 100644
+index 066bf5c..3f3a96c 100644
 --- a/main/cli.c
 +++ b/main/cli.c
-@@ -36,6 +36,8 @@ ASTERISK_FILE_VERSION(__FILE__, "$Revision$")
+@@ -40,6 +40,8 @@ ASTERISK_FILE_VERSION(__FILE__, "$Revision$")
  #include <pwd.h>
  #include <grp.h>
  
@@ -114,7 +114,7 @@ index 407973f..52faf4d 100644
  #include "asterisk/cli.h"
  #include "asterisk/linkedlists.h"
  #include "asterisk/module.h"
-@@ -44,7 +46,6 @@ ASTERISK_FILE_VERSION(__FILE__, "$Revision$")
+@@ -48,7 +50,6 @@ ASTERISK_FILE_VERSION(__FILE__, "$Revision$")
  #include "asterisk/utils.h"
  #include "asterisk/app.h"
  #include "asterisk/lock.h"
@@ -123,10 +123,10 @@ index 407973f..52faf4d 100644
  #include "asterisk/translate.h"
  
 diff --git a/makeopts.in b/makeopts.in
-index 3cde814..f86b166 100644
+index f4a7de2..8ec3d25 100644
 --- a/makeopts.in
 +++ b/makeopts.in
-@@ -308,3 +308,7 @@ TINFO_DIR=@TINFO_DIR@
+@@ -304,3 +304,7 @@ TINFO_DIR=@TINFO_DIR@
  # if poll is not present, let the makefile know.
  POLL_AVAILABLE=@HAS_POLL@
  TIMERFD_INCLUDE=@TIMERFD_INCLUDE@
@@ -135,5 +135,5 @@ index 3cde814..f86b166 100644
 +LIBEDIT_LIB=@LIBEDIT_LIB@
 +LIBEDIT_OBJ=@LIBEDIT_OBJ@
 -- 
-1.7.6.2
+1.7.12.1
 

@@ -1,7 +1,7 @@
-From 7cc61ee500084da60e0ca7aa4f968cdaeee2438b Mon Sep 17 00:00:00 2001
+From 27281c691ee1b1c632fcfd8c99f7b4a2d9fa8921 Mon Sep 17 00:00:00 2001
 From: David Woodhouse <dwmw2@infradead.org>
 Date: Tue, 20 Sep 2011 09:21:47 -0500
-Subject: [PATCH] Fix two problems with app_sms.
+Subject: [PATCH 8/9] Fix two problems with app_sms.
 
 Firstly, the 'flags' field on the stack in sms_exec() is
 uninitialised, causing it to use the wrong protocol in some cases.
@@ -16,7 +16,7 @@ stop bit' message more gracefully in that case, and hang up the call.
  1 file changed, 9 insertions(+), 3 deletions(-)
 
 diff --git a/apps/app_sms.c b/apps/app_sms.c
-index 86ab0bc..0531111 100644
+index 08b90d1..b6c4ade 100644
 --- a/apps/app_sms.c
 +++ b/apps/app_sms.c
 @@ -216,6 +216,7 @@ static const unsigned short escapes[] = {
@@ -60,5 +60,5 @@ index 86ab0bc..0531111 100644
  	char *p;
  	AST_DECLARE_APP_ARGS(sms_args,
 -- 
-1.7.11.4
+1.7.12.1
 

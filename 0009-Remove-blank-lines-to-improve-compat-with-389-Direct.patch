@@ -1,12 +1,12 @@
-From 0ee8123802c0dbc4b0d4837d1941df9299abf1a5 Mon Sep 17 00:00:00 2001
+From a4d6710c7f4a36cc6d79c80d85f157e3d7c7c6a8 Mon Sep 17 00:00:00 2001
 From: "Jeffrey C. Ollie" <jeff@ocjtech.us>
 Date: Tue, 20 Sep 2011 10:21:04 -0500
-Subject: [PATCH 13/14] Remove blank lines to improve compat with 389
- Directory Server
+Subject: [PATCH 9/9] Remove blank lines to improve compat with 389 Directory
+ Server
 
 ---
- contrib/scripts/99asterisk.ldif |   52 ---------------------------------------
- 1 files changed, 0 insertions(+), 52 deletions(-)
+ contrib/scripts/99asterisk.ldif | 52 -----------------------------------------
+ 1 file changed, 52 deletions(-)
 
 diff --git a/contrib/scripts/99asterisk.ldif b/contrib/scripts/99asterisk.ldif
 index f3bdf4e..d5cd6a1 100644
@@ -428,5 +428,5 @@ index f3bdf4e..d5cd6a1 100644
    DESC 'Asterisk configuration Information'
    SUP top
 -- 
-1.7.6.2
+1.7.12.1
 
