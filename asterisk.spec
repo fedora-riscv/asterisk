@@ -28,7 +28,7 @@
 
 Summary: The Open Source PBX
 Name: asterisk
-Version: 10.9.0
+Version: 10.10.0
 Release: 1%{?_rc:.rc%{_rc}}%{?_beta:.beta%{_beta}}%{?dist}
 License: GPLv2
 Group: Applications/Internet
@@ -1364,6 +1364,38 @@ fi
 %{_libdir}/asterisk/modules/app_voicemail_plain.so
 
 %changelog
+* Wed Nov  7 2012 Jeffrey Ollie <jeff@ocjtech.us> - 10.10.0-1:
+- The Asterisk Development Team has announced the release of Asterisk 10.10.0.
+- This release is available for immediate download at
+- http://downloads.asterisk.org/pub/telephony/asterisk
+-
+- The release of Asterisk 10.10.0 resolves several issues reported by the
+- community and would have not been possible without your participation.
+- Thank you!
+-
+- The following is a sample of the issues resolved in this release:
+-
+- * --- Resolve issues in ConfBridge regarding marked, waitmarked, and
+-       unmarked users
+-   (Closes issue ASTERISK-19562. Reported by flan)
+-
+- * --- dsp.c User Configurable DTMF_HITS_TO_BEGIN and
+-       DTMF_MISSES_TO_END
+-   (Closes issue ASTERISK-17493. Reported by alecdavis)
+-
+- * --- Fix error where improper IMAP greetings would be deleted.
+-   (Closes issue ASTERISK-20435. Reported by fhackenberger)
+-
+- * --- iax2-provision: Fix improper return on failed cache retrieval
+-   (Closes issue ASTERISK-20337. Reported by John Covert)
+-
+- * --- Fix T.38 support when used with chan_local in between.
+-   (Closes issue ASTERISK-20229. Reported by wdoekes)
+-
+- For a full list of changes in this release, please see the ChangeLog:
+-
+- http://downloads.asterisk.org/pub/telephony/asterisk/ChangeLog-10.10.0
+
 * Tue Oct  9 2012 Jeffrey Ollie <jeff@ocjtech.us> - 10.9.0-1
 - The Asterisk Development Team has announced the release of Asterisk 10.9.0.
 - This release is available for immediate download at
