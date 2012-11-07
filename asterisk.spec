@@ -17,7 +17,7 @@
 
 Summary: The Open Source PBX
 Name: asterisk
-Version: 1.8.17.0
+Version: 1.8.18.0
 Release: 1%{?_rc:.rc%{_rc}}%{?_beta:.beta%{_beta}}%{?dist}
 License: GPLv2
 Group: Applications/Internet
@@ -1265,7 +1265,39 @@ fi
 %{_libdir}/asterisk/modules/app_voicemail_plain.so
 
 %changelog
-* Tue Oct  9 2012 Jeffrey Ollie <jeff@ocjtech.us> - 1.8.17.0-1
+* Wed Nov  7 2012 Jeffrey Ollie <jeff@ocjtech.us> - 1.8.18.0-1:
+- The Asterisk Development Team has announced the release of Asterisk 1.8.18.0.
+- This release is available for immediate download at
+- http://downloads.asterisk.org/pub/telephony/asterisk
+-
+- The release of Asterisk 1.8.18.0 resolves several issues reported by the
+- community and would have not been possible without your participation.
+- Thank you!
+-
+- The following is a sample of the issues resolved in this release:
+-
+- * --- dsp.c User Configurable DTMF_HITS_TO_BEGIN and
+-       DTMF_MISSES_TO_END
+-   (Closes issue ASTERISK-17493. Reported by alecdavis)
+-
+- * --- Fix error where improper IMAP greetings would be deleted.
+-   (Closes issue ASTERISK-20435. Reported by fhackenberger)
+-
+- * --- iax2-provision: Fix improper return on failed cache retrieval
+-   (Closes issue ASTERISK-20337. Reported by John Covert)
+-
+- * --- Fix T.38 support when used with chan_local in between.
+-   (Closes issue ASTERISK-20229. Reported by wdoekes)
+-
+- * --- Fix an issue where media would not flow for situations where the
+-       legacy STUN code is in use.
+-   (Closes issue ASTERISK-20415. Reported by Michele Cicciotti)
+-
+- For a full list of changes in this release, please see the ChangeLog:
+-
+- http://downloads.asterisk.org/pub/telephony/asterisk/ChangeLog-1.8.18.0
+
+* Tue Oct  9 2012 Jeffrey Ollie <jeff@ocjtech.us> - 1.8.17.0-1:
 - The Asterisk Development Team has announced the release of Asterisk 1.8.17.0.
 - This release is available for immediate download at
 - http://downloads.asterisk.org/pub/telephony/asterisk
