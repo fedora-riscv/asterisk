@@ -28,7 +28,7 @@
 
 Summary: The Open Source PBX
 Name: asterisk
-Version: 10.10.0
+Version: 10.10.1
 Release: 1%{?_rc:.rc%{_rc}}%{?_beta:.beta%{_beta}}%{?dist}
 License: GPLv2
 Group: Applications/Internet
@@ -1364,6 +1364,24 @@ fi
 %{_libdir}/asterisk/modules/app_voicemail_plain.so
 
 %changelog
+* Fri Dec  7 2012 Jeffrey Ollie <jeff@ocjtech.us> - 10.10.1-1
+- The Asterisk Development Team has announced the release of Asterisk 10.10.1.
+- This release is available for immediate download at
+- http://downloads.asterisk.org/pub/telephony/asterisk
+-
+- The release of Asterisk 10.10.1 resolves an issue reported by the
+- community and would have not been possible without your participation.
+- Thank you!
+-
+- The following is the issue resolved in this release:
+-
+- * --- chan_local: Fix local_pvt ref leak in local_devicestate().
+-   (Closes issue ASTERISK-20769. Reported by rmudgett)
+-
+- For a full list of changes in this release, please see the ChangeLog:
+-
+- http://downloads.asterisk.org/pub/telephony/asterisk/ChangeLog-10.10.1
+
 * Wed Nov  7 2012 Jeffrey Ollie <jeff@ocjtech.us> - 10.10.0-1:
 - The Asterisk Development Team has announced the release of Asterisk 10.10.0.
 - This release is available for immediate download at
