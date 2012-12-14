@@ -28,7 +28,7 @@
 
 Summary: The Open Source PBX
 Name: asterisk
-Version: 10.10.1
+Version: 10.11.0
 Release: 1%{?_rc:.rc%{_rc}}%{?_beta:.beta%{_beta}}%{?dist}
 License: GPLv2
 Group: Applications/Internet
@@ -1364,6 +1364,37 @@ fi
 %{_libdir}/asterisk/modules/app_voicemail_plain.so
 
 %changelog
+* Fri Dec 14 2012 Jeffrey Ollie <jeff@ocjtech.us> - 10.11.0-1
+- The Asterisk Development Team has announced the release of Asterisk 10.11.0.
+- This release is available for immediate download at
+- http://downloads.asterisk.org/pub/telephony/asterisk
+-
+- The release of Asterisk 10.11.0 resolves several issues reported by the
+- community and would have not been possible without your participation.
+- Thank you!
+-
+- The following is a sample of the issues resolved in this release:
+-
+- * --- Prevent resetting of NATted realtime peer address on reload.
+-   (Closes issue ASTERISK-18203. Reported by daren ferreira)
+-
+- * --- Do not use a FILE handle when doing SIP TCP reads.
+-   (Closes issue ASTERISK-20212. Reported by Phil Ciccone)
+-
+- * --- Fix ConfBridge crash if no timing module loaded.
+-   (Closes issue ASTERISK-19448. Reported by feyfre)
+-
+- * --- confbridge: Fix a bug which made conferences not record with
+-       AMI/CLI commands
+-   (Closes issue ASTERISK-20601. Reported by Vilius)
+-
+- * --- Fix execution of 'i' extension due to uninitialized variable.
+-   (Closes issue ASTERISK-20455. Reported by Richard Miller)
+-
+- For a full list of changes in this release, please see the ChangeLog:
+-
+- http://downloads.asterisk.org/pub/telephony/asterisk/ChangeLog-10.11.0
+
 * Fri Dec  7 2012 Jeffrey Ollie <jeff@ocjtech.us> - 10.10.1-1
 - The Asterisk Development Team has announced the release of Asterisk 10.10.1.
 - This release is available for immediate download at
