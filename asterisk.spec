@@ -28,7 +28,7 @@
 
 Summary: The Open Source PBX
 Name: asterisk
-Version: 10.11.1
+Version: 10.12.0
 Release: 1%{?_rc:.rc%{_rc}}%{?_beta:.beta%{_beta}}%{?dist}
 License: GPLv2
 Group: Applications/Internet
@@ -1364,6 +1364,37 @@ fi
 %{_libdir}/asterisk/modules/app_voicemail_plain.so
 
 %changelog
+* Fri Jan 18 2013 Jeffrey Ollie <jeff@ocjtech.us> - 10.12.0-1:
+- The Asterisk Development Team has announced the release of Asterisk 10.12.0.
+- This release is available for immediate download at
+- http://downloads.asterisk.org/pub/telephony/asterisk
+-
+- The release of Asterisk 10.12.0 resolves several issues reported by the
+- community and would have not been possible without your participation.
+- Thank you!
+-
+- The following is a sample of the issues resolved in this release:
+-
+- * --- app_meetme: Fix channels lingering when hung up under certain
+-       conditions
+-   (Closes issue ASTERISK-20486. Reported by Michael Cargile)
+-
+- * --- Fix stuck DTMF when bridge is broken.
+-   (Closes issue ASTERISK-20492. Reported by Jeremiah Gowdy)
+-
+- * --- Improve Code Readability And Fix Setting natdetected Flag
+-   (Closes issue ASTERISK-20724. Reported by Michael L. Young)
+-
+- * --- Fix extension matching with the '-' char.
+-   (Closes issue ASTERISK-19205. Reported by Philippe Lindheimer, Birger "WIMPy" Harzenetter)
+-
+- * --- Fix call files when astspooldir is relative.
+-   (Closes issue ASTERISK-20593. Reported by James Le Cuirot)
+-
+- For a full list of changes in this release, please see the ChangeLog:
+-
+- http://downloads.asterisk.org/pub/telephony/asterisk/ChangeLog-10.12.0
+
 * Fri Jan  4 2013 Jeffrey Ollie <jeff@ocjtech.us> - 10.11.1-1:
 - The Asterisk Development Team has announced security releases for Certified
 - Asterisk 1.8.11 and Asterisk 1.8, 10, and 11. The available security releases
