@@ -17,7 +17,7 @@
 
 Summary: The Open Source PBX
 Name: asterisk
-Version: 1.8.20.0
+Version: 1.8.22.0
 Release: 1%{?_rc:.rc%{_rc}}%{?_beta:.beta%{_beta}}%{?dist}
 License: GPLv2
 Group: Applications/Internet
@@ -1265,7 +1265,150 @@ fi
 %{_libdir}/asterisk/modules/app_voicemail_plain.so
 
 %changelog
-* Fri Jan 18 2013 Jeffrey Ollie <jeff@ocjtech.us> - 1.8.19.0-1:
+* Mon May 20 2013 Jeffrey Ollie <jeff@ocjtech.us> - 1.8.22.0-1:
+- The Asterisk Development Team has announced the release of Asterisk 1.8.22.0.
+- This release is available for immediate download at
+- http://downloads.asterisk.org/pub/telephony/asterisk
+-
+- The release of Asterisk 1.8.22.0 resolves several issues reported by the
+- community and would have not been possible without your participation.
+- Thank you!
+-
+- The following is a sample of the issues resolved in this release:
+-
+- * --- Fix Sorting Order For Parking Lots Stored In Static Realtime
+-   (Closes issue ASTERISK-21035. Reported by Alex Epshteyn)
+-
+- * --- Make ParkAndAnnounce return to priority + 1 when return context
+-       is not defined
+-   (Closes issue ASTERISK-20113. Reported by serginuez)
+-
+- * --- When a session timer expires during a T.38 call, re-invite with
+-       correct SDP
+-   (Closes issue ASTERISK-21232. Reported by Nitesh Bansal)
+-
+- * --- Fix several unreleased mutex locks that cause problem with
+-       processing calls
+-   (Closes issue ASTERISK-21119. Reported by Daniel Bohling)
+-
+- * --- Fix crash when AMI redirect action redirects two channels out of
+-       a bridge.
+-   (Closes issue ASTERISK-21356. Reported by William luke)
+-
+- For a full list of changes in this release, please see the ChangeLog:
+-
+- http://downloads.asterisk.org/pub/telephony/asterisk/ChangeLog-1.8.22.0
+-
+- The Asterisk Development Team has announced the release of Asterisk 1.8.21.0.
+- This release is available for immediate download at
+- http://downloads.asterisk.org/pub/telephony/asterisk
+-
+- The release of Asterisk 1.8.21.0 resolves several issues reported by the
+- community and would have not been possible without your participation.
+- Thank you!
+-
+- The following is a sample of the issues resolved in this release:
+-
+- * --- Fix issue where chan_mobile fails to bind to first available
+-       port
+-   (Closes issue ASTERISK-16357. Reported by challado)
+-
+- * --- Fix station ringback; trunk hangup issues in SLA
+-   (Closes issue ASTERISK-20462. Reported by dkerr)
+-
+- * --- Fix Queue Log Reporting Every Call COMPLETECALLER With "h"
+-       Extension Present
+-   (Closes issue ASTERISK-20743. Reported by call)
+-
+- * --- Fix Record-Route parsing for large headers.
+-   (Closes issue ASTERISK-20837. Reported by Corey Farrell)
+-
+- * --- Fix AMI redirect action with two channels failing to redirect
+-       both channels.
+-   (Closes issue ASTERISK-18975. Reported by Ben Klang)
+-
+- For a full list of changes in this release, please see the ChangeLog:
+-
+- http://downloads.asterisk.org/pub/telephony/asterisk/ChangeLog-1.8.21.0
+-
+- The Asterisk Development Team has announced security releases for Certified
+- Asterisk 1.8.15 and Asterisk 1.8, 10, and 11. The available security releases
+- are released as versions 1.8.15-cert2, 1.8.20.2, 10.12.2, 10.12.2-digiumphones,
+- and 11.2.2.
+-
+- These releases are available for immediate download at
+- http://downloads.asterisk.org/pub/telephony/asterisk/releases
+-
+- The release of these versions resolve the following issues:
+-
+- * A possible buffer overflow during H.264 format negotiation. The format
+-   attribute resource for H.264 video performs an unsafe read against a media
+-   attribute when parsing the SDP.
+-
+-   This vulnerability only affected Asterisk 11.
+-
+- * A denial of service exists in Asterisk's HTTP server. AST-2012-014, fixed
+-   in January of this year, contained a fix for Asterisk's HTTP server for a
+-   remotely-triggered crash. While the fix prevented the crash from being
+-   triggered, a denial of service vector still exists with that solution if an
+-   attacker sends one or more HTTP POST requests with very large Content-Length
+-   values.
+-
+-   This vulnerability affects Certified Asterisk 1.8.15, Asterisk 1.8, 10, and 11
+-
+- * A potential username disclosure exists in the SIP channel driver. When
+-   authenticating a SIP request with alwaysauthreject enabled, allowguest
+-   disabled, and autocreatepeer disabled, Asterisk discloses whether a user
+-   exists for INVITE, SUBSCRIBE, and REGISTER transactions in multiple ways.
+-
+-   This vulnerability affects Certified Asterisk 1.8.15, Asterisk 1.8, 10, and 11
+-
+- These issues and their resolutions are described in the security advisories.
+-
+- For more information about the details of these vulnerabilities, please read
+- security advisories AST-2013-001, AST-2013-002, and AST-2013-003, which were
+- released at the same time as this announcement.
+-
+- For a full list of changes in the current releases, please see the ChangeLogs:
+-
+- http://downloads.asterisk.org/pub/telephony/certified-asterisk/releases/ChangeLog-1.8.15-cert2
+- http://downloads.asterisk.org/pub/telephony/asterisk/releases/ChangeLog-1.8.20.2
+- http://downloads.asterisk.org/pub/telephony/asterisk/releases/ChangeLog-10.12.2
+- http://downloads.asterisk.org/pub/telephony/asterisk/releases/ChangeLog-10.12.2-digiumphones
+- http://downloads.asterisk.org/pub/telephony/asterisk/releases/ChangeLog-11.2.2
+-
+- The security advisories are available at:
+-
+-  * http://downloads.asterisk.org/pub/security/AST-2013-001.pdf
+-  * http://downloads.asterisk.org/pub/security/AST-2013-002.pdf
+-  * http://downloads.asterisk.org/pub/security/AST-2013-003.pdf
+-
+- The Asterisk Development Team has announced the release of Asterisk 1.8.20.1.
+- This release is available for immediate download at
+- http://downloads.asterisk.org/pub/telephony/asterisk
+-
+- The release of Asterisk 1.8.20.1 resolves several issues reported by the
+- community and would have not been possible without your participation.
+- Thank you!
+-
+- The following are the issues resolved in this release:
+-
+- * --- Fix astcanary startup problem due to wrong pid value from before
+-       daemon call
+-   (Closes issue ASTERISK-20947. Reported by Jakob Hirsch)
+-
+- * --- Update init.d scripts to handle stderr; readd splash screen for
+-       remote consoles
+-   (Closes issue ASTERISK-20945. Reported by Warren Selby)
+-
+- * --- Reset RTP timestamp; sequence number on SSRC change
+-   (Closes issue ASTERISK-20906. Reported by Eelco Brolman)
+-
+- For a full list of changes in this release, please see the ChangeLog:
+-
+- http://downloads.asterisk.org/pub/telephony/asterisk/ChangeLog-1.8.20.1
+
+* Fri Jan 18 2013 Jeffrey Ollie <jeff@ocjtech.us> - 1.8.20.0-1:
 - The Asterisk Development Team has announced the release of Asterisk 1.8.20.0.
 - This release is available for immediate download at
 - http://downloads.asterisk.org/pub/telephony/asterisk
