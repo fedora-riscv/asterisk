@@ -17,7 +17,7 @@
 
 Summary: The Open Source PBX
 Name: asterisk
-Version: 1.8.22.0
+Version: 1.8.23.1
 Release: 1%{?_rc:.rc%{_rc}}%{?_beta:.beta%{_beta}}%{?dist}
 License: GPLv2
 Group: Applications/Internet
@@ -1265,6 +1265,81 @@ fi
 %{_libdir}/asterisk/modules/app_voicemail_plain.so
 
 %changelog
+* Thu Aug 26 2013 Jeffrey Ollie <jeff@ocjtech.us> - 1.8.23.1-1:
+- The Asterisk Development Team has announced security releases for Certified
+- Asterisk 1.8.15, 11.2, and Asterisk 1.8, 10, and 11. The available security releases
+- are released as versions 1.8.15-cert2, 11.2-cert2, 1.8.23.1, 10.12.3, 10.12.3-digiumphones,
+- and 11.5.1.
+-
+- These releases are available for immediate download at
+- http://downloads.asterisk.org/pub/telephony/asterisk/releases
+-
+- The release of these versions resolve the following issues:
+-
+- * A remotely exploitable crash vulnerability exists in the SIP channel driver if
+-   an ACK with SDP is received after the channel has been terminated. The
+-   handling code incorrectly assumes that the channel will always be present.
+-
+- * A remotely exploitable crash vulnerability exists in the SIP channel driver if
+-   an invalid SDP is sent in a SIP request that defines media descriptions before
+-   connection information. The handling code incorrectly attempts to reference
+-   the socket address information even though that information has not yet been
+-   set.
+-
+- These issues and their resolutions are described in the security advisories.
+-
+- For more information about the details of these vulnerabilities, please read
+- security advisories AST-2013-004 and AST-2013-005, which were
+- released at the same time as this announcement.
+-
+- For a full list of changes in the current releases, please see the ChangeLogs:
+-
+- http://downloads.asterisk.org/pub/telephony/certified-asterisk/releases/ChangeLog-1.8.15-cert3
+- http://downloads.asterisk.org/pub/telephony/certified-asterisk/releases/ChangeLog-11.2-cert2
+- http://downloads.asterisk.org/pub/telephony/asterisk/releases/ChangeLog-1.8.23.1
+- http://downloads.asterisk.org/pub/telephony/asterisk/releases/ChangeLog-10.12.3
+- http://downloads.asterisk.org/pub/telephony/asterisk/releases/ChangeLog-10.12.3-digiumphones
+- http://downloads.asterisk.org/pub/telephony/asterisk/releases/ChangeLog-11.5.1
+-
+- The security advisories are available at:
+-
+-  * http://downloads.asterisk.org/pub/security/AST-2013-004.pdf
+-  * http://downloads.asterisk.org/pub/security/AST-2013-005.pdf
+-
+- The Asterisk Development Team has announced the release of Asterisk 1.8.23.0.
+- This release is available for immediate download at
+- http://downloads.asterisk.org/pub/telephony/asterisk
+
+* Thu Aug 26 2013 Jeffrey Ollie <jeff@ocjtech.us> - 1.8.23.0-1:
+- The release of Asterisk 1.8.23.0 resolves several issues reported by the
+- community and would have not been possible without your participation.
+- Thank you!
+-
+- The following is a sample of the issues resolved in this release:
+-
+- * --- Fix a memory copying bug in slinfactory which was causing
+-       mixmonitor issues.
+-   (Closes issue ASTERISK-21799. Reported by Michael Walton)
+-
+- * --- IAX2: fix race condition with nativebridge transfers.
+-   (Closes issue ASTERISK-21409. Reported by alecdavis)
+-
+- * --- Fix crash in chan_sip when a core initiated op occurs at the
+-       same time as a BYE
+-   (Closes issue ASTERISK-20225. Reported by Jeff Hoppe)
+-
+- * --- Fix The Payload Being Set On CN Packets And Do Not Set Marker
+-       Bit
+-   (Closes issue ASTERISK-21246. Reported by Peter Katzmann)
+-
+- * --- chan_sip: Session-Expires: Set timer to correctly expire at
+-       (~2/3) of the interval when not the refresher
+-   (Closes issue ASTERISK-21742. Reported by alecdavis)
+-
+- For a full list of changes in this release, please see the ChangeLog:
+-
+- http://downloads.asterisk.org/pub/telephony/asterisk/ChangeLog-1.8.23.0
+
 * Mon May 20 2013 Jeffrey Ollie <jeff@ocjtech.us> - 1.8.22.0-1:
 - The Asterisk Development Team has announced the release of Asterisk 1.8.22.0.
 - This release is available for immediate download at
