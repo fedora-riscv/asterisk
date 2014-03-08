@@ -17,7 +17,8 @@
 
 Summary: The Open Source PBX
 Name: asterisk
-Version: 1.8.23.1
+#Version: 1.8.23.1
+Version: 1.8.25.0
 Release: 1%{?_rc:.rc%{_rc}}%{?_beta:.beta%{_beta}}%{?dist}
 License: GPLv2
 Group: Applications/Internet
@@ -25,6 +26,8 @@ URL: http://www.asterisk.org/
 
 Source0: http://downloads.asterisk.org/pub/telephony/asterisk/releases/asterisk-%{version}%{?_rc:-rc%{_rc}}%{?_beta:-beta%{_beta}}.tar.gz
 Source1: http://downloads.asterisk.org/pub/telephony/asterisk/releases/asterisk-%{version}%{?_rc:-rc%{_rc}}%{?_beta:-beta%{_beta}}.tar.gz.asc
+#Source0: http://downloads.asterisk.org/pub/telephony/asterisk/releases/asterisk-%{version}%{?_rc:-rc%{_rc}}%{?_beta:-beta%{_beta}}.tar.gz
+#Source1: http://downloads.asterisk.org/pub/telephony/asterisk/releases/asterisk-%{version}%{?_rc:-rc%{_rc}}%{?_beta:-beta%{_beta}}.tar.gz.asc
 Source2: asterisk-logrotate
 Source3: menuselect.makedeps
 Source4: menuselect.makeopts
@@ -1265,6 +1268,9 @@ fi
 %{_libdir}/asterisk/modules/app_voicemail_plain.so
 
 %changelog
+* Thu Feb 20 2014 Jon Disnard <jdisnard@gmail.com> - 1.8.25.0-1:
+- Bump to newer upstream release
+
 * Thu Aug 26 2013 Jeffrey Ollie <jeff@ocjtech.us> - 1.8.23.1-1:
 - The Asterisk Development Team has announced security releases for Certified
 - Asterisk 1.8.15, 11.2, and Asterisk 1.8, 10, and 11. The available security releases
