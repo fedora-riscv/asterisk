@@ -17,8 +17,7 @@
 
 Summary: The Open Source PBX
 Name: asterisk
-#Version: 1.8.23.1
-Version: 1.8.25.0
+Version: 1.8.26.1
 Release: 1%{?_rc:.rc%{_rc}}%{?_beta:.beta%{_beta}}%{?dist}
 License: GPLv2
 Group: Applications/Internet
@@ -1268,6 +1267,11 @@ fi
 %{_libdir}/asterisk/modules/app_voicemail_plain.so
 
 %changelog
+* Fri Mar 14 2014 Jon Disnard <disnard@gmail.com> - 1.8.26.1
+- bump to upstream 1.8.26.1
+- BZs: 1074829, 1074825, 1074827
+- CVEs: CVE-2014-2286, CVE-2014-2287
+
 * Thu Feb 20 2014 Jon Disnard <jdisnard@gmail.com> - 1.8.25.0-1:
 - Bump to newer upstream release
 
