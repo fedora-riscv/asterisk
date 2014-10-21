@@ -17,7 +17,7 @@
 
 Summary: The Open Source PBX
 Name: asterisk
-Version: 1.8.26.1
+Version: 1.8.31.1
 Release: 1%{?_rc:.rc%{_rc}}%{?_beta:.beta%{_beta}}%{?dist}
 License: GPLv2
 Group: Applications/Internet
@@ -41,7 +41,6 @@ Patch4:  0004-Use-the-library-function-for-loading-command-history.patch
 Patch5:  0005-Fix-up-some-paths.patch
 Patch6:  0006-Add-LDAP-schema-that-is-compatible-with-Fedora-Direc.patch
 Patch7:  0007-Don-t-load-chan_mgcp-and-res_pktccops-because-res_pk.patch
-Patch8:  0008-Fix-two-problems-with-app_sms.patch
 Patch9:  0009-Remove-blank-lines-to-improve-compat-with-389-Direct.patch
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-root-%(%{__id_u} -n)
@@ -467,7 +466,6 @@ local filesystem.
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
-%patch8 -p1
 %patch9 -p1
 
 cp %{S:3} menuselect.makedeps
@@ -1267,7 +1265,473 @@ fi
 %{_libdir}/asterisk/modules/app_voicemail_plain.so
 
 %changelog
-* Fri Mar 14 2014 Jon Disnard <disnard@gmail.com> - 1.8.26.1
+* Tue Oct 21 2014 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.8.31.1-1:
+- The Asterisk Development Team has announced security releases for Certified
+- Asterisk 1.8.28 and 11.6 and Asterisk 1.8, 11, 12, and 13. The available
+- security releases are released as versions 1.8.28-cert2, 11.6-cert7, 1.8.31.1,
+- 11.13.1, 12.6.1, and 13.0.0-beta3.
+-
+- These releases are available for immediate download at
+- http://downloads.asterisk.org/pub/telephony/asterisk/releases
+-
+- The release of these versions resolves the following security vulnerability:
+-
+- * AST-2014-011: Asterisk Susceptibility to POODLE Vulnerability
+-
+-   Asterisk is susceptible to the POODLE vulnerability in two ways:
+-   1) The res_jabber and res_xmpp module both use SSLv3 exclusively for their
+-      encrypted connections.
+-   2) The core TLS handling in Asterisk, which is used by the chan_sip channel
+-      driver, Asterisk Manager Interface (AMI), and Asterisk HTTP Server, by
+-      default allow a TLS connection to fallback to SSLv3. This allows for a
+-      MITM to potentially force a connection to fallback to SSLv3, exposing it
+-      to the POODLE vulnerability.
+-
+-   These issues have been resolved in the versions released in conjunction with
+-   this security advisory.
+-
+- For more information about the details of this vulnerability, please read
+- security advisory AST-2014-011, which was released at the same time as this
+- announcement.
+-
+- For a full list of changes in the current releases, please see the ChangeLogs:
+-
+- http://downloads.asterisk.org/pub/telephony/certified-asterisk/releases/ChangeLog-1.8.28-cert2
+- http://downloads.asterisk.org/pub/telephony/certified-asterisk/releases/ChangeLog-11.6-cert7
+- http://downloads.asterisk.org/pub/telephony/asterisk/releases/ChangeLog-1.8.31.1
+- http://downloads.asterisk.org/pub/telephony/asterisk/releases/ChangeLog-11.13.1
+- http://downloads.asterisk.org/pub/telephony/asterisk/releases/ChangeLog-12.6.1
+- http://downloads.asterisk.org/pub/telephony/asterisk/releases/ChangeLog-13.0.0-beta3
+-
+- The security advisory is available at:
+-
+-  * http://downloads.asterisk.org/pub/security/AST-2014-011.pdf
+
+* Tue Oct 21 2014 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.8.31.0-1:
+- The Asterisk Development Team has announced the release of Asterisk 1.8.31.0.
+- This release is available for immediate download at
+- http://downloads.asterisk.org/pub/telephony/asterisk
+-
+- The release of Asterisk 1.8.31.0 resolves several issues reported by the
+- community and would have not been possible without your participation.
+- Thank you!
+-
+- The following are the issues resolved in this release:
+-
+- Bugs fixed in this release:
+- -----------------------------------
+-  * ASTERISK-24032 - Gentoo compilation emits warning:
+-       "_FORTIFY_SOURCE" redefined (Reported by Kilburn)
+-  * ASTERISK-24225 - Dial option z is broken (Reported by
+-       dimitripietro)
+-  * ASTERISK-24178 - [patch]fromdomainport used even if not set
+-       (Reported by Elazar Broad)
+-  * ASTERISK-24019 - When a Music On Hold stream starts it restarts
+-       at beginning of file. (Reported by Jason Richards)
+-  * ASTERISK-24211 - testsuite: Fix the dial_LS_options test
+-       (Reported by Matt Jordan)
+-  * ASTERISK-24249 - SIP debugs do not stop (Reported by Avinash
+-       Mohod)
+-
+- Improvements made in this release:
+- -----------------------------------
+-  * ASTERISK-24171 - [patch] Provide a manpage for the aelparse
+-       utility (Reported by Jeremy Lainé)
+-
+- For a full list of changes in this release, please see the ChangeLog:
+-
+- http://downloads.asterisk.org/pub/telephony/asterisk/ChangeLog-1.8.31.0
+
+* Tue Oct 21 2014 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.8.30.0-1:
+- The Asterisk Development Team has announced the release of Asterisk 1.8.30.0.
+- This release is available for immediate download at
+- http://downloads.asterisk.org/pub/telephony/asterisk
+-
+- The release of Asterisk 1.8.30.0 resolves several issues reported by the
+- community and would have not been possible without your participation.
+- Thank you!
+-
+- The following are the issues resolved in this release:
+-
+- Bugs fixed in this release:
+- -----------------------------------
+-  * ASTERISK-23911 - URIENCODE/URIDECODE: WARNING about passing an
+-       empty string is a bit over zealous (Reported by Matt Jordan)
+-  * ASTERISK-23814 - No call started after peer dialed (Reported by
+-       Igor Goncharovsky)
+-  * ASTERISK-24087 - [patch]chan_sip: sip_subscribe_mwi_destroy
+-       should not call sip_destroy (Reported by Corey Farrell)
+-  * ASTERISK-23818 - PBX_Lua: after asterisk startup module is
+-       loaded, but dialplan not available (Reported by Dennis Guse)
+-  * ASTERISK-18345 - [patch] sips connection dropped by asterisk
+-       with a large INVITE (Reported by Stephane Chazelas)
+-  * ASTERISK-23508 - Memory Corruption in
+-       __ast_string_field_ptr_build_va (Reported by Arnd Schmitter)
+-
+- Improvements made in this release:
+- -----------------------------------
+-  * ASTERISK-21178 - Improve documentation for manager command
+-       Getvar, Setvar (Reported by Rusty Newton)
+-
+- For a full list of changes in this release, please see the ChangeLog:
+-
+- http://downloads.asterisk.org/pub/telephony/asterisk/ChangeLog-1.8.30.0
+
+* Tue Oct 21 2014 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.8.29.0-1:
+- The Asterisk Development Team has announced the release of Asterisk 1.8.29.0.
+- This release is available for immediate download at
+- http://downloads.asterisk.org/pub/telephony/asterisk
+-
+- The release of Asterisk 1.8.29.0 resolves several issues reported by the
+- community and would have not been possible without your participation.
+- Thank you!
+-
+- The following are the issues resolved in this release:
+-
+- Bugs fixed in this release:
+- -----------------------------------
+-  * ASTERISK-22551 - Session timer : UAS (Asterisk) starts counting
+-       at Invite, UAC starts counting at 200 OK. (Reported by i2045)
+-  * ASTERISK-23582 - [patch]Inconsistent column length in *odbc
+-       (Reported by Walter Doekes)
+-  * ASTERISK-23803 - AMI action UpdateConfig EmptyCat clears all
+-       categories but the requested one (Reported by zvision)
+-  * ASTERISK-23035 - ConfBridge with name longer than max (32 chars)
+-       results in several bridges with same conf_name (Reported by
+-       Iñaki Cívico)
+-  * ASTERISK-23683 - #includes - wildcard character in a path more
+-       than one directory deep - results in no config parsing on module
+-       reload (Reported by tootai)
+-  * ASTERISK-23827 - autoservice thread doesn't exit at shutdown
+-       (Reported by Corey Farrell)
+-  * ASTERISK-23814 - No call started after peer dialed (Reported by
+-       Igor Goncharovsky)
+-  * ASTERISK-23673 - Security: DOS by consuming the number of
+-       allowed HTTP connections. (Reported by Richard Mudgett)
+-  * ASTERISK-23246 - DEBUG messages in sdp_crypto.c display despite
+-       a DEBUG level of zero (Reported by Rusty Newton)
+-  * ASTERISK-23766 - [patch] Specify timeout for database write in
+-       SQLite (Reported by Igor Goncharovsky)
+-  * ASTERISK-23818 - PBX_Lua: after asterisk startup module is
+-       loaded, but dialplan not available (Reported by Dennis Guse)
+-  * ASTERISK-23667 - features.conf.sample is unclear as to which
+-       options can or cannot be set in the general section (Reported by
+-       David Brillert)
+-  * ASTERISK-23790 - [patch] - SIP From headers longer than 256
+-       characters result in dropped call and 'No closing bracket'
+-       warnings. (Reported by uniken1)
+-  * ASTERISK-23908 - [patch]When using FEC error correction,
+-       asterisk tries considers negative sequence numbers as missing
+-       (Reported by Torrey Searle)
+-  * ASTERISK-23921 - refcounter.py uses excessive ram for large refs
+-       files  (Reported by Corey Farrell)
+-  * ASTERISK-23948 - REF_DEBUG fails to record ao2_ref against
+-       objects that were already freed (Reported by Corey Farrell)
+-  * ASTERISK-23984 - Infinite loop possible in ast_careful_fwrite()
+-       (Reported by Steve Davies)
+-  * ASTERISK-23897 - [patch]Change in SETUP ACK handling (checking
+-       PI) in revision 413765 breaks working environments (Reported by
+-       Pavel Troller)
+-
+- Improvements made in this release:
+- -----------------------------------
+-  * ASTERISK-23564 - [patch]TLS/SRTP status of channel not currently
+-       available in a CLI command (Reported by Patrick Laimbock)
+-  * ASTERISK-23492 - Add option to safe_asterisk to disable
+-       backgrounding (Reported by Walter Doekes)
+-
+- For a full list of changes in this release, please see the ChangeLog:
+-
+- http://downloads.asterisk.org/pub/telephony/asterisk/ChangeLog-1.8.29.0
+
+* Tue Oct 21 2014 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.8.28.2-1:
+- The Asterisk Development Team has announced security releases for Certified
+- Asterisk 1.8.15, 11.6, and Asterisk 1.8, 11, and 12. The available security
+- releases are released as versions 1.8.15-cert7, 11.6-cert4, 1.8.28.2, 11.10.2,
+- and 12.3.2.
+-
+- These releases are available for immediate download at
+- http://downloads.asterisk.org/pub/telephony/asterisk/releases
+-
+- These releases resolve security vulnerabilities that were previously fixed in
+- 1.8.15-cert6, 11.6-cert3, 1.8.28.1, 11.10.1, and 12.3.1. Unfortunately, the fix
+- for AST-2014-007 inadvertently introduced a regression in Asterisk's TCP and TLS
+- handling that prevented Asterisk from sending data over these transports. This
+- regression and the security vulnerabilities have been fixed in the versions
+- specified in this release announcement.
+-
+- The security patches for AST-2014-007 have been updated with the fix for the
+- regression, and are available at http://downloads.asterisk.org/pub/security
+-
+- Please note that the release of these versions resolves the following security
+- vulnerabilities:
+-
+- * AST-2014-005: Remote Crash in PJSIP Channel Driver's Publish/Subscribe
+-                 Framework
+-
+- * AST-2014-006: Permission Escalation via Asterisk Manager User Unauthorized
+-                 Shell Access
+-
+- * AST-2014-007: Denial of Service via Exhaustion of Allowed Concurrent HTTP
+-                 Connections
+-
+- * AST-2014-008: Denial of Service in PJSIP Channel Driver Subscriptions
+-
+- For more information about the details of these vulnerabilities, please read
+- security advisories AST-2014-005, AST-2014-006, AST-2014-007, and AST-2014-008,
+- which were released with the previous versions that addressed these
+- vulnerabilities.
+-
+- For a full list of changes in the current releases, please see the ChangeLogs:
+-
+- http://downloads.asterisk.org/pub/telephony/certified-asterisk/releases/ChangeLog-1.8.15-cert7
+- http://downloads.asterisk.org/pub/telephony/asterisk/releases/ChangeLog-1.8.28.2
+- http://downloads.asterisk.org/pub/telephony/certified-asterisk/releases/ChangeLog-11.6-cert4
+- http://downloads.asterisk.org/pub/telephony/asterisk/releases/ChangeLog-11.10.2
+- http://downloads.asterisk.org/pub/telephony/asterisk/releases/ChangeLog-12.3.2
+-
+- The security advisories are available at:
+-
+-  * http://downloads.asterisk.org/pub/security/AST-2014-005.pdf
+-  * http://downloads.asterisk.org/pub/security/AST-2014-006.pdf
+-  * http://downloads.asterisk.org/pub/security/AST-2014-007.pdf
+-  * http://downloads.asterisk.org/pub/security/AST-2014-008.pdf
+
+* Tue Oct 21 2014 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.8.28.1-1:
+- The Asterisk Development Team has announced security releases for Certified
+- Asterisk 1.8.15, 11.6, and Asterisk 1.8, 11, and 12. The available security
+- releases are released as versions 1.8.15-cert6, 11.6-cert3, 1.8.28.1, 11.10.1,
+- and 12.3.1.
+-
+- These releases are available for immediate download at
+- http://downloads.asterisk.org/pub/telephony/asterisk/releases
+-
+- The release of these versions resolves the following issue:
+-
+- * AST-2014-007: Denial of Service via Exhaustion of Allowed Concurrent HTTP
+-                 Connections
+-
+-   Establishing a TCP or TLS connection to the configured HTTP or HTTPS port
+-   respectively in http.conf and then not sending or completing a HTTP request
+-   will tie up a HTTP session. By doing this repeatedly until the maximum number
+-   of open HTTP sessions is reached, legitimate requests are blocked.
+-
+- Additionally, the release of 11.6-cert3, 11.10.1, and 12.3.1 resolves the
+- following issue:
+-
+- * AST-2014-006: Permission Escalation via Asterisk Manager User Unauthorized
+-                 Shell Access
+-
+-   Manager users can execute arbitrary shell commands with the MixMonitor manager
+-   action. Asterisk does not require system class authorization for a manager
+-   user to use the MixMonitor action, so any manager user who is permitted to use
+-   manager commands can potentially execute shell commands as the user executing
+-   the Asterisk process.
+-
+- Additionally, the release of 12.3.1 resolves the following issues:
+-
+- * AST-2014-005: Remote Crash in PJSIP Channel Driver's Publish/Subscribe
+-                 Framework
+-
+-   A remotely exploitable crash vulnerability exists in the PJSIP channel
+-   driver's pub/sub framework. If an attempt is made to unsubscribe when not
+-   currently subscribed and the endpoint's “sub_min_expiry” is set to zero,
+-   Asterisk tries to create an expiration timer with zero seconds, which is not
+-   allowed, so an assertion raised.
+-
+- * AST-2014-008: Denial of Service in PJSIP Channel Driver Subscriptions
+-
+-   When a SIP transaction timeout caused a subscription to be terminated, the
+-   action taken by Asterisk was guaranteed to deadlock the thread on which SIP
+-   requests are serviced. Note that this behavior could only happen on
+-   established subscriptions, meaning that this could only be exploited if an
+-   attacker bypassed authentication and successfully subscribed to a real
+-   resource on the Asterisk server.
+-
+- These issues and their resolutions are described in the security advisories.
+-
+- For more information about the details of these vulnerabilities, please read
+- security advisories AST-2014-005, AST-2014-006, AST-2014-007, and AST-2014-008,
+- which were released at the same time as this announcement.
+-
+- For a full list of changes in the current releases, please see the ChangeLogs:
+-
+- http://downloads.asterisk.org/pub/telephony/certified-asterisk/releases/ChangeLog-1.8.15-cert6
+- http://downloads.asterisk.org/pub/telephony/asterisk/releases/ChangeLog-1.8.28.1
+- http://downloads.asterisk.org/pub/telephony/certified-asterisk/releases/ChangeLog-11.6-cert3
+- http://downloads.asterisk.org/pub/telephony/asterisk/releases/ChangeLog-11.10.1
+- http://downloads.asterisk.org/pub/telephony/asterisk/releases/ChangeLog-12.3.1
+-
+- The security advisories are available at:
+-
+-  * http://downloads.asterisk.org/pub/security/AST-2014-005.pdf
+-  * http://downloads.asterisk.org/pub/security/AST-2014-006.pdf
+-  * http://downloads.asterisk.org/pub/security/AST-2014-007.pdf
+-  * http://downloads.asterisk.org/pub/security/AST-2014-008.pdf
+
+* Tue Oct 21 2014 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.8.28.0-1:
+- The Asterisk Development Team has announced the release of Asterisk 1.8.28.0.
+- This release is available for immediate download at
+- http://downloads.asterisk.org/pub/telephony/asterisk
+-
+- The release of Asterisk 1.8.28.0 resolves several issues reported by the
+- community and would have not been possible without your participation.
+- Thank you!
+-
+- The following are the issues resolved in this release:
+-
+- Bugs fixed in this release:
+- -----------------------------------
+-  * ASTERISK-23547 - [patch] app_queue removing callers from queue
+-       when reloading (Reported by Italo Rossi)
+-  * ASTERISK-22846 - testsuite: masquerade super test fails on all
+-       branches (still) (Reported by Matt Jordan)
+-  * ASTERISK-23546 - CB_ADD_LEN does not do what you'd think
+-       (Reported by Walter Doekes)
+-  * ASTERISK-23620 - Code path in app_stack fails to unlock list
+-       (Reported by Bradley Watkins)
+-  * ASTERISK-18331 - app_sms failure (Reported by David Woodhouse)
+-  * ASTERISK-19465 - P-Asserted-Identity Privacy (Reported by
+-       Krzysztof Chmielewski)
+-  * ASTERISK-23707 - Realtime Contacts: Apparent mismatch between
+-       PGSQL database state and Asterisk state (Reported by Mark
+-       Michelson)
+-  * ASTERISK-23665 - Wrong mime type for codec H263-1998 (h263+)
+-       (Reported by Guillaume Maudoux)
+-  * ASTERISK-22977 - chan_sip+CEL: missing ANSWER and PICKUP event
+-       for INVITE/w/replaces pickup (Reported by Walter Doekes)
+-  * ASTERISK-23709 - Regression in Dahdi/Analog/waitfordialtone
+-       (Reported by Steve Davies)
+-  * ASTERISK-23650 - Intermittent segfault in string functions
+-       (Reported by Roel van Meer)
+-
+- Improvements made in this release:
+- -----------------------------------
+-  * ASTERISK-23754 - [patch] Use var/lib directory for log file
+-       configured in asterisk.conf (Reported by Igor Goncharovsky)
+-
+- For a full list of changes in this release, please see the ChangeLog:
+-
+- http://downloads.asterisk.org/pub/telephony/asterisk/ChangeLog-1.8.28.0
+-
+- * Tue Oct 21 2014 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.8.27.0-1:
+- The Asterisk Development Team has announced the release of Asterisk 1.8.27.0.
+- This release is available for immediate download at
+- http://downloads.asterisk.org/pub/telephony/asterisk
+-
+- The release of Asterisk 1.8.27.0 resolves several issues reported by the
+- community and would have not been possible without your participation.
+- Thank you!
+-
+- The following are the issues resolved in this release:
+-
+- Bugs fixed in this release:
+- -----------------------------------
+-  * ASTERISK-22790 - check_modem_rate() may return incorrect rate
+-       for V.27 (Reported by Paolo Compagnini)
+-  * ASTERISK-23061 - [Patch] 'textsupport' setting not mentioned in
+-       sip.conf.sample (Reported by Eugene)
+-  * ASTERISK-23028 - [patch] Asterisk man pages contains unquoted
+-       minus signs (Reported by Jeremy Lainé)
+-  * ASTERISK-23046 - Custom CDR fields set during a GoSUB called
+-       from app_queue are not inserted (Reported by Denis Pantsyrev)
+-  * ASTERISK-23027 - [patch] Spelling typo "transfered" instead of
+-       "transferred" (Reported by Jeremy Lainé)
+-  * ASTERISK-23008 - Local channels loose CALLERID name when DAHDI
+-       channel connects (Reported by Michael Cargile)
+-  * ASTERISK-23100 - [patch] In chan_mgcp the ident in transmitted
+-       request and request queue may differ - fix for locking (Reported
+-       by adomjan)
+-  * ASTERISK-22988 - [patch]T38 , SIP 488 after Rejecting image
+-       media offer due to invalid or unsupported syntax (Reported by
+-       adomjan)
+-  * ASTERISK-22861 - [patch]Specifying a null time as parameter to
+-       GotoIfTime or ExecIfTime causes segmentation fault (Reported by
+-       Sebastian Murray-Roberts)
+-  * ASTERISK-17837 - extconfig.conf - Maximum Include level (1)
+-       exceeded (Reported by pz)
+-  * ASTERISK-22662 - Documentation fix? - queues.conf says
+-       persistentmembers defaults to yes, it appears to lie (Reported
+-       by Rusty Newton)
+-  * ASTERISK-23134 - [patch] res_rtp_asterisk port selection cannot
+-       handle selinux port restrictions (Reported by Corey Farrell)
+-  * ASTERISK-23220 - STACK_PEEK function with no arguments causes
+-       crash/core dump (Reported by James Sharp)
+-  * ASTERISK-19773 - Asterisk crash on issuing Asterisk-CLI 'reload'
+-       command multiple times on cli_aliases (Reported by Joel Vandal)
+-  * ASTERISK-22757 - segfault in res_clialiases.so on reload when
+-       mapping "module reload" command (Reported by Gareth Blades)
+-  * ASTERISK-17727 - [patch] TLS doesn't get all certificate chain
+-       (Reported by LN)
+-  * ASTERISK-23178 - devicestate.h: device state setting functions
+-       are documented with the wrong return values (Reported by
+-       Jonathan Rose)
+-  * ASTERISK-23297 - Asterisk 12, pbx_config.so segfaults if
+-       res_parking.so is not loaded, or if res_parking.conf has no
+-       configuration (Reported by CJ Oster)
+-  * ASTERISK-23069 - Custom CDR variable not recorded when set in
+-       macro called from app_queue (Reported by Bryan Anderson)
+-  * ASTERISK-19499 - ConfBridge MOH is not working for transferee
+-       after attended transfer (Reported by Timo Teräs)
+-  * ASTERISK-23261 - [patch]Output mixup in
+-       ${CHANNEL(rtpqos,audio,all)} (Reported by rsw686)
+-  * ASTERISK-23260 - [patch]ForkCDR v option does not keep CDR
+-       variables for subsequent records (Reported by zvision)
+-  * ASTERISK-23141 - Asterisk crashes on Dial(), in
+-       pbx_find_extension at pbx.c (Reported by Maxim)
+-  * ASTERISK-23231 - Since 405693 If we have res_fax.conf file set
+-       to minrate=2400, then res_fax refuse to load (Reported by David
+-       Brillert)
+-  * ASTERISK-23135 - Crash - segfault in ast_channel_hangupcause_set
+-       - probably introduced in 11.7.0 (Reported by OK)
+-  * ASTERISK-23323 - [patch]chan_sip: missing p->owner checks in
+-       handle_response_invite (Reported by Walter Doekes)
+-  * ASTERISK-23382 - [patch]Build System: make -qp can corrupt
+-       menuselect-tree and related files (Reported by Corey Farrell)
+-  * ASTERISK-23406 - [patch]Fix typo in "sip show peer" (Reported by
+-       ibercom)
+-  * ASTERISK-23310 - bridged channel crashes in bridge_p2p_rtp_write
+-       (Reported by Jeremy Lainé)
+-  * ASTERISK-23104 - Specifying the SetVar AMI without a Channel
+-       cause Asterisk to crash (Reported by Joel Vandal)
+-  * ASTERISK-23383 - Wrong sense test on stat return code causes
+-       unchanged config check to break with include files. (Reported by
+-       David Woolley)
+-  * ASTERISK-17523 - Qualify for static realtime peers does not work
+-       (Reported by Maciej Krajewski)
+-  * ASTERISK-21406 - [patch] chan_sip deadlock on monlock between
+-       unload_module and do_monitor (Reported by Corey Farrell)
+-  * ASTERISK-23373 - [patch]Security: Open FD exhaustion with
+-       chan_sip Session-Timers (Reported by Corey Farrell)
+-  * ASTERISK-23340 - Security Vulnerability: stack allocation of
+-       cookie headers in loop allows for unauthenticated remote denial
+-       of service attack (Reported by Matt Jordan)
+-  * ASTERISK-23488 - Logic error in callerid checksum processing
+-       (Reported by Russ Meyerriecks)
+-  * ASTERISK-20841 - fromdomain not honored on outbound INVITE
+-       request (Reported by Kelly Goedert)
+-  * ASTERISK-22079 - Segfault: INTERNAL_OBJ (user_data=0x6374652f)
+-       at astobj2.c:120 (Reported by Jamuel Starkey)
+-  * ASTERISK-23509 - [patch]SayNumber for Polish language tries to
+-       play empty files for numbers divisible by 100 (Reported by
+-       zvision)
+-  * ASTERISK-23391 - Audit dialplan function usage of channel
+-       variable (Reported by Corey Farrell)
+-  * ASTERISK-23548 - POST to ARI sometimes returns no body on
+-       success (Reported by Scott Griepentrog)
+-
+- Improvements made in this release:
+- -----------------------------------
+-  * ASTERISK-22980 - [patch]Allow building cdr_radius and cel_radius
+-       against libfreeradius-client (Reported by Jeremy Lainé)
+-  * ASTERISK-22661 - Unable to exit ChanSpy if spied channel does
+-       not have a call in progress (Reported by Chris Hillman)
+-
+- For a full list of changes in this release, please see the ChangeLog:
+-
+- http://downloads.asterisk.org/pub/telephony/asterisk/ChangeLog-1.8.27.0
+
+* Fri Mar 14 2014 Jon Disnard <disnard@gmail.com> - 1.8.26.1:
 - bump to upstream 1.8.26.1
 - BZs: 1074829, 1074825, 1074827
 - CVEs: CVE-2014-2286, CVE-2014-2287
@@ -1275,7 +1739,7 @@ fi
 * Thu Feb 20 2014 Jon Disnard <jdisnard@gmail.com> - 1.8.25.0-1:
 - Bump to newer upstream release
 
-* Thu Aug 26 2013 Jeffrey Ollie <jeff@ocjtech.us> - 1.8.23.1-1:
+* Mon Aug 26 2013 Jeffrey Ollie <jeff@ocjtech.us> - 1.8.23.1-1:
 - The Asterisk Development Team has announced security releases for Certified
 - Asterisk 1.8.15, 11.2, and Asterisk 1.8, 10, and 11. The available security releases
 - are released as versions 1.8.15-cert2, 11.2-cert2, 1.8.23.1, 10.12.3, 10.12.3-digiumphones,
@@ -1320,7 +1784,7 @@ fi
 - This release is available for immediate download at
 - http://downloads.asterisk.org/pub/telephony/asterisk
 
-* Thu Aug 26 2013 Jeffrey Ollie <jeff@ocjtech.us> - 1.8.23.0-1:
+* Mon Aug 26 2013 Jeffrey Ollie <jeff@ocjtech.us> - 1.8.23.0-1:
 - The release of Asterisk 1.8.23.0 resolves several issues reported by the
 - community and would have not been possible without your participation.
 - Thank you!
@@ -3885,7 +4349,7 @@ http://downloads.asterisk.org/pub/telephony/asterisk/ChangeLog-1.8.3-rc2
 * Fri Jul 25 2008 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.6.0-0.18.beta9
 - Add patch for LDAP extracted from upstream SVN (#442011)
 
-* Thu Jul  2 2008 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.6.0-0.17.beta9
+* Wed Jul  2 2008 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.6.0-0.17.beta9
 - Add patch that unbreaks cdr_tds with FreeTDS 0.82.
 - Properly obsolete conference subpackage.
 
