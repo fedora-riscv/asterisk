@@ -17,7 +17,7 @@
 
 Summary: The Open Source PBX
 Name: asterisk
-Version: 1.8.31.1
+Version: 1.8.32.1
 Release: 1%{?_rc:.rc%{_rc}}%{?_beta:.beta%{_beta}}%{?dist}
 License: GPLv2
 Group: Applications/Internet
@@ -1265,6 +1265,182 @@ fi
 %{_libdir}/asterisk/modules/app_voicemail_plain.so
 
 %changelog
+* Fri Nov 21 2014 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.8.32.1-1:
+- The Asterisk Development Team has announced security releases for Certified
+- Asterisk 1.8.28 and 11.6 and Asterisk 1.8, 11, 12, and 13. The available
+- security releases are released as versions 1.8.28-cert3, 11.6-cert8, 1.8.32.1,
+- 11.14.1, 12.7.1, and 13.0.1.
+-
+- These releases are available for immediate download at
+- http://downloads.asterisk.org/pub/telephony/asterisk/releases
+-
+- The release of these versions resolves the following security vulnerabilities:
+-
+- * AST-2014-012: Unauthorized access in the presence of ACLs with mixed IP
+-   address families
+-
+-   Many modules in Asterisk that service incoming IP traffic have ACL options
+-   ("permit" and "deny") that can be used to whitelist or blacklist address
+-   ranges. A bug has been discovered where the address family of incoming
+-   packets is only compared to the IP address family of the first entry in the
+-   list of access control rules. If the source IP address for an incoming
+-   packet is not of the same address as the first ACL entry, that packet
+-   bypasses all ACL rules.
+-
+- * AST-2014-018: Permission Escalation through DB dialplan function
+-
+-   The DB dialplan function when executed from an external protocol, such as AMI,
+-   could result in a privilege escalation. Users with a lower class authorization
+-   in AMI can access the internal Asterisk database without the required SYSTEM
+-   class authorization.
+-
+- In addition, the release of 11.6-cert8 and 11.14.1 resolves the following
+- security vulnerability:
+-
+- * AST-2014-014: High call load with ConfBridge can result in resource exhaustion
+-
+-   The ConfBridge application uses an internal bridging API to implement
+-   conference bridges. This internal API uses a state model for channels within
+-   the conference bridge and transitions between states as different things
+-   occur. Unload load it is possible for some state transitions to be delayed
+-   causing the channel to transition from being hung up to waiting for media. As
+-   the channel has been hung up remotely no further media will arrive and the
+-   channel will stay within ConfBridge indefinitely.
+-
+- In addition, the release of 11.6-cert8, 11.14.1, 12.7.1, and 13.0.1 resolves
+- the following security vulnerability:
+-
+- * AST-2014-017: Permission Escalation via ConfBridge dialplan function and
+-                 AMI ConfbridgeStartRecord Action
+-
+-   The CONFBRIDGE dialplan function when executed from an external protocol (such
+-   as AMI) can result in a privilege escalation as certain options within that
+-   function can affect the underlying system. Additionally, the AMI
+-   ConfbridgeStartRecord action has options that would allow modification of the
+-   underlying system, and does not require SYSTEM class authorization in AMI.
+-
+- Finally, the release of 12.7.1 and 13.0.1 resolves the following security
+- vulnerabilities:
+-
+- * AST-2014-013: Unauthorized access in the presence of ACLs in the PJSIP stack
+-
+-   The Asterisk module res_pjsip provides the ability to configure ACLs that may
+-   be used to reject SIP requests from various hosts. However, the module
+-   currently fails to create and apply the ACLs defined in its configuration
+-   file on initial module load.
+-
+- * AST-2014-015: Remote crash vulnerability in PJSIP channel driver
+-
+-   The chan_pjsip channel driver uses a queue approach for relating to SIP
+-   sessions. There exists a race condition where actions may be queued to answer
+-   a session or send ringing after a SIP session has been terminated using a
+-   CANCEL request. The code will incorrectly assume that the SIP session is still
+-   active and attempt to send the SIP response. The PJSIP library does not
+-   expect the SIP session to be in the disconnected state when sending the
+-   response and asserts.
+-
+- * AST-2014-016: Remote crash vulnerability in PJSIP channel driver
+-
+-   When handling an INVITE with Replaces message the res_pjsip_refer module
+-   incorrectly assumes that it will be operating on a channel that has just been
+-   created. If the INVITE with Replaces message is sent in-dialog after a session
+-   has been established this assumption will be incorrect. The res_pjsip_refer
+-   module will then hang up a channel that is actually owned by another thread.
+-   When this other thread attempts to use the just hung up channel it will end up
+-   using a freed channel which will likely result in a crash.
+-
+- For more information about the details of these vulnerabilities, please read
+- security advisories AST-2014-012, AST-2014-013, AST-2014-014, AST-2014-015,
+- AST-2014-016, AST-2014-017, and AST-2014-018, which were released at the same
+- time as this announcement.
+-
+- For a full list of changes in the current releases, please see the ChangeLogs:
+-
+- http://downloads.asterisk.org/pub/telephony/certified-asterisk/releases/ChangeLog-1.8.28-cert3
+- http://downloads.asterisk.org/pub/telephony/certified-asterisk/releases/ChangeLog-11.6-cert8
+- http://downloads.asterisk.org/pub/telephony/asterisk/releases/ChangeLog-1.8.32.1
+- http://downloads.asterisk.org/pub/telephony/asterisk/releases/ChangeLog-11.14.1
+- http://downloads.asterisk.org/pub/telephony/asterisk/releases/ChangeLog-12.7.1
+- http://downloads.asterisk.org/pub/telephony/asterisk/releases/ChangeLog-13.0.1
+-
+- The security advisories are available at:
+-
+-  * http://downloads.asterisk.org/pub/security/AST-2014-012.pdf
+-  * http://downloads.asterisk.org/pub/security/AST-2014-013.pdf
+-  * http://downloads.asterisk.org/pub/security/AST-2014-014.pdf
+-  * http://downloads.asterisk.org/pub/security/AST-2014-015.pdf
+-  * http://downloads.asterisk.org/pub/security/AST-2014-016.pdf
+-  * http://downloads.asterisk.org/pub/security/AST-2014-017.pdf
+-  * http://downloads.asterisk.org/pub/security/AST-2014-018.pdf
+
+* Fri Nov 21 2014 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.8.32.0-1:
+- The Asterisk Development Team has announced the release of Asterisk 1.8.32.0.
+- This release is available for immediate download at
+- http://downloads.asterisk.org/pub/telephony/asterisk
+-
+- The release of Asterisk 1.8.32.0 resolves several issues reported by the
+- community and would have not been possible without your participation.
+- Thank you!
+-
+- The following are the issues resolved in this release:
+-
+- Bugs fixed in this release:
+- -----------------------------------
+-  * ASTERISK-24348 - Built-in editline tab complete segfault with
+-       MALLOC_DEBUG (Reported by Walter Doekes)
+-  * ASTERISK-24335 - [PATCH] Asterisk incorrectly responds 503 to
+-       INVITE retransmissions of rejected calls (Reported by Torrey
+-       Searle)
+-  * ASTERISK-23768 - [patch] Asterisk man page contains a (new)
+-       unquoted minus sign (Reported by Jeremy Lainé)
+-  * ASTERISK-24357 - [fax] Out of bounds error in update_modem_bits
+-       (Reported by Jeremy Lainé)
+-  * ASTERISK-22945 - [patch] Memory leaks in chan_sip.c with
+-       realtime peers (Reported by ibercom)
+-  * ASTERISK-24390 - astobj2: REF_DEBUG reports false leaks with
+-       ao2_callback with OBJ_MULTIPLE (Reported by Corey Farrell)
+-  * ASTERISK-24011 - [patch]safe_asterisk tries to set ulimit -n too
+-       high on linux systems with lots of RAM (Reported by Michael
+-       Myles)
+-  * ASTERISK-20784 - Failure to receive an ACK to a SIP Re-INVITE
+-       results in a SIP channel leak (Reported by NITESH BANSAL)
+-  * ASTERISK-15879 - [patch] Failure to receive an ACK to a SIP
+-       Re-INVITE results in a SIP channel leak (Reported by Torrey
+-       Searle)
+-  * ASTERISK-24406 - Some caller ID strings are parsed differently
+-       since 11.13.0 (Reported by Etienne Lessard)
+-  * ASTERISK-24325 - res_calendar_ews: cannot be used with neon 0.30
+-       (Reported by Tzafrir Cohen)
+-  * ASTERISK-13797 - [patch] relax badshell tilde test (Reported by
+-       Tzafrir Cohen)
+-  * ASTERISK-22791 - asterisk sends Re-INVITE after receiving a BYE
+-       (Reported by Paolo Compagnini)
+-  * ASTERISK-18923 - res_fax_spandsp usage counter is wrong
+-       (Reported by Grigoriy Puzankin)
+-  * ASTERISK-24393 - rtptimeout=0 doesn't disable rtptimeout
+-       (Reported by Dmitry Melekhov)
+-  * ASTERISK-24063 - [patch]Asterisk does not respect outbound proxy
+-       when sending qualify requests (Reported by Damian Ivereigh)
+-  * ASTERISK-24425 - [patch] jabber/xmpp to use TLS instead of
+-       SSLv3, security fix POODLE (CVE-2014-3566) (Reported by
+-       abelbeck)
+-  * ASTERISK-24436 - Missing header in res/res_srtp.c when compiling
+-       against libsrtp-1.5.0 (Reported by Patrick Laimbock)
+-  * ASTERISK-21721 - SIP Failed to parse multiple Supported: headers
+-       (Reported by Olle Johansson)
+-  * ASTERISK-24190 - IMAP voicemail causes segfault (Reported by
+-       Nick Adams)
+-  * ASTERISK-24432 - Install refcounter.py when REF_DEBUG is enabled
+-       (Reported by Corey Farrell)
+-  * ASTERISK-24476 - main/app.c / app_voicemail: ast_writestream
+-       leaks (Reported by Corey Farrell)
+-  * ASTERISK-24307 - Unintentional memory retention in stringfields
+-       (Reported by Etienne Lessard)
+-
+- For a full list of changes in this release, please see the ChangeLog:
+-
+- http://downloads.asterisk.org/pub/telephony/asterisk/ChangeLog-1.8.32.0
+
 * Tue Oct 21 2014 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.8.31.1-1:
 - The Asterisk Development Team has announced security releases for Certified
 - Asterisk 1.8.28 and 11.6 and Asterisk 1.8, 11, 12, and 13. The available
