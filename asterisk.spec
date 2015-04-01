@@ -48,7 +48,7 @@
 
 Summary:          The Open Source PBX
 Name:             asterisk
-Version:          11.14.2
+Version:          11.17.0
 Release:          1%{?_rc:.rc%{_rc}}%{?_beta:.beta%{_beta}}%{?dist}
 License:          GPLv2
 Group:            Applications/Internet
@@ -1411,6 +1411,295 @@ fi
 %{_libdir}/asterisk/modules/app_voicemail_plain.so
 
 %changelog
+* Wed Apr  1 2015 Jeffrey C. Ollie <jeff@ocjtech.us> - 11.17.0-1
+- The Asterisk Development Team has announced the release of Asterisk 11.17.0.
+- This release is available for immediate download at
+- http://downloads.asterisk.org/pub/telephony/asterisk
+-
+- The release of Asterisk 11.17.0 resolves several issues reported by the
+- community and would have not been possible without your participation.
+- Thank you!
+-
+- The following are the issues resolved in this release:
+-
+- New Features made in this release:
+- -----------------------------------
+-  * ASTERISK-17899 - Handle crypto lifetime in SDES-SRTP negotiation
+-       (Reported by Dwayne Hubbard)
+-
+- Bugs fixed in this release:
+- -----------------------------------
+-  * ASTERISK-24742 - [patch] Fix ast_odbc_find_table function in
+-       res_odbc (Reported by ibercom)
+-  * ASTERISK-22436 - [patch] No BYE to masqueraded channel on INVITE
+-       with replaces (Reported by Eelco Brolman)
+-  * ASTERISK-24479 - Enable REF_DEBUG for module references
+-       (Reported by Corey Farrell)
+-  * ASTERISK-24701 - Stasis: Write timeout on WebSocket fails to
+-       fully disconnect underlying socket, leading to events being
+-       dropped with no additional information (Reported by Matt Jordan)
+-  * ASTERISK-24772 - ODBC error in realtime sippeers when device
+-       unregisters under MariaDB (Reported by Richard Miller)
+-  * ASTERISK-24451 - chan_iax2: reference leak in sched_delay_remove
+-       (Reported by Corey Farrell)
+-  * ASTERISK-24799 - [patch] make fails with undefined reference to
+-       SSLv3_client_method (Reported by Alexander Traud)
+-  * ASTERISK-24787 - [patch] - Microsoft exchange incompatibility
+-       for playing back messages stored in IMAP - play_message: No
+-       origtime (Reported by Graham Barnett)
+-  * ASTERISK-24814 - asterisk/lock.h: Fix syntax errors for non-gcc
+-       OSX with 64 bit integers (Reported by Corey Farrell)
+-  * ASTERISK-24796 - Codecs and bucket schema's prevent module
+-       unload (Reported by Corey Farrell)
+-  * ASTERISK-24724 - 'httpstatus' Web Page Produces Incomplete HTML
+-       (Reported by Ashley Sanders)
+-  * ASTERISK-24797 - bridge_softmix: G.729 codec license held
+-       (Reported by Kevin Harwell)
+-  * ASTERISK-24800 - Crash in __sip_reliable_xmit due to invalid
+-       thread ID being passed to pthread_kill (Reported by JoshE)
+-  * ASTERISK-17721 - Incoming SRTP calls that specify a key lifetime
+-       fail (Reported by Terry Wilson)
+-  * ASTERISK-23214 - chan_sip WARNING message 'We are requesting
+-       SRTP for audio, but they responded without it' is ambiguous and
+-       wrong in some cases (Reported by Rusty Newton)
+-  * ASTERISK-15434 - [patch] When ast_pbx_start failed, both an
+-       error response and BYE are sent to the caller (Reported by
+-       Makoto Dei)
+-  * ASTERISK-18105 - most of asterisk modules are unbuildable in
+-       cygwin environment (Reported by feyfre)
+-  * ASTERISK-24828 - Fix Frame Leaks (Reported by Kevin Harwell)
+-  * ASTERISK-24838 - chan_sip: Locking inversion occurs when
+-       building a peer causes a peer poke during request handling
+-       (Reported by Richard Mudgett)
+-  * ASTERISK-24825 - Caller ID not recognized using
+-       Centrex/Distinctive dialing (Reported by Richard Mudgett)
+-  * ASTERISK-24739 - [patch] - Out of files -- call fails --
+-       numerous files with inodes from under /usr/share/zoneinfo,
+-       mostly posixrules (Reported by Ed Hynan)
+-  * ASTERISK-23390 - NewExten Event with application AGI shows up
+-       before and after AGI runs (Reported by Benjamin Keith Ford)
+-  * ASTERISK-24786 - [patch] - Asterisk terminates when playing a
+-       voicemail stored in LDAP (Reported by Graham Barnett)
+-  * ASTERISK-24808 - res_config_odbc: Improper escaping of
+-       backslashes occurs with MySQL (Reported by Javier Acosta)
+-  * ASTERISK-20850 - [patch]Nested functions aren't portable.
+-       Adapting RAII_VAR to use clang/llvm blocks to get the
+-       same/similar functionality. (Reported by Diederik de Groot)
+-  * ASTERISK-19470 - Documentation on app_amd is incorrect (Reported
+-       by Frank DiGennaro)
+-  * ASTERISK-21038 - Bad command completion of "core set debug
+-       channel" (Reported by Richard Kenner)
+-  * ASTERISK-18708 - func_curl hangs channel under load (Reported by
+-       Dave Cabot)
+-  * ASTERISK-16779 - Cannot disallow unknown format '' (Reported by
+-       Atis Lezdins)
+-  * ASTERISK-24876 - Investigate reference leaks from
+-       tests/channels/local/local_optimize_away (Reported by Corey
+-       Farrell)
+-  * ASTERISK-24817 - init_logger_chain: unreachable code block
+-       (Reported by Corey Farrell)
+-  * ASTERISK-24880 - [patch]Compilation under OpenBSD  (Reported by
+-       snuffy)
+-  * ASTERISK-24879 - [patch]Compilation fails due to 64bit time
+-       under OpenBSD (Reported by snuffy)
+-
+- Improvements made in this release:
+- -----------------------------------
+-  * ASTERISK-24790 - Reduce spurious noise in logs from voicemail -
+-       Couldn't find mailbox %s in context (Reported by Graham Barnett)
+-
+- For a full list of changes in this release, please see the ChangeLog:
+-
+- http://downloads.asterisk.org/pub/telephony/asterisk/ChangeLog-11.17.0
+
+* Wed Apr  1 2015 Jeffrey C. Ollie <jeff@ocjtech.us> - 11.16.0-1
+- The Asterisk Development Team has announced the release of Asterisk 11.16.0.
+- This release is available for immediate download at
+- http://downloads.asterisk.org/pub/telephony/asterisk
+-
+- The release of Asterisk 11.16.0 resolves several issues reported by the
+- community and would have not been possible without your participation.
+- Thank you!
+-
+- The following are the issues resolved in this release:
+-
+- Bugs fixed in this release:
+- -----------------------------------
+-  * ASTERISK-24472 - Asterisk Crash in OpenSSL when calling over WSS
+-       from JSSIP (Reported by Badalian Vyacheslav)
+-  * ASTERISK-24614 - Deadlock when DEBUG_THREADS compiler flag
+-       enabled (Reported by Richard Mudgett)
+-  * ASTERISK-24449 - Reinvite for T.38 UDPTL fails if SRTP is
+-       enabled (Reported by Andreas Steinmetz)
+-  * ASTERISK-24619 - [patch]Gcc 4.10 fixes in r413589 (1.8) wrongly
+-       casts char to unsigned int (Reported by Walter Doekes)
+-  * ASTERISK-24337 - Spammy DEBUG message needs to be at a higher
+-       level - 'Remote address is null, most likely RTP has been
+-       stopped' (Reported by Rusty Newton)
+-  * ASTERISK-23733 - 'reload acl' fails if acl.conf is not present
+-       on startup (Reported by Richard Kenner)
+-  * ASTERISK-24628 - [patch] chan_sip - CANCEL is sent to wrong
+-       destination when 'sendrpid=yes' (in proxy environment) (Reported
+-       by Karsten Wemheuer)
+-  * ASTERISK-24672 - [PATCH] Memory leak in func_curl CURLOPT
+-       (Reported by Kristian Høgh)
+-  * ASTERISK-20744 - [patch] Security event logging does not work
+-       over syslog (Reported by Michael Keuter)
+-  * ASTERISK-23850 - Park Application does not respect Return
+-       Context Priority (Reported by Andrew Nagy)
+-  * ASTERISK-23991 - [patch]asterisk.pc file contains a small error
+-       in the CFlags returned (Reported by Diederik de Groot)
+-  * ASTERISK-24288 - [patch] - ODBC usage with app_voicemail -
+-       voicemail is not deleted after review, hangup (Reported by LEI
+-       FU)
+-  * ASTERISK-24048 - [patch] contrib/scripts/install_prereq selects
+-       32-bit packages on 64-bit hosts (Reported by Ben Klang)
+-  * ASTERISK-24709 - [patch] msg_create_from_file used by MixMonitor
+-       m() option does not queue an MWI event (Reported by Gareth
+-       Palmer)
+-  * ASTERISK-24355 - [patch] chan_sip realtime uses case sensitive
+-       column comparison for 'defaultuser' (Reported by
+-       HZMI8gkCvPpom0tM)
+-  * ASTERISK-24719 - ConfBridge recording channels get stuck when
+-       recording started/stopped more than once (Reported by Richard
+-       Mudgett)
+-  * ASTERISK-24715 - chan_sip: stale nonce causes failure (Reported
+-       by Kevin Harwell)
+-  * ASTERISK-24728 - tcptls: Bad file descriptor error when
+-       reloading chan_sip (Reported by Kevin Harwell)
+-  * ASTERISK-24676 - Security Vulnerability: URL request injection
+-       in libCURL (CVE-2014-8150) (Reported by Matt Jordan)
+-  * ASTERISK-24711 - DTLS handshake broken with latest OpenSSL
+-       versions (Reported by Jared Biel)
+-  * ASTERISK-24646 - PJSIP changeset 4899 breaks TLS (Reported by
+-       Stephan Eisvogel)
+-
+- For a full list of changes in this release, please see the ChangeLog:
+-
+- http://downloads.asterisk.org/pub/telephony/asterisk/ChangeLog-11.16.0
+
+* Wed Apr  1 2015 Jeffrey C. Ollie <jeff@ocjtech.us> - 11.15.1-1
+- The Asterisk Development Team has announced security releases for Certified
+- Asterisk 1.8.28 and 11.6 and Asterisk 1.8, 11, 12, and 13. The available
+- security releases are released as versions 1.8.28.cert-4, 1.8.32.2, 11.6-cert10,
+- 11.15.1, 12.8.1, and 13.1.1.
+-
+- These releases are available for immediate download at
+- http://downloads.asterisk.org/pub/telephony/asterisk/releases
+-
+- The release of these versions resolves the following security vulnerabilities:
+-
+- * AST-2015-001: File descriptor leak when incompatible codecs are offered
+-
+-                 Asterisk may be configured to only allow specific audio or
+-                 video codecs to be used when communicating with a
+-                 particular endpoint. When an endpoint sends an SDP offer
+-                 that only lists codecs not allowed by Asterisk, the offer
+-                 is rejected. However, in this case, RTP ports that are
+-                 allocated in the process are not reclaimed.
+-
+-                 This issue only affects the PJSIP channel driver in
+-                 Asterisk. Users of the chan_sip channel driver are not
+-                 affected.
+-
+- * AST-2015-002: Mitigation for libcURL HTTP request injection vulnerability
+-
+-                 CVE-2014-8150 reported an HTTP request injection
+-                 vulnerability in libcURL. Asterisk uses libcURL in its
+-                 func_curl.so module (the CURL() dialplan function), as well
+-                 as its res_config_curl.so (cURL realtime backend) modules.
+-
+-                 Since Asterisk may be configured to allow for user-supplied
+-                 URLs to be passed to libcURL, it is possible that an
+-                 attacker could use Asterisk as an attack vector to inject
+-                 unauthorized HTTP requests if the version of libcURL
+-                 installed on the Asterisk server is affected by
+-                 CVE-2014-8150.
+-
+- For more information about the details of these vulnerabilities, please read
+- security advisory AST-2015-001 and AST-2015-002, which were released at the same
+- time as this announcement.
+-
+- For a full list of changes in the current releases, please see the ChangeLogs:
+-
+- http://downloads.asterisk.org/pub/telephony/certified-asterisk/releases/ChangeLog-1.8.28-cert4
+- http://downloads.asterisk.org/pub/telephony/asterisk/releases/ChangeLog-1.8.32.2
+- http://downloads.asterisk.org/pub/telephony/certified-asterisk/releases/ChangeLog-11.6-cert10
+- http://downloads.asterisk.org/pub/telephony/asterisk/releases/ChangeLog-11.15.1
+- http://downloads.asterisk.org/pub/telephony/asterisk/releases/ChangeLog-12.8.1
+- http://downloads.asterisk.org/pub/telephony/asterisk/releases/ChangeLog-13.1.1
+-
+- The security advisories are available at:
+-
+-  * http://downloads.asterisk.org/pub/security/AST-2015-001.pdf
+-  * http://downloads.asterisk.org/pub/security/AST-2015-002.pdf
+
+* Wed Apr  1 2015 Jeffrey C. Ollie <jeff@ocjtech.us> - 11.15.0-1
+- The Asterisk Development Team has announced the release of Asterisk 11.15.0.
+- This release is available for immediate download at
+- http://downloads.asterisk.org/pub/telephony/asterisk
+-
+- The release of Asterisk 11.15.0 resolves several issues reported by the
+- community and would have not been possible without your participation.
+- Thank you!
+-
+- The following are the issues resolved in this release:
+-
+- Bugs fixed in this release:
+- -----------------------------------
+-  * ASTERISK-20127 - [Regression] Config.c config_text_file_load()
+-       unescapes semicolons ("\;" -> ";") turning them into comments
+-       (corruption) on rewrite of a config file (Reported by George
+-       Joseph)
+-  * ASTERISK-24307 - Unintentional memory retention in stringfields
+-       (Reported by Etienne Lessard)
+-  * ASTERISK-24492 - main/file.c: ast_filestream sometimes causes
+-       extra calls to ast_module_unref (Reported by Corey Farrell)
+-  * ASTERISK-24504 - chan_console: Fix reference leaks to pvt
+-       (Reported by Corey Farrell)
+-  * ASTERISK-24468 - Incoming UCS2 encoded SMS truncated if SMS
+-       length exceeds 50 (roughly) national symbols (Reported by
+-       Dmitriy Bubnov)
+-  * ASTERISK-24500 - Regression introduced in chan_mgcp by SVN
+-       revision r227276 (Reported by Xavier Hienne)
+-  * ASTERISK-20402 - Unable to cancel (features.conf) attended
+-       transfer (Reported by Matt Riddell)
+-  * ASTERISK-24505 - manager: http connections leak references
+-       (Reported by Corey Farrell)
+-  * ASTERISK-24502 - Build fails when dev-mode, dont optimize and
+-       coverage are enabled (Reported by Corey Farrell)
+-  * ASTERISK-24444 - PBX: Crash when generating extension for
+-       pattern matching hint (Reported by Leandro Dardini)
+-  * ASTERISK-24522 - ConfBridge: delay occurs between kicking all
+-       endmarked users when last marked user leaves (Reported by Matt
+-       Jordan)
+-  * ASTERISK-15242 - transmit_refer leaks sip_refer structures
+-       (Reported by David Woolley)
+-  * ASTERISK-24440 - Call leak in Confbridge (Reported by Ben Klang)
+-  * ASTERISK-24469 - Security Vulnerability: Mixed IPv4/IPv6 ACLs
+-       allow blocked addresses through (Reported by Matt Jordan)
+-  * ASTERISK-24516 - [patch]Asterisk segfaults when playing back
+-       voicemail under high concurrency with an IMAP backend (Reported
+-       by David Duncan Ross Palmer)
+-  * ASTERISK-24572 - [patch]App_meetme is loaded without its
+-       defaults when the configuration file is missing (Reported by
+-       Nuno Borges)
+-  * ASTERISK-24573 - [patch]Out of sync conversation recording when
+-       divided in multiple recordings (Reported by Nuno Borges)
+-
+- Improvements made in this release:
+- -----------------------------------
+-  * ASTERISK-24283 - [patch]Microseconds precision in the eventtime
+-       column in the cel_odbc module (Reported by Etienne Lessard)
+-  * ASTERISK-24530 - [patch] app_record stripping 1/4 second from
+-       recordings (Reported by Ben Smithurst)
+-  * ASTERISK-24577 - Speed up loopback switches by avoiding unneeded
+-       lookups (Reported by Birger "WIMPy" Harzenetter)
+-
+- For a full list of changes in this release, please see the ChangeLog:
+-
+- http://downloads.asterisk.org/pub/telephony/asterisk/ChangeLog-11.15.0
+
 * Wed Dec 10 2014 Jeffrey C. Ollie <jeff@ocjtech.us> - 11.14.2-1
 - The Asterisk Development Team has announced security releases for Certified
 - Asterisk 11.6 and Asterisk 11, 12, and 13. The available security releases are
