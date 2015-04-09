@@ -1265,7 +1265,7 @@ fi
 %{_libdir}/asterisk/modules/app_voicemail_plain.so
 
 %changelog
-* Thu Apr  9 2014 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.8.32.3-1:
+* Thu Apr  9 2015 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.8.32.3-1:
 - The Asterisk Development Team has announced security releases for Certified
 - Asterisk 1.8.28, 11.6, and 13.1 and Asterisk 1.8, 11, 12, and 13. The available
 - security releases are released as versions 1.8.28.cert-5, 1.8.32.3, 11.6-cert11,
@@ -1302,7 +1302,7 @@ fi
 -
 -  * http://downloads.asterisk.org/pub/security/AST-2015-003.pdf
 
-* Thu Apr  9 2014 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.8.32.2-1:
+* Thu Apr  9 2015 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.8.32.2-1:
 - The Asterisk Development Team has announced security releases for Certified
 - Asterisk 1.8.28 and 11.6 and Asterisk 1.8, 11, 12, and 13. The available
 - security releases are released as versions 1.8.28.cert-4, 1.8.32.2, 11.6-cert10,
