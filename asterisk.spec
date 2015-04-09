@@ -17,7 +17,7 @@
 
 Summary: The Open Source PBX
 Name: asterisk
-Version: 1.8.32.1
+Version: 1.8.32.3
 Release: 1%{?_rc:.rc%{_rc}}%{?_beta:.beta%{_beta}}%{?dist}
 License: GPLv2
 Group: Applications/Internet
@@ -1265,6 +1265,99 @@ fi
 %{_libdir}/asterisk/modules/app_voicemail_plain.so
 
 %changelog
+* Thu Apr  9 2014 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.8.32.3-1:
+- The Asterisk Development Team has announced security releases for Certified
+- Asterisk 1.8.28, 11.6, and 13.1 and Asterisk 1.8, 11, 12, and 13. The available
+- security releases are released as versions 1.8.28.cert-5, 1.8.32.3, 11.6-cert11,
+- 11.17.1, 12.8.2, 13.1-cert2, and 13.3.2.
+-
+- These releases are available for immediate download at
+- http://downloads.asterisk.org/pub/telephony/asterisk/releases
+-
+- The release of these versions resolves the following security vulnerability:
+-
+- * AST-2015-003: TLS Certificate Common name NULL byte exploit
+-
+-   When Asterisk registers to a SIP TLS device and and verifies the server,
+-   Asterisk will accept signed certificates that match a common name other than
+-   the one Asterisk is expecting if the signed certificate has a common name
+-   containing a null byte after the portion of the common name that Asterisk
+-   expected. This potentially allows for a man in the middle attack.
+-
+- For more information about the details of this vulnerability, please read
+- security advisory AST-2015-003, which was released at the same time as this
+- announcement.
+-
+- For a full list of changes in the current releases, please see the ChangeLogs:
+-
+- http://downloads.asterisk.org/pub/telephony/certified-asterisk/releases/ChangeLog-1.8.28-cert5
+- http://downloads.asterisk.org/pub/telephony/asterisk/releases/ChangeLog-1.8.32.3
+- http://downloads.asterisk.org/pub/telephony/certified-asterisk/releases/ChangeLog-11.6-cert11
+- http://downloads.asterisk.org/pub/telephony/asterisk/releases/ChangeLog-11.17.1
+- http://downloads.asterisk.org/pub/telephony/asterisk/releases/ChangeLog-12.8.2
+- http://downloads.asterisk.org/pub/telephony/certified-asterisk/releases/ChangeLog-13.1-cert2
+- http://downloads.asterisk.org/pub/telephony/asterisk/releases/ChangeLog-13.3.2
+-
+- The security advisory is available at:
+-
+-  * http://downloads.asterisk.org/pub/security/AST-2015-003.pdf
+
+* Thu Apr  9 2014 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.8.32.2-1:
+- The Asterisk Development Team has announced security releases for Certified
+- Asterisk 1.8.28 and 11.6 and Asterisk 1.8, 11, 12, and 13. The available
+- security releases are released as versions 1.8.28.cert-4, 1.8.32.2, 11.6-cert10,
+- 11.15.1, 12.8.1, and 13.1.1.
+-
+- These releases are available for immediate download at
+- http://downloads.asterisk.org/pub/telephony/asterisk/releases
+-
+- The release of these versions resolves the following security vulnerabilities:
+-
+- * AST-2015-001: File descriptor leak when incompatible codecs are offered
+-
+-                 Asterisk may be configured to only allow specific audio or
+-                 video codecs to be used when communicating with a
+-                 particular endpoint. When an endpoint sends an SDP offer
+-                 that only lists codecs not allowed by Asterisk, the offer
+-                 is rejected. However, in this case, RTP ports that are
+-                 allocated in the process are not reclaimed.
+-
+-                 This issue only affects the PJSIP channel driver in
+-                 Asterisk. Users of the chan_sip channel driver are not
+-                 affected.
+-
+- * AST-2015-002: Mitigation for libcURL HTTP request injection vulnerability
+-
+-                 CVE-2014-8150 reported an HTTP request injection
+-                 vulnerability in libcURL. Asterisk uses libcURL in its
+-                 func_curl.so module (the CURL() dialplan function), as well
+-                 as its res_config_curl.so (cURL realtime backend) modules.
+-
+-                 Since Asterisk may be configured to allow for user-supplied
+-                 URLs to be passed to libcURL, it is possible that an
+-                 attacker could use Asterisk as an attack vector to inject
+-                 unauthorized HTTP requests if the version of libcURL
+-                 installed on the Asterisk server is affected by
+-                 CVE-2014-8150.
+-
+- For more information about the details of these vulnerabilities, please read
+- security advisory AST-2015-001 and AST-2015-002, which were released at the same
+- time as this announcement.
+-
+- For a full list of changes in the current releases, please see the ChangeLogs:
+-
+- http://downloads.asterisk.org/pub/telephony/certified-asterisk/releases/ChangeLog-1.8.28-cert4
+- http://downloads.asterisk.org/pub/telephony/asterisk/releases/ChangeLog-1.8.32.2
+- http://downloads.asterisk.org/pub/telephony/certified-asterisk/releases/ChangeLog-11.6-cert10
+- http://downloads.asterisk.org/pub/telephony/asterisk/releases/ChangeLog-11.15.1
+- http://downloads.asterisk.org/pub/telephony/asterisk/releases/ChangeLog-12.8.1
+- http://downloads.asterisk.org/pub/telephony/asterisk/releases/ChangeLog-13.1.1
+-
+- The security advisories are available at:
+-
+-  * http://downloads.asterisk.org/pub/security/AST-2015-001.pdf
+-  * http://downloads.asterisk.org/pub/security/AST-2015-002.pdf
+
 * Fri Nov 21 2014 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.8.32.1-1:
 - The Asterisk Development Team has announced security releases for Certified
 - Asterisk 1.8.28 and 11.6 and Asterisk 1.8, 11, 12, and 13. The available
