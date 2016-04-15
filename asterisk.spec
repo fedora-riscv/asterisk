@@ -18,7 +18,7 @@
 Summary: The Open Source PBX
 Name: asterisk
 Version: 1.8.32.3
-Release: 1%{?_rc:.rc%{_rc}}%{?_beta:.beta%{_beta}}%{?dist}
+Release: 2%{?_rc:.rc%{_rc}}%{?_beta:.beta%{_beta}}%{?dist}
 License: GPLv2
 Group: Applications/Internet
 URL: http://www.asterisk.org/
@@ -1265,6 +1265,9 @@ fi
 %{_libdir}/asterisk/modules/app_voicemail_plain.so
 
 %changelog
+* Fri Apr 15 2016 Tom Callaway <spot@fedoraproject.org> - 1.8.32.3-2
+- rebuild for new libsrtp
+
 * Thu Apr  9 2015 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.8.32.3-1:
 - The Asterisk Development Team has announced security releases for Certified
 - Asterisk 1.8.28, 11.6, and 13.1 and Asterisk 1.8, 11, 12, and 13. The available
