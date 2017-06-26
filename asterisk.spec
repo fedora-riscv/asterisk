@@ -52,7 +52,7 @@
 Summary:          The Open Source PBX
 Name:             asterisk
 Version:          13.11.2
-Release:          1%{?_rc:.rc%{_rc}}%{?_beta:1}%{?dist}.1
+Release:          1%{?_rc:.rc%{_rc}}%{?_beta:1}%{?dist}.2
 License:          GPLv2
 Group:            Applications/Internet
 URL:              http://www.asterisk.org/
@@ -66,12 +66,14 @@ Source5:          asterisk.service
 Source6:          asterisk-tmpfiles
 
 BuildRoot:        %{_tmppath}/%{name}-%{version}-root-%(%{__id_u} -n)
+# Does not build on s390x: https://bugzilla.redhat.com/show_bug.cgi?id=1465162
+ExcludeArch:      s390x
 
 BuildRequires:    autoconf
 BuildRequires:    automake
 
 # core build requirements
-BuildRequires:    openssl-devel
+BuildRequires:    compat-openssl10-devel
 BuildRequires:    newt-devel
 %if 0%{?fedora} <= 8
 BuildRequires:    libtermcap-devel
@@ -1616,6 +1618,10 @@ fi
 %{_libdir}/asterisk/modules/res_xmpp.so
 
 %changelog
+* Tue Jun 27 2017 Till Maas <opensource@till.name> - 13.11.2-1.2
+- Do not build for s390x
+- Use BR: compat-openssl10-devel because openssl was upgraded in F26 (https://bugzilla.redhat.com/show_bug.cgi?id=1459608)
+
 * Fri Feb 10 2017 Fedora Release Engineering <releng@fedoraproject.org> - 13.11.2-1.1
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_26_Mass_Rebuild
 
