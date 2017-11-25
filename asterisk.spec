@@ -1303,6 +1303,9 @@ fi
 %endif
 %attr(0755,asterisk,asterisk) %dir %{astvarrundir}
 
+%{_datarootdir}/asterisk/scripts/
+
+
 %files ael
 %attr(0640,asterisk,asterisk) %config(noreplace) %{_sysconfdir}/asterisk/extensions.ael
 %{_sbindir}/aelparse
