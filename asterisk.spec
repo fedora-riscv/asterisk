@@ -48,7 +48,7 @@
 
 Summary:          The Open Source PBX
 Name:             asterisk
-Version:          15.1.0
+Version:          14.7.2
 Release:          1%{?dist}
 License:          GPLv2
 Group:            Applications/Internet
@@ -1030,7 +1030,7 @@ fi
 %{_libdir}/asterisk/modules/app_stasis.so
 %{_libdir}/asterisk/modules/app_statsd.so
 %{_libdir}/asterisk/modules/app_statsd.so
-%{_libdir}/asterisk/modules/app_stream_echo.so
+#%{_libdir}/asterisk/modules/app_stream_echo.so
 %{_libdir}/asterisk/modules/app_system.so
 %{_libdir}/asterisk/modules/app_talkdetect.so
 %{_libdir}/asterisk/modules/app_test.so
@@ -1187,7 +1187,7 @@ fi
 %{_libdir}/asterisk/modules/res_resolver_unbound.so
 %{_libdir}/asterisk/modules/res_rtp_asterisk.so
 %{_libdir}/asterisk/modules/res_rtp_multicast.so
-%{_libdir}/asterisk/modules/res_sdp_translator_pjmedia.so
+#%{_libdir}/asterisk/modules/res_sdp_translator_pjmedia.so
 %{_libdir}/asterisk/modules/res_security_log.so
 %{_libdir}/asterisk/modules/res_smdi.so
 %{_libdir}/asterisk/modules/res_sorcery_astdb.so
@@ -1641,11 +1641,8 @@ fi
 %{_libdir}/asterisk/modules/res_xmpp.so
 
 %changelog
-* Tue Oct 31 2017 Jared Smith <jsmith@fedoraproject.org> - 15.1.0-1
-- Update to upstream 15.1.0 release
-
-* Thu Oct 05 2017 Jared Smith <jsmith@fedoraproject.org> - 15.0.0-1
-- Update to upstream 15.0.0 release
+* Sat Nov 25 2017 Jared Smith <jsmith@fedoraproject.org> - 14.7.2-1
+- Update to upstream 14.7.2 release
 
 * Thu Sep 21 2017 Jared Smith <jsmith@fedoraproject.org> - 14.6.2-1
 - Update to upstream 14.6.2 release
