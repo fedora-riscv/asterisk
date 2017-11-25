@@ -43,16 +43,13 @@
 %else
 %global           jack       1
 %endif
-%if 0%{?fedora} >= 25
-%global           radius     0
-%endif
 
 %global           makeargs        DEBUG= OPTIMIZE= DESTDIR=%{buildroot} ASTVARRUNDIR=%{astvarrundir} ASTDATADIR=%{_datadir}/asterisk ASTVARLIBDIR=%{_datadir}/asterisk ASTDBDIR=%{_localstatedir}/spool/asterisk NOISY_BUILD=1
 
 Summary:          The Open Source PBX
 Name:             asterisk
-Version:          13.11.2
-Release:          1%{?_rc:.rc%{_rc}}%{?_beta:1}%{?dist}.2
+Version:          13.18.2
+Release:          1%{?dist}
 License:          GPLv2
 Group:            Applications/Internet
 URL:              http://www.asterisk.org/
@@ -73,7 +70,7 @@ BuildRequires:    autoconf
 BuildRequires:    automake
 
 # core build requirements
-BuildRequires:    compat-openssl10-devel
+BuildRequires:    openssl-devel
 BuildRequires:    newt-devel
 %if 0%{?fedora} <= 8
 BuildRequires:    libtermcap-devel
@@ -853,6 +850,8 @@ rm -rf %{buildroot}%{_sysconfdir}/asterisk/test_sorcery.conf
 rm -rf %{buildroot}%{_libdir}/libasteriskssl.so
 ln -s libasterisk.so.1 %{buildroot}%{_libdir}/libasteriskssl.so
 
+# scripts that don't need to be packaged
+
 %if 0%{?apidoc}
 find doc/api/html -name \*.map -size 0 -delete
 %endif
@@ -1147,6 +1146,7 @@ fi
 %{_libdir}/asterisk/modules/res_crypto.so
 %{_libdir}/asterisk/modules/res_endpoint_stats.so
 %{_libdir}/asterisk/modules/res_format_attr_celt.so
+%{_libdir}/asterisk/modules/res_format_attr_g729.so
 %{_libdir}/asterisk/modules/res_format_attr_h263.so
 %{_libdir}/asterisk/modules/res_format_attr_h264.so
 %{_libdir}/asterisk/modules/res_format_attr_opus.so
@@ -1224,6 +1224,7 @@ fi
 %attr(0640,asterisk,asterisk) %config(noreplace) %{_sysconfdir}/asterisk/alarmreceiver.conf
 %attr(0640,asterisk,asterisk) %config(noreplace) %{_sysconfdir}/asterisk/amd.conf
 %attr(0640,asterisk,asterisk) %config(noreplace) %{_sysconfdir}/asterisk/ari.conf
+%attr(0640,asterisk,asterisk) %config(noreplace) %{_sysconfdir}/asterisk/ast_debug_tools.conf
 %attr(0640,asterisk,asterisk) %config(noreplace) %{_sysconfdir}/asterisk/asterisk.adsi
 %attr(0640,asterisk,asterisk) %config(noreplace) %{_sysconfdir}/asterisk/asterisk.conf
 %attr(0640,asterisk,asterisk) %config(noreplace) %{_sysconfdir}/asterisk/ccss.conf
@@ -1503,7 +1504,7 @@ fi
 %{_libdir}/asterisk/modules/res_pjsip_history.so
 %{_libdir}/asterisk/modules/res_pjsip_logger.so
 %{_libdir}/asterisk/modules/res_pjsip_messaging.so
-%{_libdir}/asterisk/modules/res_pjsip_multihomed.so
+#%{_libdir}/asterisk/modules/res_pjsip_multihomed.so
 %{_libdir}/asterisk/modules/res_pjsip_mwi.so
 %{_libdir}/asterisk/modules/res_pjsip_mwi_body_generator.so
 %{_libdir}/asterisk/modules/res_pjsip_nat.so
@@ -1618,6 +1619,9 @@ fi
 %{_libdir}/asterisk/modules/res_xmpp.so
 
 %changelog
+* Sat Nov 25 2017 Jared Smith <jsmith@fedoraproject.org> - 13.18.2-1
+- Update to upstream 13.18.2 release
+
 * Tue Jun 27 2017 Till Maas <opensource@till.name> - 13.11.2-1.2
 - Do not build for s390x
 - Use BR: compat-openssl10-devel because openssl was upgraded in F26 (https://bugzilla.redhat.com/show_bug.cgi?id=1459608)
