@@ -48,7 +48,7 @@
 
 Summary:          The Open Source PBX
 Name:             asterisk
-Version:          13.18.4
+Version:          13.18.5
 Release:          1%{?dist}
 License:          GPLv2
 Group:            Applications/Internet
@@ -1507,7 +1507,7 @@ fi
 %{_libdir}/asterisk/modules/res_pjsip_history.so
 %{_libdir}/asterisk/modules/res_pjsip_logger.so
 %{_libdir}/asterisk/modules/res_pjsip_messaging.so
-#%{_libdir}/asterisk/modules/res_pjsip_multihomed.so
+#%%{_libdir}/asterisk/modules/res_pjsip_multihomed.so
 %{_libdir}/asterisk/modules/res_pjsip_mwi.so
 %{_libdir}/asterisk/modules/res_pjsip_mwi_body_generator.so
 %{_libdir}/asterisk/modules/res_pjsip_nat.so
@@ -1622,6 +1622,10 @@ fi
 %{_libdir}/asterisk/modules/res_xmpp.so
 
 %changelog
+* Wed Dec 27 2017 Jared Smith <jsmith@fedoraproject.org> - 13.18.5-1
+- Update to upstream 13.18.5 release for AST-2017-014/CVE-2017-17850 security
+  issue
+
 * Wed Dec 13 2017 Jared Smith <jsmith@fedoraproject.org> - 13.18.4-1
 - Update to upstream 13.18.4 release to address AST-2017-012 security issue
 
