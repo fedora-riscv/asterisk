@@ -642,7 +642,9 @@ Jabber/XMPP resources for Asterisk.
 %prep
 %setup -q -n asterisk-%{version}%{?_rc:-rc%{_rc}}%{?_beta:-beta%{_beta}}
 
+%if !0%{?epel}
 %patch0 -p1
+%endif
 
 cp %{S:3} menuselect.makedeps
 cp %{S:4} menuselect.makeopts
@@ -1641,6 +1643,9 @@ fi
 %{_libdir}/asterisk/modules/res_xmpp.so
 
 %changelog
+* Sat Jan 06 2018 Brian J. Murrell <brian@interlinx.bc.ca> - 14.7.5-2
+- don't apply mysql->mariadb patch on epel
+
 * Wed Dec 27 2017 Jared Smith <jsmith@fedoraproject.org> - 14.7.5-1
 - Update to upstream 14.7.5 release for AST-2017-014/CVE-2017-17850 security
   issue
