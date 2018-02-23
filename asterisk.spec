@@ -48,7 +48,7 @@
 
 Summary:          The Open Source PBX
 Name:             asterisk
-Version:          14.7.5
+Version:          14.7.6
 Release:          1%{?dist}
 License:          GPLv2
 Group:            Applications/Internet
@@ -1555,7 +1555,7 @@ fi
 %{_libdir}/asterisk/modules/res_pjsip_session.so
 %{_libdir}/asterisk/modules/res_pjsip_sips_contact.so
 %{_libdir}/asterisk/modules/res_pjsip_t38.so
-%{_libdir}/asterisk/modules/res_pjsip_transport_management.so
+#%%{_libdir}/asterisk/modules/res_pjsip_transport_management.so
 %{_libdir}/asterisk/modules/res_pjsip_transport_websocket.so
 %{_libdir}/asterisk/modules/res_pjsip_xpidf_body_generator.so
 
@@ -1645,6 +1645,10 @@ fi
 %{_libdir}/asterisk/modules/res_xmpp.so
 
 %changelog
+* Fri Feb 23 2018 Jared Smith <jsmith@fedoraproject.org> - 14.7.6-1
+- Update to upstream 14.7.6 release for security updates
+- This update addresses security alerts AST-2018-001 through AST-2018-006
+
 * Sat Jan 06 2018 Brian J. Murrell <brian@interlinx.bc.ca> - 14.7.5-2
 - don't apply mysql->mariadb patch on epel
 
