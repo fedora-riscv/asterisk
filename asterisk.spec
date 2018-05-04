@@ -1166,6 +1166,8 @@ fi
 %{_libdir}/asterisk/modules/res_mutestream.so
 %{_libdir}/asterisk/modules/res_parking.so
 %{_libdir}/asterisk/modules/res_phoneprov.so
+# res_pjproject is required by res_rtp_asterisk
+%{_libdir}/asterisk/modules/res_pjproject.so
 %{_libdir}/asterisk/modules/res_realtime.so
 %{_libdir}/asterisk/modules/res_rtp_asterisk.so
 %{_libdir}/asterisk/modules/res_rtp_multicast.so
@@ -1488,7 +1490,6 @@ fi
 %{_libdir}/asterisk/modules/func_pjsip_aor.so
 %{_libdir}/asterisk/modules/func_pjsip_contact.so
 %{_libdir}/asterisk/modules/func_pjsip_endpoint.so
-%{_libdir}/asterisk/modules/res_pjproject.so
 %{_libdir}/asterisk/modules/res_pjsip.so
 %{_libdir}/asterisk/modules/res_pjsip_acl.so
 %{_libdir}/asterisk/modules/res_pjsip_authenticator_digest.so
