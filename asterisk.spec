@@ -43,12 +43,17 @@
 %else
 %global           jack       1
 %endif
+%if 0%{?fedora} >= 28
+%global           phone      0
+%else
+%global           phone      1
+%endif
 
 %global           makeargs        DEBUG= OPTIMIZE= DESTDIR=%{buildroot} ASTVARRUNDIR=%{astvarrundir} ASTDATADIR=%{_datadir}/asterisk ASTVARLIBDIR=%{_datadir}/asterisk ASTDBDIR=%{_localstatedir}/spool/asterisk NOISY_BUILD=1
 
 Summary:          The Open Source PBX
 Name:             asterisk
-Version:          15.3.0
+Version:          15.4.0
 Release:          1%{?dist}
 License:          GPLv2
 Group:            Applications/Internet
@@ -104,6 +109,7 @@ BuildRequires:    popt-devel
 %{?systemd_requires}
 BuildRequires:    systemd
 %endif
+BuildRequires:    kernel-headers
 
 # for res_http_post
 %if (0%{?fedora} > 0 || 0%{?rhel} >= 7) && 0%{?gmime}
@@ -234,6 +240,9 @@ Obsoletes:        asterisk-firmware <= 1.6.2.0-0.2.rc1
 
 # chan_usbradio was been removed in 10.4.0
 Obsoletes:        asterisk-usbradio <= 10.3.1-1
+
+# chan_phone headers no longer in kernel headers
+Obsoletes:        asterisk-phone < %{version}
 
 %description
 Asterisk is a complete PBX in software. It runs on Linux and provides
@@ -911,6 +920,10 @@ rm -f %{buildroot}%{_sysconfdir}/asterisk/res_ldap.conf
 rm -f %{buildroot}%{_sysconfdir}/asterisk/res_corosync.conf
 %endif
 
+%if ! 0%{?phone}
+rm -f %{buildroot}%{_sysconfdir}/asterisk/phone.conf
+%endif
+
 %pre
 %{_sbindir}/groupadd -r asterisk &>/dev/null || :
 %{_sbindir}/useradd  -r -s /sbin/nologin -d /var/lib/asterisk -M \
@@ -1037,7 +1050,6 @@ fi
 %{_libdir}/asterisk/modules/app_speech_utils.so
 %{_libdir}/asterisk/modules/app_stack.so
 %{_libdir}/asterisk/modules/app_stasis.so
-%{_libdir}/asterisk/modules/app_statsd.so
 %{_libdir}/asterisk/modules/app_statsd.so
 %{_libdir}/asterisk/modules/app_stream_echo.so
 %{_libdir}/asterisk/modules/app_system.so
@@ -1198,7 +1210,7 @@ fi
 %{_libdir}/asterisk/modules/res_resolver_unbound.so
 %{_libdir}/asterisk/modules/res_rtp_asterisk.so
 %{_libdir}/asterisk/modules/res_rtp_multicast.so
-#%{_libdir}/asterisk/modules/res_sdp_translator_pjmedia.so
+#%%{_libdir}/asterisk/modules/res_sdp_translator_pjmedia.so
 %{_libdir}/asterisk/modules/res_security_log.so
 %{_libdir}/asterisk/modules/res_smdi.so
 %{_libdir}/asterisk/modules/res_sorcery_astdb.so
@@ -1505,9 +1517,11 @@ fi
 %attr(0640,asterisk,asterisk) %config(noreplace) %{_sysconfdir}/asterisk/oss.conf
 %{_libdir}/asterisk/modules/chan_oss.so
 
+%if 0%{phone}
 %files phone
 %attr(0640,asterisk,asterisk) %config(noreplace) %{_sysconfdir}/asterisk/phone.conf
 %{_libdir}/asterisk/modules/chan_phone.so
+%endif
 
 %files pjsip
 %attr(0640,asterisk,asterisk) %config(noreplace) %{_sysconfdir}/asterisk/pjsip.conf
@@ -1651,6 +1665,9 @@ fi
 %{_libdir}/asterisk/modules/res_xmpp.so
 
 %changelog
+* Sun May 06 2018 Jared K. Smith <jsmith@fedoraproject.org> - 15.4.0-1
+- Update to upstream 15.4.0 release
+
 * Thu Mar 15 2018 jsmith <jsmith.fedora@gmail.com> - 15.3.0-1
 - Update to upstream 15.3.0 release
 
