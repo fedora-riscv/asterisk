@@ -49,7 +49,7 @@
 Summary:          The Open Source PBX
 Name:             asterisk
 Version:          14.7.6
-Release:          1%{?dist}
+Release:          2%{?dist}
 License:          GPLv2
 Group:            Applications/Internet
 URL:              http://www.asterisk.org/
@@ -1646,6 +1646,9 @@ fi
 %{_libdir}/asterisk/modules/res_xmpp.so
 
 %changelog
+* Sun May 06 2018 Jared K. Smith <jsmith@fedoraproject.org> - 14.7.6-2
+- Move res_pjproject to main package
+
 * Fri Feb 23 2018 Jared Smith <jsmith@fedoraproject.org> - 14.7.6-1
 - Update to upstream 14.7.6 release for security updates
 - This update addresses security alerts AST-2018-001 through AST-2018-006
