@@ -48,7 +48,7 @@
 
 Summary:          The Open Source PBX
 Name:             asterisk
-Version:          13.18.5
+Version:          13.21.0
 Release:          1%{?dist}
 License:          GPLv2
 Group:            Applications/Internet
@@ -716,7 +716,7 @@ pushd menuselect
 #aclocal -I ../autoconf --force
 #autoconf --force
 #autoheader --force
-./bootstrap.sh
+#./bootstrap.sh
 
 %configure
 
@@ -846,6 +846,7 @@ rm -rf %{buildroot}%{_sbindir}/hashtest2
 rm -rf %{buildroot}%{_sysconfdir}/asterisk/app_skel.conf
 rm -rf %{buildroot}%{_sysconfdir}/asterisk/config_test.conf
 rm -rf %{buildroot}%{_sysconfdir}/asterisk/test_sorcery.conf
+rm -rf %{buildroot}%{_sysconfdir}/asterisk/phone.conf
 
 rm -rf %{buildroot}%{_libdir}/libasteriskssl.so
 ln -s libasterisk.so.1 %{buildroot}%{_libdir}/libasteriskssl.so
@@ -950,7 +951,7 @@ fi
 %endif
 
 %files
-%doc README *.txt ChangeLog BUGS CREDITS configs
+%doc README.md *.txt ChangeLog BUGS CREDITS configs
 
 %doc doc/asterisk.sgml
 
@@ -1477,10 +1478,6 @@ fi
 %attr(0640,asterisk,asterisk) %config(noreplace) %{_sysconfdir}/asterisk/oss.conf
 %{_libdir}/asterisk/modules/chan_oss.so
 
-%files phone
-%attr(0640,asterisk,asterisk) %config(noreplace) %{_sysconfdir}/asterisk/phone.conf
-%{_libdir}/asterisk/modules/chan_phone.so
-
 %files pjsip
 %attr(0640,asterisk,asterisk) %config(noreplace) %{_sysconfdir}/asterisk/pjsip.conf
 %attr(0640,asterisk,asterisk) %config(noreplace) %{_sysconfdir}/asterisk/pjproject.conf
@@ -1533,7 +1530,7 @@ fi
 %{_libdir}/asterisk/modules/res_pjsip_session.so
 %{_libdir}/asterisk/modules/res_pjsip_sips_contact.so
 %{_libdir}/asterisk/modules/res_pjsip_t38.so
-%{_libdir}/asterisk/modules/res_pjsip_transport_management.so
+#%%{_libdir}/asterisk/modules/res_pjsip_transport_management.so
 %{_libdir}/asterisk/modules/res_pjsip_transport_websocket.so
 %{_libdir}/asterisk/modules/res_pjsip_xpidf_body_generator.so
 
@@ -1623,6 +1620,12 @@ fi
 %{_libdir}/asterisk/modules/res_xmpp.so
 
 %changelog
+* Sun May 06 2018 Jared K. Smith <jsmith@fedoraproject.org> - 13.21.0-1
+- Update to upstream 13.21.0 release for security issues AST-2018-002,
+  AST-2018-003, AST-2018-004, and AST-2018-005
+- Stop building chan_phone (and its sub-package), since support was removed
+  from the kernel
+
 * Wed Dec 27 2017 Jared Smith <jsmith@fedoraproject.org> - 13.18.5-1
 - Update to upstream 13.18.5 release for AST-2017-014/CVE-2017-17850 security
   issue
