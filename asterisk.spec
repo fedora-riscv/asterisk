@@ -41,7 +41,7 @@
 Summary:          The Open Source PBX
 Name:             asterisk
 Version:          16.10.0
-Release:          1%{?dist}
+Release:          2%{?dist}
 License:          GPLv2
 URL:              http://www.asterisk.org/
 
@@ -917,6 +917,7 @@ fi
 %{_libdir}/asterisk/modules/app_morsecode.so
 %{_libdir}/asterisk/modules/app_nbscat.so
 %{_libdir}/asterisk/modules/app_originate.so
+%{_libdir}/asterisk/modules/app_page.so
 #%%{_libdir}/asterisk/modules/app_parkandannounce.so
 %{_libdir}/asterisk/modules/app_playback.so
 %{_libdir}/asterisk/modules/app_playtones.so
@@ -1280,7 +1281,6 @@ fi
 %attr(0640,asterisk,asterisk) %config(noreplace) %{_sysconfdir}/asterisk/ss7.timers
 %{_libdir}/asterisk/modules/app_flash.so
 %{_libdir}/asterisk/modules/app_meetme.so
-%{_libdir}/asterisk/modules/app_page.so
 %{_libdir}/asterisk/modules/app_dahdiras.so
 %{_libdir}/asterisk/modules/chan_dahdi.so
 %{_libdir}/asterisk/modules/codec_dahdi.so
@@ -1548,6 +1548,9 @@ fi
 %endif
 
 %changelog
+* Mon May 11 2020 Jared K. Smith <jsmith@fedoraproject.org> - 16.10.0-2
+- app_page no longer depends on meetme
+
 * Thu Apr 30 2020 Jared K. Smith <jsmith@fedoraproject.org> - 16.10.0-1
 - Update to upstream 16.10.0 release for bug fixes
 
