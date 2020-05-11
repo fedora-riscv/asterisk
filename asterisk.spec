@@ -71,6 +71,7 @@ Source8:          https://raw.githubusercontent.com/asterisk/third-party/master/
 %if 0%{?fedora}
 Patch0:           asterisk-mariadb.patch
 Patch1:           asterisk-16.1.0-explicit-python2.patch
+Patch2:           asterisk_earlier-pjproject-pjsip-sc-null.patch
 %endif
 
 # Asterisk now builds against a bundled copy of pjproject, as they apply some patches
@@ -590,6 +591,7 @@ ls -altr cache/
 %if 0%{?fedora}
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 %endif
 
 cp %{S:3} menuselect.makedeps
@@ -1550,6 +1552,7 @@ fi
 %changelog
 * Mon May 11 2020 Jared K. Smith <jsmith@fedoraproject.org> - 16.10.0-2
 - app_page no longer depends on meetme
+- fix usage of PJSIP_SC_NULL with older versions of pjproject
 
 * Thu Apr 30 2020 Jared K. Smith <jsmith@fedoraproject.org> - 16.10.0-1
 - Update to upstream 16.10.0 release for bug fixes
