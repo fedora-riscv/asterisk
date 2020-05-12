@@ -19,7 +19,7 @@
 %global           postgresql 1
 %global           radius     1
 %global           snmp       1
-%global           misdn      1
+%global           misdn      0
 %global           ldap       1
 %global           gmime      1
 %global           corosync   1
@@ -40,8 +40,8 @@
 
 Summary:          The Open Source PBX
 Name:             asterisk
-Version:          16.6.0
-Release:          1%{?dist}
+Version:          16.10.0
+Release:          2%{?dist}
 License:          GPLv2
 URL:              http://www.asterisk.org/
 
@@ -62,7 +62,6 @@ Source6:          asterisk-tmpfiles
 #0x639D932D5170532F8C200CCD9C59F000777DCC45 \
 #0x551F29104B2106080C6C2851073B0C1FC9B2E352 \
 #0x57E769BC37906C091E7F641F6CB44E557BD982D8 \
-#0x0F77FB5D216A02390B4C51DB7C2C8A8BCB3F61BD \
 #0xF2FC93DB7587BD1FB49E045A5D984BE337191CE7
 Source7:          asterisk-gpgkeys.gpg
 
@@ -72,6 +71,7 @@ Source8:          https://raw.githubusercontent.com/asterisk/third-party/master/
 %if 0%{?fedora}
 Patch0:           asterisk-mariadb.patch
 Patch1:           asterisk-16.1.0-explicit-python2.patch
+Patch2:           asterisk_earlier-pjproject-pjsip-sc-null.patch
 %endif
 
 # Asterisk now builds against a bundled copy of pjproject, as they apply some patches
@@ -590,6 +590,7 @@ cp %{SOURCE8} cache/
 %if 0%{?fedora}
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 %endif
 
 cp %{S:3} menuselect.makedeps
@@ -918,6 +919,7 @@ fi
 %{_libdir}/asterisk/modules/app_morsecode.so
 %{_libdir}/asterisk/modules/app_nbscat.so
 %{_libdir}/asterisk/modules/app_originate.so
+%{_libdir}/asterisk/modules/app_page.so
 #%%{_libdir}/asterisk/modules/app_parkandannounce.so
 %{_libdir}/asterisk/modules/app_playback.so
 %{_libdir}/asterisk/modules/app_playtones.so
@@ -1281,7 +1283,6 @@ fi
 %attr(0640,asterisk,asterisk) %config(noreplace) %{_sysconfdir}/asterisk/ss7.timers
 %{_libdir}/asterisk/modules/app_flash.so
 %{_libdir}/asterisk/modules/app_meetme.so
-%{_libdir}/asterisk/modules/app_page.so
 %{_libdir}/asterisk/modules/app_dahdiras.so
 %{_libdir}/asterisk/modules/chan_dahdi.so
 %{_libdir}/asterisk/modules/codec_dahdi.so
@@ -1549,13 +1550,16 @@ fi
 %endif
 
 %changelog
-* Wed Oct 09 2019 Jared K. Smith <jsmith@fedoraproject.org> - 16.6.0-1
-- Update to upstream 16.6.0 for security and bug fixes
-- Update to using bundled pjproject release 2.9
+* Mon May 11 2020 Jared K. Smith <jsmith@fedoraproject.org> - 16.10.0-2
+- app_page no longer depends on meetme
+- fix usage of PJSIP_SC_NULL with older versions of pjproject
+- stop building chan_misdn again
 
-* Fri Sep 06 2019 Jared K. Smith <jsmith@fedoraproject.org> - 16.5.1-1
-- Update for upstream security release 16.5.1, with AST-2019-004 and
-  AST-2019-005
+* Thu Apr 30 2020 Jared K. Smith <jsmith@fedoraproject.org> - 16.10.0-1
+- Update to upstream 16.10.0 release for bug fixes
+
+* Thu Mar 12 2020 Jared K. Smith <jsmith@fedoraproject.org> - 16.9.0-1
+- Update to upstream 16.9.0 release for bug fixes
 
 * Thu Jul 25 2019 Jared K. Smith <jsmith@fedoraproject.org> - 16.5.0-1
 - Update to upstream 16.5.0 release for security and bug fixes
