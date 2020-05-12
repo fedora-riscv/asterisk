@@ -19,7 +19,7 @@
 %global           postgresql 1
 %global           radius     1
 %global           snmp       1
-%global           misdn      1
+%global           misdn      0
 %global           ldap       1
 %global           gmime      1
 %global           corosync   1
@@ -1553,6 +1553,7 @@ fi
 * Mon May 11 2020 Jared K. Smith <jsmith@fedoraproject.org> - 16.10.0-2
 - app_page no longer depends on meetme
 - fix usage of PJSIP_SC_NULL with older versions of pjproject
+- stop building chan_misdn again
 
 * Thu Apr 30 2020 Jared K. Smith <jsmith@fedoraproject.org> - 16.10.0-1
 - Update to upstream 16.10.0 release for bug fixes
