@@ -23,7 +23,7 @@
 %global           ldap       1
 %global           gmime      1
 %global           corosync   1
-%if 0%{?fedora} >= 21
+%if 0%{?fedora} >= 21 || 0%{?rhel} >=7
 %global           jack       0
 %else
 %global           jack       1
@@ -70,8 +70,11 @@ Source8:          https://raw.githubusercontent.com/asterisk/third-party/master/
 
 %if 0%{?fedora}
 Patch0:           asterisk-mariadb.patch
-Patch1:           asterisk-16.1.0-explicit-python2.patch
 Patch2:           asterisk_earlier-pjproject-pjsip-sc-null.patch
+%endif
+
+%if 0%{?fedora} || %{?rhel}
+Patch1:           asterisk-16.1.0-explicit-python2.patch
 %endif
 
 # Asterisk now builds against a bundled copy of pjproject, as they apply some patches
@@ -589,8 +592,11 @@ cp %{SOURCE8} cache/
 
 %if 0%{?fedora}
 %patch0 -p1
-%patch1 -p1
 %patch2 -p1
+%endif
+
+%if 0%{?fedora} || 0%{?rhel}
+%patch1 -p1
 %endif
 
 cp %{S:3} menuselect.makedeps
