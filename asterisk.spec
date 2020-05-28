@@ -1,4 +1,4 @@
-#global _rc 2
+global _rc 1
 #global _beta 3
 
 %global           pjsip_version   2.9
@@ -73,7 +73,7 @@ Patch0:           asterisk-mariadb.patch
 Patch2:           asterisk_earlier-pjproject-pjsip-sc-null.patch
 %endif
 
-%if 0%{?fedora} || %{?rhel}
+%if 0%{?fedora} || 0%{?rhel}
 Patch1:           asterisk-16.1.0-explicit-python2.patch
 %endif
 
