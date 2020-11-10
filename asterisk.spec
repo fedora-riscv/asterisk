@@ -1,7 +1,7 @@
 #%%global _rc 2
 #%%global _beta 3
 
-%global           pjsip_version   2.9
+%global           pjsip_version   2.10
 %global           jansson_version 2.12
 
 %global           optflags        %{optflags} -Werror-implicit-function-declaration -DLUA_COMPAT_MODULE -fPIC
