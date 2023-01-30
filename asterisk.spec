@@ -51,7 +51,7 @@
 Summary:          The Open Source PBX
 Name:             asterisk
 Version:          18.12.1
-Release:          %{?_rc||?_beta:0.}1%{?_rc:.rc%{_rc}}%{?_beta:.beta%{_beta}}%{?dist}.1
+Release:          %{?_rc||?_beta:0.}1%{?_rc:.rc%{_rc}}%{?_beta:.beta%{_beta}}%{?dist}.2
 License:          GPLv2
 URL:              http://www.asterisk.org/
 
@@ -1686,6 +1686,9 @@ fi
 %endif
 
 %changelog
+* Mon Jan 30 2023 Miro Hrončok <mhroncok@redhat.com> - 18.12.1-1.2
+- Rebuilt to change Python shebangs to /usr/bin/python3.6 on EPEL 8
+
 * Wed Jul 20 2022 Fedora Release Engineering <releng@fedoraproject.org> - 18.12.1-1.1
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_37_Mass_Rebuild
 
